@@ -31,15 +31,7 @@
         <View android:layout_width="match_parent" android:layout_height="10dp"
             android:background="@color/orange_main"
             />
-        <ImageView
-            android:id="@+id/img_account"
-            android:layout_width="@dimen/dp_19"
-            android:layout_height="@dimen/dp_20"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/margin_tiny"
-            android:layout_marginLeft="@dimen/margin_tiny"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_login_account"/>
+
 
         <EditText
             android:id="@+id/et_account"
@@ -47,24 +39,36 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_marginBottom="@dimen/margin_tiny"
             android:layout_marginLeft="@dimen/margin_normal"
             android:layout_toRightOf="@+id/img_account"
             android:background="@null"
             android:hint="@string/account"
             android:maxLines="1"
+            android:drawableLeft="@drawable/icon_login_account"
             android:textColor="@android:color/black"
             android:textColorHint="@color/tv_gray_deep"
             android:textSize="@dimen/text_size_normal"/>
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="@dimen/margin_tiny"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_toRightOf="@+id/img_account"
+                android:background="@null"
+                android:hint="@string/account"
+                android:maxLines="1"
+                android:drawableLeft="@drawable/icon_login_pw"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/tv_gray_deep"
+                android:textSize="@dimen/text_size_normal"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_height"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_toRightOf="@+id/img_account"
-            android:background="@color/orange_light"/>
-
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 
