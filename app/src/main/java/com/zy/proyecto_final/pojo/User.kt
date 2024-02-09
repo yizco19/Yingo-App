@@ -12,6 +12,8 @@ data class User (
     var password: String? = "",
     @ColumnInfo(name = "name")
     var name: String? = "",
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    val imagenBytes: ByteArray,
     @PrimaryKey(autoGenerate = true)
     var id:Long?=null
 )

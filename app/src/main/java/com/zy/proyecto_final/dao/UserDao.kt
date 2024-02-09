@@ -18,7 +18,10 @@ interface UserDao {
     fun delete(user: User)
     @Update
     fun update(user: User)
-
+    @Query("SELECT * FROM User WHERE id = :imagenId")
+    suspend fun obtenerImagenPorId(imagenId: Long): User?
+    @Insert
+    suspend fun insertarImagen(imagen: User)
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
 }
