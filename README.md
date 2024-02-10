@@ -1,6 +1,5 @@
 # Aplicación de Tienda en Línea de Informáticos con Chatbot Integrado
 
-Color: azul aciano claro 1, significa que podría no aparecer en el proyecto final, si durante el desarrollo falta tiempo o existe alguna dificultad insuperable.
 
 ## Descripción de la Aplicación
 
