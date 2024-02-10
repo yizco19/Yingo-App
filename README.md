@@ -38,6 +38,21 @@ La aplicación de tienda en línea de informáticos es una plataforma móvil dis
 ## Estructura de Carpetas y Archivos
 
 El proyecto estará organizado de la siguiente manera:
+**java**
+  - **com.zy.proyecto_final**
+    - **activities**
+    - **adapters**
+    - **dao**
+    - **fragments**
+    - **pojo**
+    - **repositories**
+    - **util**
+**res**
+  - **layout**
+  - **menu**
+  - **navigation**
+  - **values**
+
 ## Funcionamiento General
 
 Ordenado por su prioridad de desarrollo:
