@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".activity.HomeActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,4 +22,12 @@
         android:layout_height="670dp"
         app:layout_constraintBottom_toTopOf="@+id/toolbar"
         tools:layout_editor_absoluteX="207dp" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="284dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

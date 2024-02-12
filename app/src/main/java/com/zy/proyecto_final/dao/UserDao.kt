@@ -13,7 +13,7 @@ interface UserDao {
     @Insert
     fun insertAll(vararg users: User)
     @Insert
-    fun insert(user: User)
+    fun add(user: User)
     @Delete
     fun delete(user: User)
     @Update
@@ -24,4 +24,6 @@ interface UserDao {
     suspend fun insertarImagen(imagen: User)
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
+    @Query("SELECT * FROM user WHERE id = :id")
+     fun getUser(id: Long?): Any
 }

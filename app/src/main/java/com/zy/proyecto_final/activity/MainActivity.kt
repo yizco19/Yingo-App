@@ -1,8 +1,9 @@
-package com.zy.proyecto_final
+package com.zy.proyecto_final.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.zy.proyecto_final.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

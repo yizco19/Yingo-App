@@ -13,7 +13,7 @@ data class User (
     @ColumnInfo(name = "name")
     var name: String? = "",
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    val imagenBytes: ByteArray,
+    val imagenBytes: ByteArray = byteArrayOf(),
     @PrimaryKey(autoGenerate = true)
     var id:Long?=null
 )

@@ -1,0 +1,45 @@
+package com.zy.proyecto_final.viewmodel
+
+import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.zy.proyecto_final.pojo.User
+import com.zy.proyecto_final.repository.UserRepository
+
+class UserViewModel : ViewModel() {
+    private lateinit var _context: Context
+    lateinit var itemsrepository: UserRepository
+    private lateinit var _items: MutableLiveData<MutableList<User>>;
+    var userlogged= User();
+    public val items: LiveData<MutableList<User>>
+        get() = _items
+
+    fun init(c: Context) {
+        this._context = c
+        _items = MutableLiveData()
+        this.itemsrepository = UserRepository(c)
+        this._items.value=this.itemsrepository.getAll()
+    }
+    fun add(user: User) :Boolean{
+
+        // compruebaExiste()
+        if(itemsrepository.getUser(user.id)!=null){
+            this._items.value=this.itemsrepository.getAll()
+            this.itemsrepository.add(user)
+            var t=this.userlogged
+            this.update()
+            return true
+        }
+        this.itemsrepository.add(this.userlogged)
+            return false
+
+
+    }
+
+    private fun update() {
+        var values = this._items.value
+        this._items.value = values
+    }
+
+}
