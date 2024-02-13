@@ -1,5 +1,6 @@
 package com.zy.proyecto_final.dao
 
+import android.accounts.Account
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -24,6 +25,6 @@ interface UserDao {
     suspend fun insertarImagen(imagen: User)
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
-    @Query("SELECT * FROM user WHERE id = :id")
-     fun getUser(id: Long?): Any
+    @Query("SELECT * FROM user WHERE account = :account")
+     fun getUser(account: Account): Any
 }

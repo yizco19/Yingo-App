@@ -18,7 +18,7 @@ class UserRepository (var context: Context){
     }
 
     fun add(user: User) :Long? {
-        if(_userDAO.getUser(user.id)!=null){
+        if(_userDAO.getUser(user.account)==null){
             _userDAO.add(user)
             return user.id
         }
@@ -26,8 +26,8 @@ class UserRepository (var context: Context){
 
     }
 
-    fun getUser(id: Long?): Any {
-        return _userDAO.getUser(id)
+    fun getUser(account: String): Any {
+        return _userDAO.getUser(account)
 
     }
 }

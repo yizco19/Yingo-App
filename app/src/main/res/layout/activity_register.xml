@@ -37,7 +37,7 @@
 
 
             <EditText
-                android:id="@+id/et_account"
+                android:id="@+id/account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -69,6 +69,24 @@
                 android:layout_toRightOf="@+id/img_account"
                 android:background="@null"
                 android:hint="@string/password"
+                android:maxLines="1"
+                android:drawableLeft="@drawable/icon_login_pw"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/tv_gray_deep"
+                android:borderColor="@color/green_main"
+                android:textSize="@dimen/text_size_normal"/>
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="@dimen/margin_tiny"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_toRightOf="@+id/img_account"
+                android:background="@null"
+                android:hint="@string/check_password"
                 android:maxLines="1"
                 android:drawableLeft="@drawable/icon_login_pw"
                 android:textColor="@android:color/black"

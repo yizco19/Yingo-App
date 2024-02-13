@@ -23,8 +23,7 @@ class UserViewModel : ViewModel() {
     }
     fun add(user: User) :Boolean{
 
-        // compruebaExiste()
-        if(itemsrepository.getUser(user.id)!=null){
+        if(){
             this._items.value=this.itemsrepository.getAll()
             this.itemsrepository.add(user)
             var t=this.userlogged
