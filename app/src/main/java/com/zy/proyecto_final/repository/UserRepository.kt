@@ -14,7 +14,7 @@ class UserRepository (var context: Context){
 
     }
     fun getAll(): MutableList<User>? {
-        TODO("Not yet implemented")
+        return _userDAO.getAll().toMutableList()
     }
 
     fun add(user: User) :Long? {
@@ -26,8 +26,13 @@ class UserRepository (var context: Context){
 
     }
 
-    fun getUser(account: String): Any {
-        return _userDAO.getUser(account)
+    fun getUser(usernameoremail: String): Any {
+        return _userDAO.getUser(usernameoremail)
+
+    }
+
+    fun login(usernameoremail: String, password: String): Any {
+        return _userDAO.getUser(usernameoremail, password)
 
     }
 }

@@ -41,4 +41,12 @@ class UserViewModel : ViewModel() {
         this._items.value = values
     }
 
+    fun login(usernameoremail: String, password: String): Boolean {
+        if(this.itemsrepository.login(usernameoremail,password)!=null){
+            return true
+        }
+        return false
+
+    }
+
 }

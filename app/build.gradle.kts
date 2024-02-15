@@ -35,6 +35,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
 }
@@ -42,6 +43,8 @@ android {
 dependencies {
 
     implementation("androidx.room:room-runtime:2.5.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.annotation:annotation:1.7.1")
     annotationProcessor("androidx.room:room-compiler:2.5.0")
     ksp("androidx.room:room-compiler:2.5.0")
 

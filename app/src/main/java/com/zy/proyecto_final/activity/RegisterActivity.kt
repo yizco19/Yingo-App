@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.ActivityRegisterBinding
 import com.zy.proyecto_final.pojo.User
+import com.zy.proyecto_final.util.MD5util
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class RegisterActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.viewModel.init(this)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -32,8 +34,8 @@ class RegisterActivity : AppCompatActivity() {
                 binding.confirmPassword.error = "Las contraseñas no coinciden"
                 return@setOnClickListener
             }
-
-            val user = User(username, email, password)
+            val passwordMD5 = MD5util().getMD5(password)
+            val user = User(username, email, passwordMD5)
             if (viewModel.add(user)) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)

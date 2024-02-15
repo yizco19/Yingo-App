@@ -5,7 +5,7 @@ import java.security.MessageDigest
 
 class MD5util {
     val CLAVE = "yang"
-    fun md5(texto: String): String {
+    fun getMD5(texto: String): String {
         val md = MessageDigest.getInstance(CLAVE)
         val byteArray = md.digest(texto.toByteArray())
 

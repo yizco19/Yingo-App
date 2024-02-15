@@ -37,7 +37,7 @@
 
 
         <EditText
-            android:id="@+id/et_account"
+            android:id="@+id/emailorusername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -75,6 +75,7 @@
                 android:textColorHint="@color/tv_gray_deep"
                 android:textSize="@dimen/text_size_normal"/>
             <Button
+                android:id="@+id/login"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
