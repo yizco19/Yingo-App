@@ -15,7 +15,7 @@ import com.zy.proyecto_final.pojo.User
     ], version = 6, exportSchema = true
 )
 @TypeConverters(Converters::class)
-abstract class AppDatabase {
+abstract class AppDatabase: RoomDatabase()  {
     abstract fun userDao(): UserDao
 
     companion object {
@@ -43,4 +43,5 @@ abstract class AppDatabase {
             }
         }
     }
+
 }

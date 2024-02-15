@@ -19,12 +19,11 @@ interface UserDao {
     fun delete(user: User)
     @Update
     fun update(user: User)
-    @Query("SELECT * FROM User WHERE id = :imagenId")
-    suspend fun obtenerImagenPorId(imagenId: Long): User?
-    @Insert
-    suspend fun insertarImagen(imagen: User)
+    /*@Query("SELECT * FROM User WHERE id = :imagenId")
+    suspend fun obtenerImagenPorId(imagenId: Long): User?*/
+
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
-    @Query("SELECT * FROM user WHERE account = :account")
-     fun getUser(account: Account): Any
+    @Query("SELECT * FROM user WHERE username = :username")
+     fun getUser(username: String): User
 }

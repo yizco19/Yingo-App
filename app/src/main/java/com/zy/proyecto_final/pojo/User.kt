@@ -12,10 +12,6 @@ data class User (
     var email: String? = "",
     @ColumnInfo(name = "password")
     var password: String? = "",
-    @ColumnInfo(name = "name")
-    var name: String? = "",
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    val imagenBytes: ByteArray = byteArrayOf(),
     @PrimaryKey(autoGenerate = true)
     var id:Long?=null
 )

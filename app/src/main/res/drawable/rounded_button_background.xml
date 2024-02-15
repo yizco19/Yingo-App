@@ -1,0 +1,6 @@
+<!-- res/drawable/rounded_button_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FFCDD2" /> <!-- Cambia este color por el que prefieras -->
+    <corners android:radius="50dp" /> <!-- Establece la mitad del tamaño deseado del radio para que se vea como un círculo -->
+</shape>
