@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         countDownTimer = object : CountDownTimer(WAIT_TIME, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val secondsRemaining = millisUntilFinished / 1000
-                skipButton.text = "($secondsRemaining)"
+                skipButton.text = "$secondsRemaining"
             }
 
             override fun onFinish() {

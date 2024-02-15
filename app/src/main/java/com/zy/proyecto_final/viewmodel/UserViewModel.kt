@@ -23,7 +23,7 @@ class UserViewModel : ViewModel() {
     }
     fun add(user: User) :Boolean{
 
-        /*if(){
+        if( user.username?.let { this.itemsrepository.getUser(it) } ==null){
             this._items.value=this.itemsrepository.getAll()
             this.itemsrepository.add(user)
             var t=this.userlogged
@@ -31,7 +31,7 @@ class UserViewModel : ViewModel() {
             return true
         }
         this.itemsrepository.add(this.userlogged)
-            */return false
+        return false
 
 
     }

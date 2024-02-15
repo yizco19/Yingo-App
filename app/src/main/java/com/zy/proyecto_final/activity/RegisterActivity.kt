@@ -3,6 +3,7 @@ package com.zy.proyecto_final.activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.zy.proyecto_final.R
@@ -11,7 +12,7 @@ import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class RegisterActivity : AppCompatActivity() {
-
+    val viewModel: UserViewModel by viewModels()
     private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +34,11 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             val user = User(username, email, password)
-            /*if (viewModel.add(user)) {
+            if (viewModel.add(user)) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
-            }*/
+            }
         }
     }
 }
