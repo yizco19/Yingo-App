@@ -1,22 +1,23 @@
 package com.zy.proyecto_final.repository
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.zy.proyecto_final.AppDatabase
 import com.zy.proyecto_final.dao.CategoryDao
 import com.zy.proyecto_final.pojo.Category
 
-class CategoryRepository(application: Application) {
+class CategoryRepository(context: Context) {
 
     private val _categoryDao: CategoryDao
 
     init {
-        val database = AppDatabase.getInstance(application)
+        val database = AppDatabase.getInstance(context)
         _categoryDao = database.categoryDao()
     }
 
-    fun getAll(): List<Category> {
-        return _categoryDao.getAll()
+    fun getAll(): MutableList<Category> {
+        return _categoryDao.getAll().toMutableList()
     }
 
     fun insert(category: Category) {

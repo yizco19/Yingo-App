@@ -8,44 +8,67 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import com.zy.proyecto_final.R
+import com.zy.proyecto_final.fragment.ProductDetailsFragment
+import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.ProductRecyclerViewAdapter
+import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 /**
  * A fragment representing a list of Items.
  */
 class ProductsFragment : Fragment() {
-
-    private var columnCount = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
+    private val viewmodel: ProductViewModel by activityViewModels()
+    private var view: View? = null
+    var fav_click: ((Int, Product) -> Unit)? = null
+    var add_click: ((Int, Product) -> Unit)? = null
+    var detail_click: ((Int, Product) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        view = inflater.inflate(R.layout.fragment_products, container, false)
+        // Obtén el RecyclerView
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.listado)
+        // Configura el LayoutManager
+        recyclerView?.layoutManager = GridLayoutManager(context, 1)
+        // Verifica si items es nulo antes de asignar el adaptador
+        this.viewmodel.items.value?.let {
+            recyclerView?.adapter = ProductRecyclerViewAdapter(it.toMutableList())
+        }
+        (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).add_click = { position:Int, item: Product ->
+            run {
+
+            }
+        }
+        (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).fav_click = { position:Int, item: Product ->
+            run {
+
+            }
+        }
+        (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).detail_click = { position:Int, item: Product ->
+            run {
+                this.viewmodel.selectedproduct=item
+                //se avisa al principal
+                this.detail_click?.let { it -> it(position, item) }
+                var  fm: FragmentManager = parentFragmentManager
+                var f=fm.fragments
+                fm.commit {
+                    replace(R.id.fragmentContainerView, ProductDetailsFragment.newInstance())
+
+                }
+            }
+        }
 
         return view
     }
 
+
     companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ProductsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+        fun newInstance() = ProductsFragment()
     }
 }

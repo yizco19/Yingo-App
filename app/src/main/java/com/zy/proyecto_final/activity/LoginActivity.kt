@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.ActivityLoginBinding
 import com.zy.proyecto_final.util.MD5util
@@ -64,6 +65,15 @@ class LoginActivity : AppCompatActivity() {
                     edit?.commit()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                }else{
+                    // Mostrar alerta de usuario o contraseña incorrectos
+                    AlertDialog.Builder(this)
+                        .setTitle("Error de inicio de sesión")
+                        .setMessage("El nombre de usuario o la contraseña son incorrectos. Por favor, inténtalo de nuevo.")
+                        .setPositiveButton("OK") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
                 }
             }
         }

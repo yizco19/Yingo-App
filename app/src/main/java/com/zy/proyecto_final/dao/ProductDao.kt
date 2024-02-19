@@ -5,19 +5,23 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.zy.proyecto_final.pojo.Product
 
 @Dao
 interface ProductDao {
-    @Query("SELECT * FROM products")
-    suspend fun getAllProducts(): List<Product>
+    @Query("SELECT * FROM product")
+    fun getAll(): List<Product>
 
-    @Query("SELECT * FROM products WHERE id = :productId")
-    suspend fun getProductById(productId: Int): Product?
+    @Query("SELECT * FROM product WHERE id = :productId")
+    fun getProductById(productId: Long): Product?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProduct(product: Product)
+    @Insert()
+    fun insert(product: Product):Long
 
     @Delete
-    suspend fun deleteProduct(product: Product)
+    fun delete(product: Product)
+
+    @Update
+    fun update(product: Product)
 }

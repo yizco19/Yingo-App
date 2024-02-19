@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.back -> {
+            R.id.back_login -> {
                 finish()
                 true
             }

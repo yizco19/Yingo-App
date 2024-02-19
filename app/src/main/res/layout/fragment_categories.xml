@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CategoriesFragment">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/my_app_color"
+            app:titleTextColor="@color/white"
+            app:title="Categorias" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listado"
             android:layout_width="match_parent"
@@ -20,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

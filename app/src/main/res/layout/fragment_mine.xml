@@ -11,5 +11,5 @@
         android:layout_height="wrap_content"
         android:background="@color/my_app_color"
         app:titleTextColor="@color/white"
-        app:title="Account" />
+        app:title="Cuenta" />
 </androidx.appcompat.widget.LinearLayoutCompat>
