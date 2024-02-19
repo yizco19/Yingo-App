@@ -6,17 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.zy.proyecto_final.dao.CategoryDao
 import com.zy.proyecto_final.dao.UserDao
+import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.User
 
 @Database(
     entities = [
         User::class,
-    ], version = 6, exportSchema = true
+    Category::class
+    ], version = 2, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase()  {
     abstract fun userDao(): UserDao
+    abstract fun categoryDao(): CategoryDao
 
     companion object {
         private var instance: AppDatabase? = null

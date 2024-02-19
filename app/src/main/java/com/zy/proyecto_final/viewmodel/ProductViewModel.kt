@@ -1,4 +1,4 @@
-package com.zy.proyecto_final.fragment
+package com.zy.proyecto_final.viewmodel
 
 import androidx.lifecycle.ViewModel
 

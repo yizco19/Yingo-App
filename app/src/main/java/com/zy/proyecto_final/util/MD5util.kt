@@ -4,9 +4,8 @@ import java.math.BigInteger
 import java.security.MessageDigest
 
 class MD5util {
-    val CLAVE = "yang"
     fun getMD5(texto: String): String {
-        val md = MessageDigest.getInstance(CLAVE)
+        val md = MessageDigest.getInstance("MD5")
         val byteArray = md.digest(texto.toByteArray())
 
         val numeroEnHexadecimal = BigInteger(1, byteArray)

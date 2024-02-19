@@ -1,42 +1,49 @@
 package com.zy.proyecto_final.activity
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zy.proyecto_final.R
-class MainActivity : AppCompatActivity() {
+import com.zy.proyecto_final.fragment.CarFragment
+import com.zy.proyecto_final.fragment.FavoritesFragment
+import com.zy.proyecto_final.fragment.HomeFragment
+import com.zy.proyecto_final.fragment.MineFragment
+import com.zy.proyecto_final.fragment.OrderFragment
 
-    private val WAIT_TIME: Long = 3000 // Tiempo de espera en milisegundos
-    private lateinit var skipButton: Button
-    private lateinit var countDownTimer: CountDownTimer
+class MainActivity : AppCompatActivity() {
+    lateinit var mBottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Inicializar el botón skipButton
-        skipButton = findViewById(R.id.skipButton)
+        // Inicializa la barra de navegación
+        mBottomNav = findViewById(R.id.bottom_navigation)
 
-        // Mostrar el tiempo restante en el botón skipButton
-        countDownTimer = object : CountDownTimer(WAIT_TIME, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val secondsRemaining = millisUntilFinished / 1000
-                skipButton.text = "$secondsRemaining"
+        mBottomNav.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.order -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.content, OrderFragment()).commit()
+                    true
+                }
+                R.id.car -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.content, CarFragment()).commit()
+                    true
+                }
+                R.id.home -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.content, HomeFragment()).commit()
+                    true
+                }
+                R.id.favorites -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.content, FavoritesFragment()).commit()
+                    true
+                }
+                R.id.mine -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.content, MineFragment()).commit()
+                    true
+                }
+                else -> false
             }
-
-            override fun onFinish() {
-                skipButton.text = "Saltar espera"
-            }
-        }.start()
-
-        // Listener para el botón skipButton
-        skipButton.setOnClickListener {
-            // Cancelar la espera y pasar directamente a LoginActivity
-            countDownTimer.cancel()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
         }
     }
 }

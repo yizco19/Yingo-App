@@ -5,13 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class User (
-    @ColumnInfo(name = "username")
-    var username: String? = "",
+data class User(
     @ColumnInfo(name = "email")
     var email: String? = "",
+    @ColumnInfo(name = "username")
+    var username: String? = "",
     @ColumnInfo(name = "password")
     var password: String? = "",
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    val imagenBytes: ByteArray? = null,
     @PrimaryKey(autoGenerate = true)
     var id:Long?=null
 )

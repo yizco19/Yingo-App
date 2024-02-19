@@ -1,4 +1,4 @@
-package com.zy.proyecto_final.fragment
+package com.zy.proyecto_final.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.zy.proyecto_final.R
-import com.zy.proyecto_final.fragment.placeholder.PlaceholderContent
 import com.zy.proyecto_final.recyclerviewadapter.ProductRecyclerViewAdapter
 
 /**
@@ -31,18 +30,7 @@ class ProductsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_products_list, container, false)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = ProductRecyclerViewAdapter(PlaceholderContent.ITEMS)
-            }
-        }
         return view
     }
 

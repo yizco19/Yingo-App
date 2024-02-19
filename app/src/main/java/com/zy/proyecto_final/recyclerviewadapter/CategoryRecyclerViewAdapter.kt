@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 
-import com.zy.proyecto_final.databinding.FragmentProductsBinding
-import com.zy.proyecto_final.pojo.Product
+import com.zy.proyecto_final.databinding.FragmentItemcategoryBinding
+import com.zy.proyecto_final.pojo.Category
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class ProductRecyclerViewAdapter(
-    private val values: MutableList<Product>
-) : RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder>() {
-
+class CategoryRecyclerViewAdapter(
+    private val values: List<Category>
+) : RecyclerView.Adapter<CategoryRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentProductsBinding.inflate(
+            FragmentItemcategoryBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -28,13 +27,16 @@ class ProductRecyclerViewAdapter(
 
     }
 
+    override fun getItemCount(): Int {
+        TODO("Not yet implemented")
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
     }
 
-    override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentProductsBinding) :
+    inner class ViewHolder(binding: FragmentItemcategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content

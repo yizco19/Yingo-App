@@ -2,10 +2,37 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+
+        <item
+            android:id="@+id/order"
+            android:icon="@drawable/category"
+            android:title="Category"
+            app:showAsAction="always"/>
+
     <item
-        android:id="@+id/boton_reiniciar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_restart_alt_24"
-        android:title="Reiniciar" />
+        android:id="@+id/car"
+        android:icon="@drawable/carrito"
+        android:title="Cart"
+        app:showAsAction="always"/>
+
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/home"
+            android:title="Home"
+            app:showAsAction="always"/>
+
+        <item
+            android:id="@+id/favorites"
+            android:icon="@drawable/heart"
+            android:title="Favorites"
+            app:showAsAction="always"/>
+
+        <item
+            android:id="@+id/mine"
+            android:icon="@drawable/account"
+            android:title="Account"
+            app:showAsAction="always"/>
+
+
 </menu>

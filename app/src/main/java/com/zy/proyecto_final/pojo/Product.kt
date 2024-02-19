@@ -3,11 +3,13 @@ package com.zy.proyecto_final.pojo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-data class Product (
+@Entity(tableName = "products")
+data class Product(
     @PrimaryKey(autoGenerate = true)
-    var id: Long? = null,
-    var name: String? = null,
-    var category: String? = null
-
+    val id: Int = 0,
+    val name: String,
+    val description: String,
+    val category: String,
+    val price: Double,
+    val imageUrl: String
 )

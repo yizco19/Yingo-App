@@ -3,18 +3,19 @@ package com.zy.proyecto_final.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.Query
 import androidx.room.Update
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.User
 
 @Dao
 interface CategoryDao {
-    @Insert
-    fun insertAll(vararg categories: Category)
-    @Insert
-    fun add(category: Category)
+    @Insert()
+    fun insert(item: Category):Long
     @Delete
-    fun delete(category: Category)
+    fun delete(item:  Category)
     @Update
-    fun update(category: Category)
+    fun update(item:  Category)
+    @Query("SELECT * FROM category")
+    fun getAll(): List<Category>
 }
