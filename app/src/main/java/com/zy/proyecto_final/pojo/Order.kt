@@ -12,7 +12,7 @@ data class Order(
     val id: Int = 0,
     val userId: Int,
     @Embedded
-    val products: List<Product>,
+    val products: Pair<Product,Int>,//producto y cantidad
     val totalPrice: Double,
     val orderDate: Date,
     val status: OrderStatus

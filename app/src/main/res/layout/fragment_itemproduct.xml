@@ -28,7 +28,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@+id/fav_click"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+            app:layout_constraintTop_toBottomOf="@+id/detail">
 
             <TextView
                 android:id="@+id/content"
@@ -41,7 +41,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/button3"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/detail"
                 app:layout_constraintVertical_bias="0.571" />
 
             <TextView
@@ -58,7 +58,7 @@
             android:background="@drawable/heart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/add_click"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/detail" />
 
         <Button
             android:id="@+id/add_click"
@@ -68,7 +68,7 @@
             android:background="@drawable/carrito"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/detail" />
 
 
 

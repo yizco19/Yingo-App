@@ -7,15 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentProductDetailsBinding
+import com.zy.proyecto_final.fragments.CategoriesFragment
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class ProductDetailsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
     private  lateinit var binding: FragmentProductDetailsBinding
     private var view:View?=null
-
 
 
     override fun onCreateView(
@@ -25,8 +26,15 @@ class ProductDetailsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_details, container, false)
         binding.lifecycleOwner = this
         binding.productViewModel = viewmodel
+
+        binding.toolbar.setNavigationOnClickListener {
+            //replace fragment
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, CategoriesFragment())?.commit()
+        }
         // Inflate the layout for this fragment
         return binding.root
+
+
     }
 
     companion object {

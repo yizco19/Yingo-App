@@ -6,14 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.zy.proyecto_final.databinding.FragmentItemproductBinding
-
-import com.zy.proyecto_final.databinding.FragmentProductsBinding
 import com.zy.proyecto_final.pojo.Product
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
+
 class ProductRecyclerViewAdapter(
     private val values: MutableList<Product>
 ) : RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder>() {
@@ -41,7 +36,7 @@ class ProductRecyclerViewAdapter(
             this.add_click?.let { it -> it(position, item) }
         }
         holder.priceView.setOnClickListener {
-            this.add_click?.let { it -> it(position, item) }
+            this.fav_click?.let { it -> it(position, item) }
         }
         holder.detailView.setOnClickListener {
             this.detail_click?.let { it -> it(position, item) }

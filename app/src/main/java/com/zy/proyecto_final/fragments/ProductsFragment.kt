@@ -3,7 +3,6 @@ package com.zy.proyecto_final.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -35,19 +34,19 @@ class ProductsFragment : Fragment() {
         // Obtén el RecyclerView
         val recyclerView = view?.findViewById<RecyclerView>(R.id.listado)
         // Configura el LayoutManager
-        recyclerView?.layoutManager = GridLayoutManager(context, 1)
+        recyclerView?.layoutManager = GridLayoutManager(context, 2)
         // Verifica si items es nulo antes de asignar el adaptador
         this.viewmodel.items.value?.let {
             recyclerView?.adapter = ProductRecyclerViewAdapter(it.toMutableList())
         }
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).add_click = { position:Int, item: Product ->
             run {
-
+                    this.add_click?.let { it -> it(position, item) }
             }
         }
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).fav_click = { position:Int, item: Product ->
             run {
-
+                this.fav_click?.let { it -> it(position, item) }
             }
         }
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).detail_click = { position:Int, item: Product ->
