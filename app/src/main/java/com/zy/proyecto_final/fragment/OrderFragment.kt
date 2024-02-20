@@ -1,33 +1,36 @@
 package com.zy.proyecto_final.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zy.proyecto_final.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
+import com.zy.proyecto_final.pojo.Product
+import com.zy.proyecto_final.recyclerviewadapter.OrderRecyclerViewAdapter
 
 class OrderFragment : Fragment() {
 
+    // Lista de productos simulada (debes obtenerla de tu fuente de datos)
+    private val productList = mutableListOf(
+        Product("Producto 1", "Producto 1", 1),
+        Product("Producto 2", "Producto 2", 1),
+        // Agrega más productos según sea necesario
+    )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var btnPlaceOrder: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false)
+        val view = inflater.inflate(R.layout.fragment_order, container, false)
+
+        return view
     }
-
-
 }

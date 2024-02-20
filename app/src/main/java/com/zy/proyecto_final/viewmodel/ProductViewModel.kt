@@ -31,9 +31,6 @@ class ProductViewModel : ViewModel() {
         _items = MutableLiveData()
         this.itemsrepository = ProductRepository(c)
         this._items.value = this.itemsrepository.getAll()
-        var producttest = Product("Honer", "Es un movil", 1,1.2,"")
-        producttest.name = "test"
-        this.itemsrepository.insert(producttest)
     }
     fun delete(item: Product) {
         this.itemsrepository.delete(item)

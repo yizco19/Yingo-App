@@ -11,9 +11,8 @@ data class Order(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val userId: Int,
-    @Embedded
-    val products: Pair<Product,Int>,//producto y cantidad
+    val product: Product,
+    val quantity: Int,
     val totalPrice: Double,
-    val orderDate: Date,
-    val status: OrderStatus
+    val carId: Int,
 )

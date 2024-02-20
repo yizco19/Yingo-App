@@ -5,10 +5,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zy.proyecto_final.R
-import com.zy.proyecto_final.fragment.CarFragment
 import com.zy.proyecto_final.fragment.FavoritesFragment
 import com.zy.proyecto_final.fragment.HomeFragment
 import com.zy.proyecto_final.fragment.MineFragment
+import com.zy.proyecto_final.fragment.OrderFragment
 import com.zy.proyecto_final.fragments.CategoriesFragment
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.car -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, CarFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, OrderFragment()).commit()
                     true
                 }
                 R.id.home -> {

@@ -19,9 +19,6 @@ interface UserDao {
     fun delete(user: User)
     @Update
     fun update(user: User)
-    /*@Query("SELECT * FROM User WHERE id = :imagenId")
-    suspend fun obtenerImagenPorId(imagenId: Long): User?*/
-
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
     @Query("SELECT * FROM user WHERE username = :usernameoremail OR email = :usernameoremail")
