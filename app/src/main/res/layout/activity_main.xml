@@ -21,4 +21,5 @@
         app:menu="@menu/menu_navigator"
         android:layout_alignParentBottom="true"/>
 
-    </RelativeLayout>
+
+</RelativeLayout>

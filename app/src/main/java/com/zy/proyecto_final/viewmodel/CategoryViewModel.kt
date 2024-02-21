@@ -23,8 +23,8 @@ class CategoryViewModel : ViewModel() {
         _items = MutableLiveData()
 
         this.itemsrepository = CategoryRepository(context)
-        var categorytest = Category("Monitor", 2)
-this.itemsrepository.add(categorytest)
+        /*var categorytest = Category("Movil", 1)
+this.itemsrepository.add(categorytest)*/
 
         this._items.value = this.itemsrepository.getAll()
 

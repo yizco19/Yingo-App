@@ -64,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
                     //
                     edit?.commit()
                     val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("userid", viewModel.userlogged.id)
                     startActivity(intent)
                 }else{
                     // Mostrar alerta de usuario o contraseña incorrectos

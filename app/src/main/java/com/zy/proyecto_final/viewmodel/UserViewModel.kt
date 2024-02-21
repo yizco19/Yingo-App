@@ -35,6 +35,9 @@ class UserViewModel : ViewModel() {
 
 
     }
+    fun getUserById(id:Long):User?{
+        return this.itemsrepository.getUserById(id)
+    }
 
     private fun update() {
         var values = this._items.value
@@ -44,8 +47,8 @@ class UserViewModel : ViewModel() {
     fun login(usernameoremail: String, password: String): Boolean {
         val user = this.itemsrepository.getUser(usernameoremail)
         if (user != null && this.itemsrepository.login(usernameoremail, password) != null) {
-            this.userlogged = user
             this._items.value = this.itemsrepository.getAll()
+            this.userlogged = user
             return true
         }
 

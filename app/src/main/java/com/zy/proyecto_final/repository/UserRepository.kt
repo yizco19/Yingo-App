@@ -35,4 +35,7 @@ class UserRepository (var context: Context){
         return _userDAO.getUser(usernameoremail, password)
 
     }
+    fun getUserById(id:Long):User?{
+        return _userDAO.getUserById(id)
+    }
 }

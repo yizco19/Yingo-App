@@ -28,4 +28,8 @@ class CarRepository (contexto: Context) {
     fun getAll(user_id:Long?): MutableList<Car> {
         return _cardao.getAll(user_id).toMutableList()
     }
+
+    fun deleteAll() {
+        _cardao.deleteAll()
+    }
 }

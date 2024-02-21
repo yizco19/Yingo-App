@@ -31,9 +31,12 @@ class MainActivity : AppCompatActivity() {
         this.carviewmodel.init(this)
         this.orderviewmodel.init(this)
         this.userviewmodel.init(this)
+
+        //asigna userlogged
+        val user_id=intent.getLongExtra("userid",0)
+        this.userviewmodel.userlogged= this.userviewmodel.getUserById(user_id)!!
         // Inicializa la barra de navegación
         mBottomNav = findViewById(R.id.bottom_navigation)
-
         mBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.category -> {

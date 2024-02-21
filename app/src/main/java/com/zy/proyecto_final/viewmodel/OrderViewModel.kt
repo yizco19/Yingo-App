@@ -53,7 +53,6 @@ class OrderViewModel : ViewModel() {
     }
 
     fun update() {
-        val values =this._items.value
         this._items.value = this.itemsrepository.getAll()
     }
 
@@ -69,6 +68,7 @@ class OrderViewModel : ViewModel() {
             ))
         }
         this._items.value = listOrder
+        this.itemsrepository.setAll(listOrder)
     }
 
 }

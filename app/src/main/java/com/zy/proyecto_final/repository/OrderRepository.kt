@@ -28,4 +28,7 @@ class OrderRepository (contexto: Context) {
     fun getAll(user_id:Long?): MutableList<Order> {
         return _orderdao.getAll(user_id).toMutableList()
     }
+    fun setAll(listOrder: MutableList<Order>) {
+        _orderdao.setAll(listOrder)
+    }
 }

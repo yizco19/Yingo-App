@@ -50,6 +50,9 @@ class CarViewModel: ViewModel() {
     fun delete(item: Car) {
 this.itemsrepository.delete(item)
     }
+    fun deleteAll() {
+        this.itemsrepository.deleteAll()
+    }
     fun update(item: Car) {
         this.selectedcar = item
         this.itemsrepository.update(selectedcar)

@@ -23,4 +23,6 @@ interface OrderDao {
 
     @Update
     fun update(item: Order)
+    @Insert
+    abstract fun setAll(listOrder: MutableList<Order>)
 }
