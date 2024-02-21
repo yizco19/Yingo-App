@@ -7,15 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentProductDetailsBinding
-import com.zy.proyecto_final.fragments.CategoriesFragment
+import com.zy.proyecto_final.pojo.Car
+import com.zy.proyecto_final.pojo.Product
+import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
+import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class ProductDetailsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
-    private val pedidoviewmodel: ProductViewModel by activityViewModels()
+    private val carviewmodel: CarViewModel by activityViewModels()
+    private val userviewmodel: UserViewModel by activityViewModels()
+
     private  lateinit var binding: FragmentProductDetailsBinding
     private var view:View?=null
 
@@ -30,9 +34,15 @@ class ProductDetailsFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener {
             //replace fragment
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, CategoriesFragment())?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, CategoryFragment())?.commit()
         }
         binding.comprar.setOnClickListener {
+            val product : Product = viewmodel.selectedproduct
+            val userid = userviewmodel.userlogged.id
+            val car = Car( null, userid, product.id,product.name,product.price,1,product.imageUrl)
+            carviewmodel.selectedcar = car
+            carviewmodel.add()
+
 
         }
         // Inflate the layout for this fragment

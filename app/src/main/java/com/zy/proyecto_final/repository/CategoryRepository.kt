@@ -1,8 +1,6 @@
 package com.zy.proyecto_final.repository
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.zy.proyecto_final.AppDatabase
 import com.zy.proyecto_final.dao.CategoryDao
 import com.zy.proyecto_final.pojo.Category
@@ -20,7 +18,7 @@ class CategoryRepository(context: Context) {
         return _categoryDao.getAll().toMutableList()
     }
 
-    fun insert(category: Category) {
+    fun add(category: Category) {
         // Puedes ejecutar esta operación en un hilo de fondo si es necesario
         _categoryDao.insert(category)
     }

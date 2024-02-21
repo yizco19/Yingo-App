@@ -1,5 +1,6 @@
 package com.zy.proyecto_final.pojo
 
+import android.media.Image
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -17,7 +18,7 @@ data class Product(
     var description: String="",
     var categoryid: Long?=null,
     var price: Double = 0.0,
-    var imageUrl: String ="",
+    var imageUrl: Int? = null,
     @PrimaryKey(autoGenerate = true)
     var id: Long ?=null
 )

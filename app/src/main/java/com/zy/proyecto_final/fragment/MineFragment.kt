@@ -36,10 +36,7 @@ class MineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var imagen: ImageView? =view?.findViewById<ImageView>(R.id.image)
-        imagen.setOnClickListener{
-            pickImage.launch(imagen)
-        }
+
 
 
 
@@ -47,7 +44,7 @@ class MineFragment : Fragment() {
     }
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { imagen ->
         // La URI contiene la ubicación de la imagen seleccionada por el usuario
-        imagen.
+
     }
 
 }

@@ -7,7 +7,7 @@ import com.zy.proyecto_final.enum.OrderStatus
 import java.util.Date
 
 @Entity(tableName = "orders")
-data class Order(
+data class rder(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val userId: Int,

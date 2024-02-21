@@ -17,7 +17,6 @@ class CategoryRecyclerViewAdapter(
 ) : RecyclerView.Adapter<CategoryRecyclerViewAdapter.ViewHolder>() {
     var content_click : ((position: Int, item: Category) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         return ViewHolder(
             FragmentItemcategoryBinding.inflate(
                 LayoutInflater.from(parent.context),

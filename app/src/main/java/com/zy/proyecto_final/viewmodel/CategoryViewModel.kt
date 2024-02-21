@@ -17,8 +17,6 @@ class CategoryViewModel : ViewModel() {
     var selectedcategory = Category();
     public val items: LiveData<MutableList<Category>>
         get() = _items
-    public val rutas: LiveData<MutableList<Category>>
-        get() = _items
 
     fun init(context: Context) {
         this._context = context
@@ -26,8 +24,7 @@ class CategoryViewModel : ViewModel() {
         this.itemsrepository = CategoryRepository(context)
         this._items.value = this.itemsrepository.getAll()
         /*var categorytest = Category("Movil", 1)
-        categorytest.name = "test"
-        this.itemsrepository.insert(categorytest)*/
+        this.itemsrepository.add(categorytest)*/
 
     }
 }

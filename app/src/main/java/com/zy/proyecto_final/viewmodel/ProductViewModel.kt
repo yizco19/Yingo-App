@@ -31,6 +31,17 @@ class ProductViewModel : ViewModel() {
         _items = MutableLiveData()
         this.itemsrepository = ProductRepository(c)
         this._items.value = this.itemsrepository.getAll()
+        /*val productList = mutableListOf(
+            Product("Producto 1", "Descripcion del Producto 1", 1,100.0),
+            Product("Producto 2", "Descripcion del Producto 2", 1,200.0),
+        )
+        for (product in productList) {
+            add(product)
+
+        }*/
+    }
+    fun add( item:Product) {
+        itemsrepository.add(item)
     }
     fun delete(item: Product) {
         this.itemsrepository.delete(item)

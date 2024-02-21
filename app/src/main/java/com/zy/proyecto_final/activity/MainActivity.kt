@@ -8,8 +8,9 @@ import com.zy.proyecto_final.R
 import com.zy.proyecto_final.fragment.FavoritesFragment
 import com.zy.proyecto_final.fragment.HomeFragment
 import com.zy.proyecto_final.fragment.MineFragment
-import com.zy.proyecto_final.fragment.OrderFragment
-import com.zy.proyecto_final.fragments.CategoriesFragment
+import com.zy.proyecto_final.fragment.CarFragment
+import com.zy.proyecto_final.fragment.CategoryFragment
+import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
@@ -17,22 +18,24 @@ class MainActivity : AppCompatActivity() {
     lateinit var mBottomNav: BottomNavigationView
     private val categoryviewmodel: CategoryViewModel by viewModels()
     private val productviewmodel: ProductViewModel by viewModels()
+    private val carviewmodel: CarViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.categoryviewmodel.init(this)
         this.productviewmodel.init(this)
+        this.carviewmodel.init(this)
         // Inicializa la barra de navegación
         mBottomNav = findViewById(R.id.bottom_navigation)
 
         mBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.category -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, CategoriesFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, CategoryFragment()).commit()
                     true
                 }
                 R.id.car -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, OrderFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, CarFragment()).commit()
                     true
                 }
                 R.id.home -> {

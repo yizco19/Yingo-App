@@ -17,8 +17,8 @@ class ProductRepository(context: Context) {
         _productDao.delete(item)
     }
 
-    fun insert(item: Product): Long {
-        return _productDao.insert(item)
+    fun add(item: Product): Long {
+        return _productDao.add(item)
     }
 
     fun getAll(): MutableList<Product> {
