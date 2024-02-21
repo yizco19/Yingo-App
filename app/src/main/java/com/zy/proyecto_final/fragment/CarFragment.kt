@@ -14,15 +14,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.pojo.Car
+import com.zy.proyecto_final.pojo.Order
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.recyclerviewadapter.CategoryRecyclerViewAdapter
 import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
+import com.zy.proyecto_final.viewmodel.OrderViewModel
+import com.zy.proyecto_final.viewmodel.ProductViewModel
+import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class CarFragment : Fragment() {
     private val viewmodel: CarViewModel by activityViewModels<CarViewModel>()
-
+    private val userviewmodel: UserViewModel by activityViewModels<UserViewModel>()
+    private val productviewmodel: ProductViewModel by activityViewModels<ProductViewModel>()
+    private val orderviewmodel: OrderViewModel by activityViewModels<OrderViewModel>()
     var plus_click: ((Int, Car) -> Unit)? = null
     var minus_click: ((Int, Car) -> Unit)? = null
     private lateinit var txt_total :TextView
@@ -41,15 +47,14 @@ class CarFragment : Fragment() {
         view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter =
             this.viewmodel.items.value?.let {
                 CarRecyclerViewAdapter(
-                    it.toMutableList()
+                    it.toMutableList(),productviewmodel
                 )
             }
-        loadData()
         (view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter as CarRecyclerViewAdapter).plus_click =
             { position: Int, item: Car ->
                 run {
                     item.product_count = item.product_count + 1
-                    this.viewmodel.selectedcar = item
+                    this.viewmodel.update(item)
                     loadData()
                     //se avisa al principal
                     this.plus_click?.let { it -> it(position, item) }
@@ -60,7 +65,7 @@ class CarFragment : Fragment() {
             { position: Int, item: Car ->
                 run {
                     item.product_count = item.product_count - 1
-                    this.viewmodel.selectedcar = item
+                    this.viewmodel.update(item)
                     //se avisa al principal
                     loadData()
                     this.minus_click?.let { it -> it(position, item) }
@@ -70,14 +75,19 @@ class CarFragment : Fragment() {
         txt_total=view.findViewById<TextView>(R.id.total)
         var btn_total=view.findViewById<TextView>(R.id.btn_total)
         btn_total.setOnClickListener {
-
+            if( viewmodel.items.value!!.isNotEmpty() && userviewmodel.userlogged != null){
+                orderviewmodel.setAll(userviewmodel.userlogged!!,viewmodel.items.value!!)
+                //limpia el carrito
+                viewmodel.items.value!!.clear()
+            }
         }
         return view
     }
     private fun setTotal(List: List<Car>) {
         var total = 0.0
         for (i in List) {
-            total +=i.product_count * i.product_price
+            var product_price = productviewmodel.getProductbyId(i.product_id!!)!!.price
+            total +=i.product_count * product_price
         }
         txt_total.text = total.toString()
     }

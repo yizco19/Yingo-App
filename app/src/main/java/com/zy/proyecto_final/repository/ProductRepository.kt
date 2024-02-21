@@ -28,4 +28,9 @@ class ProductRepository(context: Context) {
     fun update(item: Product) {
         _productDao.update(item)
     }
+
+    fun getProductbyId(id: Long): Product? {
+        return _productDao.getProductById(id)
+
+    }
 }

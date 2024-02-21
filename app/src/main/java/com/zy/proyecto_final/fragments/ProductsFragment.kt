@@ -36,6 +36,7 @@ class ProductsFragment : Fragment() {
         // Configura el LayoutManager
         recyclerView?.layoutManager = GridLayoutManager(context, 2)
         // Verifica si items es nulo antes de asignar el adaptador
+        // Asigna el adaptador
         this.viewmodel.items.value?.let {
             recyclerView?.adapter = ProductRecyclerViewAdapter(it.toMutableList())
         }
@@ -68,6 +69,12 @@ class ProductsFragment : Fragment() {
 
 
     companion object {
-        fun newInstance() = ProductsFragment()
+        private const val CATEGORY_ID_ARG = "CATEGORY_ID_ARG"
+
+        fun newInstance(categoryId: Long?) = ProductsFragment().apply {
+            arguments = Bundle().apply {
+                putLong(CATEGORY_ID_ARG, categoryId ?: -1)
+            }
+        }
     }
 }

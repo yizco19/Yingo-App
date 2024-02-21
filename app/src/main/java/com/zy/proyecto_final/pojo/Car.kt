@@ -26,8 +26,5 @@ data class Car(
     var id: Long? = null,
     var user_id: Long? = null,
     var product_id: Long? = null,
-    var product_name: String = "",
-    var product_price: Double = 0.0,
     var product_count: Int = 0,
-    var product_image: Int? = 0
 )

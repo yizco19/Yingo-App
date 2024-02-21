@@ -37,7 +37,7 @@ class CarViewModel: ViewModel() {
             this._items.value?.add(this.selectedcar)
             itemsrepository.add(this.selectedcar)
             var t= this.selectedcar
-            this.update()
+            this.updateAll()
 
         }
         itemsrepository.add(this.selectedcar)
@@ -50,8 +50,12 @@ class CarViewModel: ViewModel() {
     fun delete(item: Car) {
 this.itemsrepository.delete(item)
     }
+    fun update(item: Car) {
+        this.selectedcar = item
+        this.itemsrepository.update(selectedcar)
+    }
 
-    fun update() {
+    fun updateAll() {
         val values =this._items.value
         this._items.value = this.itemsrepository.getAll()
     }

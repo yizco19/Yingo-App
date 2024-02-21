@@ -21,10 +21,12 @@ class CategoryViewModel : ViewModel() {
     fun init(context: Context) {
         this._context = context
         _items = MutableLiveData()
+
         this.itemsrepository = CategoryRepository(context)
+        var categorytest = Category("Monitor", 2)
+this.itemsrepository.add(categorytest)
+
         this._items.value = this.itemsrepository.getAll()
-        /*var categorytest = Category("Movil", 1)
-        this.itemsrepository.add(categorytest)*/
 
     }
 }

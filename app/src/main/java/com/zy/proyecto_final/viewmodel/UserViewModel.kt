@@ -11,7 +11,7 @@ class UserViewModel : ViewModel() {
     private lateinit var _context: Context
     lateinit var itemsrepository: UserRepository
     private lateinit var _items: MutableLiveData<MutableList<User>>;
-    var userlogged= User();
+    var userlogged= User()
     public val items: LiveData<MutableList<User>>
         get() = _items
 
@@ -42,11 +42,15 @@ class UserViewModel : ViewModel() {
     }
 
     fun login(usernameoremail: String, password: String): Boolean {
-        if(this.itemsrepository.login(usernameoremail,password)!=null){
+        val user = this.itemsrepository.getUser(usernameoremail)
+        if (user != null && this.itemsrepository.login(usernameoremail, password) != null) {
+            this.userlogged = user
+            this._items.value = this.itemsrepository.getAll()
             return true
         }
-        return false
 
+        return false
     }
+
 
 }

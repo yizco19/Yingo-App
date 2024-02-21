@@ -38,8 +38,8 @@ class ProductDetailsFragment : Fragment() {
         }
         binding.comprar.setOnClickListener {
             val product : Product = viewmodel.selectedproduct
-            val userid = userviewmodel.userlogged.id
-            val car = Car( null, userid, product.id,product.name,product.price,1,product.imageUrl)
+            val user = userviewmodel.userlogged
+            val car = Car( null, user.id, product.id,1)
             carviewmodel.selectedcar = car
             carviewmodel.add()
 

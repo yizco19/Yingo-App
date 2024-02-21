@@ -14,7 +14,6 @@ import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentCategoryBinding
 import com.zy.proyecto_final.fragments.ProductsFragment
 import com.zy.proyecto_final.pojo.Category
-import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.recyclerviewadapter.CategoryRecyclerViewAdapter
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 
@@ -54,7 +53,7 @@ class CategoryFragment : Fragment() {
                 var  fm: FragmentManager = parentFragmentManager
                 var f=fm.fragments
                 fm.commit {
-                    replace(R.id.fragmentContainerView, ProductsFragment.newInstance())
+                    replace(R.id.fragmentContainerView, ProductsFragment.newInstance(item.id))
                 }
 
             }

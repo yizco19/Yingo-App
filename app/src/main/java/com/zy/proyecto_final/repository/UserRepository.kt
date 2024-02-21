@@ -26,7 +26,7 @@ class UserRepository (var context: Context){
 
     }
 
-    fun getUser(usernameoremail: String): Any {
+    fun getUser(usernameoremail: String): User? {
         return _userDAO.getUser(usernameoremail)
 
     }
