@@ -37,6 +37,7 @@
 
                 <LinearLayout
                     android:layout_width="350dp"
+                    android:paddingLeft="10dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -91,6 +92,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:paddingLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -141,10 +143,11 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
-                android:background="@color/white" />
+                android:background="@color/white"/>
         </LinearLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat

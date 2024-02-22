@@ -29,6 +29,15 @@ class MineFragment : Fragment() {
                 val time: Time = timeViewModel.getTime()
             view?.findViewById<TextView>(R.id.date) !!.text = time.date
             view?.findViewById<TextView>(R.id.time) !!.text = time.time
+
+        view?.findViewById<TextView>(R.id.logout) !!.setOnClickListener {
+            viewModel.viewModelScope.launch {
+                viewModel.logout()
+                //cambia a welcome activity
+                requireActivity().finish()
+
+            }
+        }
         return view
     }
 }

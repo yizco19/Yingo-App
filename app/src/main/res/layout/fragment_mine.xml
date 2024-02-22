@@ -122,7 +122,7 @@
                 android:layout_centerVertical="true"
                 android:text="Historial de pedidos"/>
             <ImageView
-                android:id="@+id/order"
+                android:id="@+id/history"
                 android:layout_marginRight="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -155,9 +155,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:layout_centerVertical="true"
-                android:text="Direccion de envio"/>
+                android:text="Informacion usuario"/>
             <ImageView
-                android:id="@+id/order"
+                android:id="@+id/user_info"
                 android:layout_marginRight="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -188,7 +188,7 @@
                 android:layout_centerVertical="true"
                 android:text="Política de privacidad"/>
             <ImageView
-                android:id="@+id/order"
+                android:id="@+id/policy"
                 android:layout_marginRight="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -220,7 +220,7 @@
                 android:layout_centerVertical="true"
                 android:text="Acerca de"/>
             <ImageView
-                android:id="@+id/order"
+                android:id="@+id/about"
                 android:layout_marginRight="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -235,6 +235,7 @@
         </RelativeLayout>
         
         <TextView
+            android:id="@+id/logout"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"

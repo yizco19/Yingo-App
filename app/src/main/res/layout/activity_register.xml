@@ -10,26 +10,19 @@
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/my_app_color"
+        android:layout_height="40dp"
+        app:navigationIcon="@drawable/reply"
+        android:background="#b0f7c3"
         app:title="Register"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:menu="@menu/menu"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="40dp"
-        />
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/login_et_bg"
+        android:layout_height="300dp"
+        android:src="@drawable/login_bg"
         android:scaleType="centerCrop"
         />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,13 +30,13 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:layout_margin="20dp"
-        android:textColor="#333333"
+        android:textColor="@color/white"
         android:text="Register" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="26dp"
+        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat

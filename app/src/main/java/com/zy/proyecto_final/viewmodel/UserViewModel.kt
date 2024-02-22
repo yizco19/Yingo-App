@@ -55,5 +55,9 @@ class UserViewModel : ViewModel() {
         return false
     }
 
+    fun logout() {
+        this.userlogged = User()
+    }
+
 
 }

@@ -77,9 +77,19 @@ class CarFragment : Fragment() {
         btn_total.setOnClickListener {
             if( viewmodel.items.value!!.isNotEmpty() && userviewmodel.userlogged != null){
                 orderviewmodel.setAll(userviewmodel.userlogged!!,viewmodel.items.value!!)
+                //cambia a order fragment
+                parentFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(
+                        R.id.fragmentContainerView,
+                        OrderFragment::class.java,
+                        null,
+                        "OrderFragment"
+                    )
+                }
                 //limpia el carrito y actualiza el total y avisa al recyclerView
-                viewmodel.items.value!!.clear()
-                viewmodel.deleteAll()
+                //viewmodel.items.value!!.clear()
+                //viewmodel.deleteAll()
                 loadData()
                 //volve a homeFramegent
                 parentFragmentManager.popBackStack()

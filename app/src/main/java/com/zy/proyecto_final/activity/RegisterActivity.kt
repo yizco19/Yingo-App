@@ -26,8 +26,9 @@ class RegisterActivity : AppCompatActivity() {
 // Encuentra el Toolbar por su ID
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
-        // Configura el Toolbar como la Action Bar
-        setSupportActionBar(toolbar)
+        toolbar.setOnClickListener{
+            finish()
+        }
 
 
         val registerButton = findViewById<Button>(R.id.register)
@@ -65,9 +66,5 @@ class RegisterActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-    private fun setSupportActionBar(findViewById: Toolbar?) {
-
-
     }
 }

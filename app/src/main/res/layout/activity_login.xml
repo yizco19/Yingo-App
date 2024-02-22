@@ -9,14 +9,14 @@
     tools:context=".activity.LoginActivity">
     <View
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="100dp"
+        android:background="#b0f7c3"
+        android:layout_height="10dp"
         />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/login_et_bg"
+        android:layout_height="350dp"
+        android:src="@drawable/login_bg"
         android:scaleType="centerCrop"
         />
 
