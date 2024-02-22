@@ -74,6 +74,7 @@ class CarFragment : Fragment() {
             }
         txt_total=view.findViewById<TextView>(R.id.total)
         var btn_total=view.findViewById<TextView>(R.id.btn_total)
+        setTotal(viewmodel.items.value!!)
         btn_total.setOnClickListener {
             if( viewmodel.items.value!!.isNotEmpty() && userviewmodel.userlogged != null){
                 orderviewmodel.setAll(userviewmodel.userlogged!!,viewmodel.items.value!!)
