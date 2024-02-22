@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.User
+import com.zy.proyecto_final.relation.CategoryWithProducts
 
 @Dao
 interface CategoryDao {
@@ -18,4 +19,7 @@ interface CategoryDao {
     fun update(item:  Category)
     @Query("SELECT * FROM category")
     fun getAll(): List<Category>
+
+    @Query("SELECT * FROM category WHERE id = :id")
+    fun getCategoryWithProducts(id: Long): CategoryWithProducts
 }

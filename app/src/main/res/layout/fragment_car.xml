@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.CarFragment"
+    tools:context=".fragment.CarFragment">
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-
 <androidx.appcompat.widget.Toolbar
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,15 +23,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="vertical">
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/recyclerView"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
     <LinearLayout
+        android:background="#f5f5f5"
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,6 +78,6 @@
 
 </RelativeLayout>
 
-
-
 </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

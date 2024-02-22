@@ -1,9 +1,15 @@
 package com.zy.proyecto_final.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.fragment.FavoritesFragment
 import com.zy.proyecto_final.fragment.HomeFragment
@@ -18,11 +24,13 @@ import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var mBottomNav: BottomNavigationView
+    lateinit var mNavView: NavigationView
     private val categoryviewmodel: CategoryViewModel by viewModels()
     private val productviewmodel: ProductViewModel by viewModels()
     private val carviewmodel: CarViewModel by viewModels()
     private val orderviewmodel: OrderViewModel by viewModels()
     private val userviewmodel: UserViewModel by viewModels()
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         this.carviewmodel.init(this)
         this.orderviewmodel.init(this)
         this.userviewmodel.init(this)
-
         //asigna userlogged
         val user_id=intent.getLongExtra("userid",0)
         this.userviewmodel.userlogged= this.userviewmodel.getUserById(user_id)!!
@@ -40,7 +47,8 @@ class MainActivity : AppCompatActivity() {
         mBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.category -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, CategoryFragment()).commit()
+                    findViewById<DrawerLayout>(R.id.drawer_layout).openDrawer(GravityCompat.START)
+                    //llamada a CategoryFragment para que actualiza los datos de la barra de navegación
                     true
                 }
                 R.id.car -> {

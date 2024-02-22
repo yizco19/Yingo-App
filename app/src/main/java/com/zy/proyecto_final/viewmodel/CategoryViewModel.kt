@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zy.proyecto_final.pojo.Category
+import com.zy.proyecto_final.relation.CategoryWithProducts
 import com.zy.proyecto_final.repository.CategoryRepository
 
 class CategoryViewModel : ViewModel() {
@@ -27,6 +28,11 @@ class CategoryViewModel : ViewModel() {
 this.itemsrepository.add(categorytest)*/
 
         this._items.value = this.itemsrepository.getAll()
+
+    }
+
+    fun getCategoryWithProducts(): CategoryWithProducts? {
+        return this.selectedcategory.id?.let { this.itemsrepository.getCategoryWithProducts(it) }
 
     }
 }

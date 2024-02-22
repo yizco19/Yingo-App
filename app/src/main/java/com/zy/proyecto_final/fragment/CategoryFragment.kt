@@ -16,6 +16,7 @@ import com.zy.proyecto_final.fragments.ProductsFragment
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.recyclerviewadapter.CategoryRecyclerViewAdapter
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
+import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 /**
  * A fragment representing a list of Items.
@@ -23,6 +24,7 @@ import com.zy.proyecto_final.viewmodel.CategoryViewModel
 class CategoryFragment : Fragment() {
     private lateinit var binding : FragmentCategoryBinding
     private val viewmodel : CategoryViewModel by activityViewModels<CategoryViewModel>()
+    private val productviewmodel : ProductViewModel by activityViewModels<ProductViewModel>()
     private var view: View? = null;
     val content_click: ((Int, Category) -> Unit)? = null
     private var columnCount = 1
@@ -48,6 +50,7 @@ class CategoryFragment : Fragment() {
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as CategoryRecyclerViewAdapter).content_click = { position:Int, item: Category ->
             run {
                 this.viewmodel.selectedcategory=item
+                this.productviewmodel.category_selected= this.viewmodel.getCategoryWithProducts()!!
                 //se avisa al principal
                 this.content_click?.let { it -> it(position, item) }
                 var  fm: FragmentManager = parentFragmentManager

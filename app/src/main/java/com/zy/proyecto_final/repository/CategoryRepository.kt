@@ -4,6 +4,7 @@ import android.content.Context
 import com.zy.proyecto_final.AppDatabase
 import com.zy.proyecto_final.dao.CategoryDao
 import com.zy.proyecto_final.pojo.Category
+import com.zy.proyecto_final.relation.CategoryWithProducts
 
 class CategoryRepository(context: Context) {
 
@@ -31,5 +32,8 @@ class CategoryRepository(context: Context) {
     fun delete(category: Category) {
         // Puedes ejecutar esta operación en un hilo de fondo si es necesario
         _categoryDao.delete(category)
+    }
+    fun getCategoryWithProducts(id: Long): CategoryWithProducts {
+        return _categoryDao.getCategoryWithProducts(id)
     }
 }
