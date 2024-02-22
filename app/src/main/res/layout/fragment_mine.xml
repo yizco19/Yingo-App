@@ -20,25 +20,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+
         android:orientation="vertical"
         >
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:background="@color/my_app_color"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="140dp"
             android:orientation="horizontal"
-            android:gravity=""
+            android:gravity="center_vertical"
             android:layout_marginBottom="20dp">
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/account"
-                android:layout_alignParentRight="true"/>
+             <androidx.cardview.widget.CardView
+                 android:layout_width="80dp"
+                 app:cardCornerRadius="40dp"
+                 android:layout_marginLeft="30dp"
+                 android:layout_height="80dp">
+                 <ImageView
+                     android:id="@+id/image"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:src="@drawable/account"
+                     android:layout_alignParentRight="true"/>
+
+             </androidx.cardview.widget.CardView>
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="User"
                 android:textSize="40dp"/>
 
@@ -62,112 +71,179 @@
                 android:text="asd"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
-        <LinearLayout
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+        <View
             android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f5f5f5"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:gravity="center" >
-            <LinearLayout
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:text="Cambiar contraseña"/>
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_marginRight="10dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/edit"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#f5f5f5"/>
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#f5f5f5"/>
+            <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:text="Historial de pedidos"/>
+            <ImageView
+                android:id="@+id/order"
                 android:layout_marginRight="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/edit"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#f5f5f5"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:background="#f5f5f5"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#f5f5f5"/>
+            <TextView
                 android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/location"
-                    android:layout_gravity="center"
-                    android:tooltipText="Address"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address"/>
-            </LinearLayout>
-            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:text="Direccion de envio"/>
+            <ImageView
+                android:id="@+id/order"
                 android:layout_marginRight="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/edit"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#f5f5f5"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#f5f5f5"/>
+            <TextView
                 android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/location"
-                    android:layout_gravity="center"
-                    android:tooltipText="Address"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address"/>
-            </LinearLayout>
-            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:text="Política de privacidad"/>
+            <ImageView
+                android:id="@+id/order"
                 android:layout_marginRight="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/edit"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#f5f5f5"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#f5f5f5"/>
+            <TextView
                 android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/location"
-                    android:layout_gravity="center"
-                    android:tooltipText="Address"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address"/>
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/btn_change_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:text="Acerca de"/>
+            <ImageView
+                android:id="@+id/order"
+                android:layout_marginRight="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/edit"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#f5f5f5"/>
+        </RelativeLayout>
+        
+        <TextView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/my_app_color"
-            android:text="Cambia Constraseña"
-            android:textColorLink="#CDDC39" />
-
-        <Button
-            android:id="@+id/btn_change_address"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/my_app_color"
-            android:text="Dirección"
-            android:textColorLink="#CDDC39" />
-        <Button
-            android:id="@+id/btn_change_billing_address"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/my_app_color"
-            android:text="Dirección de facturación"
-            android:textColorLink="#CDDC39" />
-
-        <Button
-            android:id="@+id/btn_change_payment"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/my_app_color"
-            android:text="Forma de pago"
-            android:textColorLink="#CDDC39" />
-
-
-        <Button
-            android:id="@+id/btn_orders"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/my_app_color"
-            android:text="Pedidos"
-            android:textColorLink="#CDDC39" />
-
-
-
+            android:layout_height="50dp"
+            android:textColor="#e33030"
+            android:textStyle="bold"
+            android:text="Salir de la cuenta"
+            android:textSize="20sp"
+            android:background="#f5f5f5"
+            android:gravity="center"/>
     </LinearLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
