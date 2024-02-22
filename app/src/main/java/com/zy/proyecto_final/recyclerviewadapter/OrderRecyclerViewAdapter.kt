@@ -1,5 +1,6 @@
 package com.zy.proyecto_final.recyclerviewadapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
