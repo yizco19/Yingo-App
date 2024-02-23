@@ -38,4 +38,9 @@ class UserRepository (var context: Context){
     fun getUserById(id:Long):User?{
         return _userDAO.getUserById(id)
     }
+
+    fun updateUser(mD5: String, userId: Long) {
+        _userDAO.updateUser(mD5, userId)
+    }
+
 }

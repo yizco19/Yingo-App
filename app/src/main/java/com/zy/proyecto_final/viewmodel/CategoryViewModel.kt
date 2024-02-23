@@ -25,7 +25,11 @@ class CategoryViewModel : ViewModel() {
 
         this.itemsrepository = CategoryRepository(context)
         /*var categorytest = Category("Movil", 1)
-this.itemsrepository.add(categorytest)*/
+this.itemsrepository.add(categorytest)
+
+var categorytestu = Category("Monitor", 2)
+this.itemsrepository.add(categorytestu)*/
+
 
         this._items.value = this.itemsrepository.getAll()
 

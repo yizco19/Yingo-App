@@ -28,5 +28,7 @@ interface UserDao {
 
     @Query("SELECT * FROM user WHERE id = :id")
     fun getUserById(id:Long):User
+    @Query("UPDATE user SET password = :mD5 WHERE id = :userId")
+    fun updateUser(mD5: String, userId: Long)
 
 }

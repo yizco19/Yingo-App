@@ -27,7 +27,7 @@ class UserViewModel : ViewModel() {
             this._items.value=this.itemsrepository.getAll()
             this.itemsrepository.add(user)
             var t=this.userlogged
-            this.update()
+            this.update(user)
             return true
         }
         this.itemsrepository.add(this.userlogged)
@@ -39,7 +39,7 @@ class UserViewModel : ViewModel() {
         return this.itemsrepository.getUserById(id)
     }
 
-    private fun update() {
+    private fun update(user: User) {
         var values = this._items.value
         this._items.value = values
     }
@@ -57,6 +57,10 @@ class UserViewModel : ViewModel() {
 
     fun logout() {
         this.userlogged = User()
+    }
+
+    fun updateUser(mD5: String, userId: Long) {
+        this.itemsrepository.updateUser(mD5, userId)
     }
 
 

@@ -75,6 +75,6 @@
     <!--searchView-->
     <color name="search_layover_bg">#50000000</color>
     <color name="theme_primary">#2196F3</color>
-    <color name="my_app_color">#d9a107</color>
+    <color name="my_app_color">#e3b900</color>
     <color name="my_back_product">#bfd7e3</color>
 </resources>

@@ -171,7 +171,7 @@
                 android:textSize="18sp"/>
             <TextView
                 android:id="@+id/total"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10000,0"
@@ -185,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Pagar"
-                android:background="@color/red"
+                android:backgroundTint="@color/my_app_color"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />

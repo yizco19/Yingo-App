@@ -4,21 +4,22 @@
 
 
 
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home"
+        android:title="Home"
+        app:showAsAction="always"/>
         <item
             android:id="@+id/category"
             android:icon="@drawable/category"
-            android:title="Category" />
+            android:title="Category"
+            app:showAsAction="always"/>
 
     <item
         android:id="@+id/car"
         android:icon="@drawable/carrito"
-        android:title="Cart" />
-
-        <item
-            android:id="@+id/home"
-            android:icon="@drawable/home"
-            android:title="Home"
-            app:showAsAction="always"/>
+        android:title="Cart"
+    app:showAsAction="always"/>
 
         <item
             android:id="@+id/favorites"

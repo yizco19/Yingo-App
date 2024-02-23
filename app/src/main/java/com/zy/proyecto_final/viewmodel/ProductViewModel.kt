@@ -33,6 +33,9 @@ class ProductViewModel : ViewModel() {
         /*val productList = mutableListOf(
             Product("Producto 1", "Descripcion del Producto 1", 1,150.0),
             Product("Producto 2", "Descripcion del Producto 2", 1,250.0),
+                        Product("Producto 2", "Descripcion del Producto 2", 2,290.0),
+                                    Product("Producto 2", "Descripcion del Producto 2", 2,350.0),
+
         )
         for (product in productList) {
             add(product)

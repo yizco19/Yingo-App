@@ -1,5 +1,6 @@
 package com.zy.proyecto_final.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -7,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewModelScope
 import com.zy.proyecto_final.R
+import com.zy.proyecto_final.activity.LoginActivity
+import com.zy.proyecto_final.activity.UpdatePwdActivity
 import com.zy.proyecto_final.pojo.Time
 import com.zy.proyecto_final.viewmodel.TimeViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
@@ -45,6 +49,11 @@ class MineFragment : Fragment() {
 
             }
         }
+        view?.findViewById<RelativeLayout>(R.id.updatePwd) !!.setOnClickListener {
+                var intent= Intent(context, UpdatePwdActivity::class.java)
+            intent.putExtra("user_id",viewModel.userlogged.id)
+                startActivityForResult(intent,1000)
+        }
         return view
     }
 
@@ -56,6 +65,16 @@ class MineFragment : Fragment() {
 
             // Programar la ejecución del Runnable nuevamente después del intervalo de tiempo
             handler.postDelayed(this, delay)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==1000){
+            activity?.finish()
+            var intent= Intent(context, LoginActivity::class.java)
+            //pasa userlogged
+            startActivity(intent)
         }
     }
 }

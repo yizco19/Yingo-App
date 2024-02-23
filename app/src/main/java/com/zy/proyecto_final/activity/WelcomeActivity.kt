@@ -28,7 +28,7 @@ class WelcomeActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                skipButton.text = "Saltar espera"
+                skipButton.text = "Skip"
             }
         }.start()
 

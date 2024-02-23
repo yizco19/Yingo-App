@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.UpdatePwdActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/back_arrow"
+        android:background="@color/my_app_color"
+        app:titleTextColor="@color/white"
+        app:title="Cambiar contraseña" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_marginLeft="26dp"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="26dp"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/login_et_bg"
+            android:orientation="horizontal"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_login_pw" />
+            <EditText
+                android:id="@+id/newPassword"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Introduce tu nueva contraseña"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:textSize="14sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/login_et_bg"
+            android:orientation="horizontal"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_login_pw" />
+            <EditText
+                android:id="@+id/newPasswordConf"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Introduce otra vez tu nueva contraseña"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:textSize="14sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/login_et_bg"
+            android:orientation="horizontal"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_login_pw" />
+            <EditText
+                android:id="@+id/oldPassword"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Introduce tu contraseña actual"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:textSize="14sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/updatePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/my_app_color"
+
+            android:text="Cambiar contraseña" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

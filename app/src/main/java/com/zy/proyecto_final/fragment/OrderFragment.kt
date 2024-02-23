@@ -16,6 +16,7 @@ import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.recyclerviewadapter.OrderRecyclerViewAdapter
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
+import java.math.BigDecimal
 
 class OrderFragment : Fragment() {
     private val viewmodel: OrderViewModel by activityViewModels<OrderViewModel>()
@@ -39,11 +40,25 @@ class OrderFragment : Fragment() {
                 )
             }
 
-        loadData()
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false)
+        return view
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadData() // Move the loadData() call to onViewCreated
+        var precio = BigDecimal.ZERO
 
+        viewmodel.items.value?.let { items ->
+            for (i in items) {
+                i.product_id?.let { productId ->
+                    val product = productviewmodel.getProductbyId(productId)
+                    val productPrice = product?.price?.toBigDecimal() ?: BigDecimal.ZERO
+                    precio += productPrice * (i.product_count?.toBigDecimal() ?: BigDecimal.ZERO)
+                }
+            }
+        }
+        view?.findViewById<TextView>(R.id.total)?.text = precio.toString()
+    }
     private fun loadData() {
         viewmodel.items.value?.let {
             (view?.findViewById<RecyclerView>(R.id.recyclerView_order)!!.adapter as OrderRecyclerViewAdapter).setValues(
