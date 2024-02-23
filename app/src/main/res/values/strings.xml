@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">login_demo</string>
+    <string name="app_name">yingo</string>
     <string name="account">email o usuario</string>
     <string name="password">Contraseña</string>
     <string name="check_password">Recordar contraseña</string>
