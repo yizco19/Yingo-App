@@ -2,11 +2,13 @@ package com.zy.proyecto_final.activity
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.coroutineScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.zy.proyecto_final.R
@@ -21,6 +23,7 @@ import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     lateinit var mBottomNav: BottomNavigationView
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         this.orderviewmodel.init(this)
         this.userviewmodel.init(this)
         this.favoriteviewmodel.init(this)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //asigna userlogged
         settings = getSharedPreferences("user", MODE_PRIVATE)
         val user_id=intent.getLongExtra("userid",0)
@@ -80,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData(issettings: Boolean) {
-        if (!issettings) {
+        if (issettings) {
             // Crea una lista de categorías
             val additionalCategories = List(20) { index ->
                 com.zy.proyecto_final.pojo.Category(
@@ -109,7 +113,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 )
             }
-            categoryviewmodel.insertAll(additionalCategories)
+            lifecycle.coroutineScope.launch {
+                categoryviewmodel.insertAll(additionalCategories)
+            }
 
 
             val productData = listOf(
@@ -149,10 +155,13 @@ class MainActivity : AppCompatActivity() {
             }
 
 // Ahora, la lista productList contiene los productos que se pueden agregar a tu base de datos.
-            productviewmodel.insertAll(productData)
+
+            lifecycle.coroutineScope.launch {
+                productviewmodel.insertAll(productData)
+            }
         }
         with(settings.edit()) {
-            putBoolean("issettings", true)
+            putBoolean("issettings", false)
             apply()
             }
         }

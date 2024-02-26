@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.coroutineScope
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.relation.CategoryWithProducts
 import com.zy.proyecto_final.repository.ProductRepository
+import kotlinx.coroutines.launch
 
 class ProductViewModel : ViewModel() {
     private lateinit var _context: Context
@@ -47,8 +49,9 @@ class ProductViewModel : ViewModel() {
     }
 
     fun insertAll(productList: List<Product>) {
-        this.itemsrepository.insertAll(productList)
-        this._items.value = this.itemsrepository.getAll()
+            this.itemsrepository.insertAll(productList)
+            this._items.value = this.itemsrepository.getAll()
+
     }
 
 }

@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.zy.proyecto_final.databinding.FragmentItemfavoriteBinding
 import com.zy.proyecto_final.pojo.Favorite
-import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class FavoriteRecyclerViewAdapter(
@@ -44,6 +43,7 @@ class FavoriteRecyclerViewAdapter(
         }
         holder.deleteView.setOnClickListener {
             delete_click?.invoke(position, item!!)
+            notifyDataSetChanged()
         }
     }
 

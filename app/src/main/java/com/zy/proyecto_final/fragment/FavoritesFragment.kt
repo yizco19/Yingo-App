@@ -72,7 +72,8 @@ class FavoritesFragment : Fragment() {
         }
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as FavoriteRecyclerViewAdapter).delete_click = { position:Int, item: Favorite ->
             run {
-        viewmodel.delete(item)
+                viewmodel.selectedfavorite=item
+        viewmodel.delete()
                 this.delete_click?.let { it(position,item) }
                 Toast.makeText(context, "Eliminado de favoritos", Toast.LENGTH_SHORT).show()
                 //notify data change
