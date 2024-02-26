@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zy.proyecto_final.R
@@ -23,6 +25,7 @@ import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
+import kotlinx.coroutines.launch
 
 class CarFragment : Fragment() {
     private val viewmodel: CarViewModel by activityViewModels<CarViewModel>()
@@ -76,24 +79,22 @@ class CarFragment : Fragment() {
         var btn_total=view.findViewById<TextView>(R.id.btn_total)
         setTotal(viewmodel.items.value!!)
         btn_total.setOnClickListener {
-            if( viewmodel.items.value!!.isNotEmpty() && userviewmodel.userlogged != null){
-                orderviewmodel.setAll(userviewmodel.userlogged!!,viewmodel.items.value!!)
-                //cambia a order fragment
-                parentFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace(
-                        R.id.fragmentContainerView,
-                        OrderFragment::class.java,
-                        null,
-                        "OrderFragment"
-                    )
+            lifecycleScope.launch {
+                if (viewmodel.items.value!!.isNotEmpty() && userviewmodel.userlogged != null) {
+                    orderviewmodel.setAll(userviewmodel.userlogged!!, viewmodel.items.value!!)
+                    parentFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        setReorderingAllowed(true)
+                        replace(
+                            R.id.fragmentContainerView,
+                            OrderFragment::class.java,
+                            null,
+                            "OrderFragment"
+                        )
+                    }
+                    loadData()
+                    parentFragmentManager.popBackStack()
                 }
-                //limpia el carrito y actualiza el total y avisa al recyclerView
-                //viewmodel.items.value!!.clear()
-                //viewmodel.deleteAll()
-                loadData()
-                //volve a homeFramegent
-                parentFragmentManager.popBackStack()
             }
         }
         return view
@@ -108,12 +109,14 @@ class CarFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewmodel.items.value?.let {
-            (view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter as CarRecyclerViewAdapter).setValues(
-                it.toMutableList()
-            )
+        lifecycle.coroutineScope.launch {
+            viewmodel.items.value?.let {
+                (view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter as CarRecyclerViewAdapter).setValues(
+                    it.toMutableList()
+                )
+            }
+            setTotal(viewmodel.items.value!!)
         }
-        setTotal(viewmodel.items.value!!)
     }
 
 }

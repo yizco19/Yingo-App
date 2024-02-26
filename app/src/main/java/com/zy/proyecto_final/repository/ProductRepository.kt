@@ -33,4 +33,8 @@ class ProductRepository(context: Context) {
         return _productDao.getProductById(id)
 
     }
+
+    fun insertAll(productList: List<Product>) {
+        _productDao.insertAll(productList)
+    }
 }

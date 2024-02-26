@@ -57,10 +57,10 @@
         android:layout_height="wrap_content"
         android:text="1,2"
         android:textColor="@color/my_app_color"
-        android:textSize="34sp"/>
+        android:textSize="18sp"/>
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/euro" />
 
     <Button
@@ -70,8 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:textColor="@color/white"
-        android:text="Realizar pedido"
-        android:textSize="20sp"
+        android:text="Comprar"
+        android:textSize="16sp"
         android:textStyle="bold"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>

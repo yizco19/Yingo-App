@@ -1,6 +1,8 @@
 package com.zy.proyecto_final.fragment
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -29,6 +31,8 @@ class MineFragment : Fragment() {
     var date : TextView? = null
     var time : TextView? = null
     val delay: Long = 1000 // 1000 milisegundos = 1 segundo
+
+    private val PICK_IMAGE_REQUEST = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +58,20 @@ class MineFragment : Fragment() {
             intent.putExtra("user_id",viewModel.userlogged.id)
                 startActivityForResult(intent,1000)
         }
+        view?.findViewById<RelativeLayout>(R.id.user_info) !!.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainerView, UserDetailsFragment())?.commit()
+        }
+
+        val profileImage = view.findViewById<ImageView>(R.id.image)
+
+        // Agrega un OnClickListener al ImageView
+        profileImage.setOnClickListener {
+            // Abre el selector de imágenes
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
         return view
     }
 
@@ -75,6 +93,13 @@ class MineFragment : Fragment() {
             var intent= Intent(context, LoginActivity::class.java)
             //pasa userlogged
             startActivity(intent)
+        }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            // Obtiene la Uri de la imagen seleccionada
+            val selectedImageUri: Uri? = data?.data
+
+            // Asigna la Uri al ImageView
+            view?.findViewById<ImageView>(R.id.image)?.setImageURI(selectedImageUri)
         }
     }
 }

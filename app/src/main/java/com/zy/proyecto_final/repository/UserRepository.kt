@@ -43,4 +43,9 @@ class UserRepository (var context: Context){
         _userDAO.updateUser(mD5, userId)
     }
 
+    fun update(user: User) {
+        _userDAO.update(user)
+
+    }
+
 }

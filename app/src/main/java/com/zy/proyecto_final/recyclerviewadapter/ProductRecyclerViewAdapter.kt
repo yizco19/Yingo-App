@@ -3,6 +3,7 @@ package com.zy.proyecto_final.recyclerviewadapter
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.zy.proyecto_final.databinding.FragmentItemproductBinding
@@ -32,10 +33,11 @@ class ProductRecyclerViewAdapter(
         val item = values[position]
         holder.contentView.text = item.name
         holder.priceView.text = item.price.toString()
-        holder.contentView.setOnClickListener {
+        holder.detailView.setImageResource(item.imageUrl!!)
+        holder.addView.setOnClickListener {
             this.add_click?.let { it -> it(position, item) }
         }
-        holder.priceView.setOnClickListener {
+        holder.favView.setOnClickListener {
             this.fav_click?.let { it -> it(position, item) }
         }
         holder.detailView.setOnClickListener {
@@ -51,6 +53,11 @@ class ProductRecyclerViewAdapter(
         val contentView: TextView = binding.content
         val priceView: TextView = binding.price
         val detailView: ImageView = binding.detail
+        val favView: Button = binding.favClick
+        val addView: Button = binding.addClick
+
+
+
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

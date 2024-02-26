@@ -22,4 +22,7 @@ interface CategoryDao {
 
     @Query("SELECT * FROM category WHERE id = :id")
     fun getCategoryWithProducts(id: Long): CategoryWithProducts
+
+    @Insert
+    fun insertAll(additionalCategories: List<Category>): List<Long>
 }

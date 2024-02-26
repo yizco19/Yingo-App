@@ -34,9 +34,15 @@ class CarViewModel: ViewModel() {
 
     fun add() {
         if(this.selectedcar.id == null){
-            this._items.value?.add(this.selectedcar)
-            itemsrepository.add(this.selectedcar)
-            var t= this.selectedcar
+            val existingCar = _items.value?.find { it.product_id == selectedcar.product_id }
+            if (existingCar != null) {
+                existingCar.product_count += 1
+            }else{
+                this._items.value?.add(this.selectedcar)
+                itemsrepository.add(this.selectedcar)
+                var t= this.selectedcar
+            }
+
             this.updateAll()
 
         }

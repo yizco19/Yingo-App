@@ -3,7 +3,6 @@ package com.zy.proyecto_final.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.zy.proyecto_final.pojo.Product
@@ -24,4 +23,6 @@ interface ProductDao {
 
     @Update
     fun update(product: Product)
+    @Insert
+    fun insertAll(productList: List<Product>)
 }

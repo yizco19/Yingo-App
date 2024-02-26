@@ -44,6 +44,7 @@
 
              </androidx.cardview.widget.CardView>
             <TextView
+                android:layout_marginLeft="10dp"
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,17 +54,21 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:gravity="right">
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:text="asd"/>
             <TextView
                 android:id="@+id/time"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -141,36 +146,43 @@
             android:layout_height="20dp"
             android:layout_alignParentBottom="true"
             android:background="#f5f5f5"/>
+
         <RelativeLayout
+            android:id="@+id/user_info"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#f5f5f5"/>
+                android:background="#f5f5f5" />
+
             <TextView
-                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+
                 android:layout_centerVertical="true"
-                android:text="Informacion usuario"/>
+                android:layout_marginLeft="10dp"
+                android:text="Informacion usuario"
+                android:textSize="16sp" />
+
             <ImageView
-                android:id="@+id/user_info"
-                android:layout_marginRight="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/edit"/>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/edit" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
-                android:background="#f5f5f5"/>
+                android:background="#f5f5f5" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"

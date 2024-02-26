@@ -2,6 +2,7 @@ package com.zy.proyecto_final.pojo
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
@@ -19,7 +20,9 @@ import androidx.room.PrimaryKey
         parentColumns = ["id"],
         onDelete = ForeignKey.CASCADE
     )
-    ]
+    ],
+    indices = [Index("product_id")]
+
 )
 data class Car(
     @PrimaryKey(autoGenerate = true)

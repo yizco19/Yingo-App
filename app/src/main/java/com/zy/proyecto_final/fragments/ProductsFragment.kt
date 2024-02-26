@@ -7,20 +7,29 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.fragment.ProductDetailsFragment
+import com.zy.proyecto_final.pojo.Car
+import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.ProductRecyclerViewAdapter
+import com.zy.proyecto_final.viewmodel.CarViewModel
+import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
+import com.zy.proyecto_final.viewmodel.UserViewModel
 
 /**
  * A fragment representing a list of Items.
  */
 class ProductsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
+    private val carviewmodel: CarViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+    private val favoritviewmodel: FavoriteViewModel by activityViewModels()
     private var view: View? = null
     var fav_click: ((Int, Product) -> Unit)? = null
     var add_click: ((Int, Product) -> Unit)? = null
@@ -42,12 +51,19 @@ class ProductsFragment : Fragment() {
         }
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).add_click = { position:Int, item: Product ->
             run {
-                    this.add_click?.let { it -> it(position, item) }
+                var car :Car = Car(null,userViewModel.userlogged.id, item.id, 1)
+                carviewmodel.selectedcar=car
+                carviewmodel.add()
+                Toast.makeText(context,"Agregado al carrito [${item.name}]", Toast.LENGTH_SHORT).show()
+
             }
         }
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).fav_click = { position:Int, item: Product ->
             run {
-                this.fav_click?.let { it -> it(position, item) }
+                var favorite :Favorite = Favorite(item.id,userViewModel.userlogged.id,"defecto")
+                favoritviewmodel.selectedfavorite=favorite
+                favoritviewmodel.add()
+                Toast.makeText(context, "Añadido al favorito [${item.name}]", Toast.LENGTH_SHORT).show()
             }
         }
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).detail_click = { position:Int, item: Product ->

@@ -39,9 +39,10 @@ class UserViewModel : ViewModel() {
         return this.itemsrepository.getUserById(id)
     }
 
-    private fun update(user: User) {
+    fun update(user: User) {
         var values = this._items.value
         this._items.value = values
+        this.itemsrepository.update(user)
     }
 
     fun login(usernameoremail: String, password: String): Boolean {

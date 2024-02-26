@@ -16,9 +16,9 @@ import androidx.room.PrimaryKey
 data class Product(
     var name: String="",
     var description: String="",
-    var categoryid: Long?=null,
     var price: Double = 0.0,
     var imageUrl: Int? = null,
+    var categoryid: Long?=null,
     @PrimaryKey(autoGenerate = true)
     var id: Long ?=null
 )

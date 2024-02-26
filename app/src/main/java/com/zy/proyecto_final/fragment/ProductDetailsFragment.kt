@@ -5,13 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentProductDetailsBinding
+import com.zy.proyecto_final.fragments.ProductsFragment
 import com.zy.proyecto_final.pojo.Car
+import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.viewmodel.CarViewModel
+import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
@@ -19,6 +23,7 @@ class ProductDetailsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
     private val carviewmodel: CarViewModel by activityViewModels()
     private val userviewmodel: UserViewModel by activityViewModels()
+    private val favoritviewmodel: FavoriteViewModel by activityViewModels()
 
     private  lateinit var binding: FragmentProductDetailsBinding
     private var view:View?=null
@@ -34,7 +39,7 @@ class ProductDetailsFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener {
             //replace fragment
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, CategoryFragment())?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProductsFragment())?.commit()
         }
         binding.comprar.setOnClickListener {
             val product : Product = viewmodel.selectedproduct
@@ -42,9 +47,18 @@ class ProductDetailsFragment : Fragment() {
             val car = Car( null, user.id, product.id,1)
             carviewmodel.selectedcar = car
             carviewmodel.add()
+            Toast.makeText(context, "Agregado al carrito", Toast.LENGTH_SHORT).show()
 
 
         }
+        binding.favorito.setOnClickListener {
+            val product : Product = viewmodel.selectedproduct
+            val favorite = Favorite(product.id, userviewmodel.userlogged.id,"defecto")
+            favoritviewmodel.selectedfavorite = favorite
+            favoritviewmodel.add()
+            Toast.makeText(context, "Añadido al favorito", Toast.LENGTH_SHORT).show()
+        }
+        viewmodel.selectedproduct.imageUrl?.let { binding.productImg.setImageResource(it) }
         // Inflate the layout for this fragment
         return binding.root
 

@@ -24,31 +24,18 @@ class CategoryViewModel : ViewModel() {
         this._context = context
         _items = MutableLiveData()
         this.itemsrepository = CategoryRepository(context)
-        // Check if the flag is set in SharedPreferences
-        val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val isDatabaseInitialized = sharedPreferences.getBoolean("isDatabaseInitialized", false)
-
-        if (!isDatabaseInitialized) {
-            // Perform one-time operation to add an element to the database
-            val categoryTest = Category("Movil", 1)
-            this.itemsrepository.add(categoryTest)
-
-            val categoryTestU = Category("Monitor", 2)
-            this.itemsrepository.add(categoryTestU)
-
-            // Set the flag in SharedPreferences to true
-            with(sharedPreferences.edit()) {
-                putBoolean("isDatabaseInitialized", true)
-                apply()
-            }
-        }
-
         this._items.value = this.itemsrepository.getAll()
 
     }
 
     fun getCategoryWithProducts(): CategoryWithProducts? {
         return this.selectedcategory.id?.let { this.itemsrepository.getCategoryWithProducts(it) }
+
+    }
+
+    fun insertAll(additionalCategories: List<Category>) {
+        this.itemsrepository.insertAll(additionalCategories)
+        this._items.value = this.itemsrepository.getAll()
 
     }
 }

@@ -24,7 +24,7 @@ import androidx.room.PrimaryKey
 data class Favorite(
     var product_id: Long?=null,
     var user_id: Long?=null,
-    var name: String = "",
+    var list: String = "",
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 )

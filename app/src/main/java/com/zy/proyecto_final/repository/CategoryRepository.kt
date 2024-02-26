@@ -36,4 +36,9 @@ class CategoryRepository(context: Context) {
     fun getCategoryWithProducts(id: Long): CategoryWithProducts {
         return _categoryDao.getCategoryWithProducts(id)
     }
+
+    fun insertAll(additionalCategories: List<Category>) {
+        _categoryDao.insertAll(additionalCategories)
+
+    }
 }

@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:navigationIcon="@drawable/reply"
+        app:navigationIcon="@drawable/back"
         android:background="#b0f7c3"
         app:title="Register"
         android:elevation="4dp"
@@ -52,9 +52,10 @@
             android:layout_height="50dp"
             >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_width="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:src="@drawable/account" />
             <EditText
                 android:id="@+id/username"
@@ -73,10 +74,11 @@
             android:layout_height="50dp"
             >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_width="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:src="@drawable/account" />
+                android:layout_height="40dp"
+                android:src="@drawable/email" />
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -95,10 +97,10 @@
             android:background="@drawable/login_et_bg"
             android:layout_height="50dp">
             <ImageView
-
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_width="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:src="@drawable/icon_login_pw" />
             <EditText
                 android:id="@+id/password"
@@ -118,10 +120,10 @@
             android:background="@drawable/login_et_bg"
             android:layout_height="50dp">
             <ImageView
-
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_width="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:src="@drawable/icon_login_pw" />
             <EditText
                 android:id="@+id/confirmpassword"

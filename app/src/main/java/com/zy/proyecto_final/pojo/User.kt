@@ -15,6 +15,7 @@ data class User(
     var imagen: Int? = null,
     var address: String? = "",
     var mobile: String? = "",
+    var payment: String? = "",
     @PrimaryKey(autoGenerate = true)
     var id:Long?=null
 )

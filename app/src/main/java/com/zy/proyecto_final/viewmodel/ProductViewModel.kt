@@ -30,30 +30,6 @@ class ProductViewModel : ViewModel() {
         this._context = c
         _items = MutableLiveData()
         this.itemsrepository = ProductRepository(c)
-// Check if the flag is set in SharedPreferences
-        val sharedPreferences = c.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val isDatabaseInitialized = sharedPreferences.getBoolean("isDatabaseInitialized", false)
-
-        if (!isDatabaseInitialized) {
-            // Perform one-time operation to add an element to the database
-            val productList = mutableListOf(
-                Product("Producto 1", "Descripcion del Producto 1", 1, 150.0),
-                Product("Producto 2", "Descripcion del Producto 2", 1, 250.0),
-                Product("Producto 2", "Descripcion del Producto 2", 2, 290.0),
-                Product("Producto 2", "Descripcion del Producto 2", 2, 350.0),
-            )
-
-            for (product in productList) {
-                add(product)
-            }
-
-            // Set the flag in SharedPreferences to true
-            with(sharedPreferences.edit()) {
-                putBoolean("isDatabaseInitialized", true)
-                apply()
-            }
-        }
-
         this._items.value = this.itemsrepository.getAll()
 
     }
@@ -68,6 +44,11 @@ class ProductViewModel : ViewModel() {
     }
     private fun update(item: Product) {
         this.itemsrepository.update(item)
+    }
+
+    fun insertAll(productList: List<Product>) {
+        this.itemsrepository.insertAll(productList)
+        this._items.value = this.itemsrepository.getAll()
     }
 
 }
