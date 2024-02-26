@@ -113,26 +113,26 @@ class MainActivity : AppCompatActivity() {
 
 
             val productData = listOf(
-                Product("Laptop", "Laptop", 1000.99, R.drawable.laptop, 1),
-                Product("Tablet", "Tablet", 1000.99, R.drawable.tablet, 2),
-                Product("Accesorios", "Accesorios", 1000.99, R.drawable.accesorios, 3),
-                Product("Impresoras", "Impresoras", 1000.99, R.drawable.impresora, 4),
-                Product("Software", "Software", 1000.99, R.drawable.software, 5),
-                Product("Almacenamiento", "Almacenamiento", 1000.99, R.drawable.almacenamiento, 6),
-                Product("Redes", "Redes", 1000.99, R.drawable.red, 7),
-                Product("Audio", "Audio", 1000.99, R.drawable.audio, 8),
-                Product("Monitores", "Monitores", 1000.99, R.drawable.monitor, 9),
-                Product("Periféricos", "Periféricos", 1000.99, R.drawable.perifericos, 10),
-                Product("Gaming", "Gaming", 1000.99, R.drawable.gaming, 11),
-                Product("Componentes", "Componentes", 1000.99, R.drawable.componentes, 12),
-                Product("Smartphones", "Smartphones", 1000.99, R.drawable.smartphones, 13),
-                Product("Cámaras", "Cámaras", 1000.99, R.drawable.camaras, 14),
-                Product("Electrónica", "Electrónica", 1000.99, R.drawable.electronica, 15),
+                Product("Laptop", "Laptop", 321.99, R.drawable.laptop, 1),
+                Product("Tablet", "Tablet", 123.99, R.drawable.tablet, 2),
+                Product("Accesorios", "Accesorios", 888.99, R.drawable.accesorios, 3),
+                Product("Impresoras", "Impresoras", 666.99, R.drawable.impresora, 4),
+                Product("Software", "Software", 444.99, R.drawable.software, 5),
+                Product("Almacenamiento", "Almacenamiento", 555.99, R.drawable.almacenamiento, 6),
+                Product("Redes", "Redes", 333.99, R.drawable.red, 7),
+                Product("Audio", "Audio", 222.99, R.drawable.audio, 8),
+                Product("Monitores", "Monitores", 666.99, R.drawable.monitor, 9),
+                Product("Periféricos", "Periféricos", 777.99, R.drawable.perifericos, 10),
+                Product("Gaming", "Gaming", 800.99, R.drawable.gaming, 11),
+                Product("Componentes", "Componentes", 600.99, R.drawable.componentes, 12),
+                Product("Smartphones", "Smartphones", 400.99, R.drawable.smartphones, 13),
+                Product("Cámaras", "Cámaras", 250.99, R.drawable.camaras, 14),
+                Product("Electrónica", "Electrónica", 200.99, R.drawable.electronica, 15),
                 Product("Realidad Virtual", "Realidad Virtual", 1000.99, R.drawable.realidad_virtual, 16),
-                Product("Oficina", "Oficina", 1000.99, R.drawable.oficina, 17),
-                Product("Seguridad", "Seguridad", 1000.99, R.drawable.eguridad, 18),
-                Product("Energía", "Energía", 1000.99, R.drawable.energia, 19),
-                Product("Teclados", "Teclados", 1000.99, R.drawable.teclados, 20)
+                Product("Oficina", "Oficina", 100.99, R.drawable.oficina, 17),
+                Product("Seguridad", "Seguridad", 400.99, R.drawable.eguridad, 18),
+                Product("Energía", "Energía", 300.00, R.drawable.energia, 19),
+                Product("Teclados", "Teclados", 500.00, R.drawable.teclados, 20)
             )
 
             val productList = mutableListOf<Product>()
