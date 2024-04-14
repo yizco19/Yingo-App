@@ -29,10 +29,9 @@ class FavoriteViewModel : ViewModel() {
 
     }
 
-    fun delete(item: Favorite) {
-        this._items.value?.remove(item)
-        this.itemsrepository.delete(item)
-        this._items.value = this.itemsrepository.getAll()
+    fun delete() {
+        this._items.value?.remove(this.selectedfavorite)
+        this.itemsrepository.delete(this.selectedfavorite)
         this.update()
 
     }

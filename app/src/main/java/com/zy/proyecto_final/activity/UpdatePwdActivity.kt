@@ -27,7 +27,8 @@ class UpdatePwdActivity : AppCompatActivity() {
         btn_update = findViewById(R.id.updatePassword)
         toolbar = findViewById(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
-            finish()
+            //regresa a la pantalla anterior
+            onBackPressed()
         }
         viewModel.init(this)
         btn_update.setOnClickListener {

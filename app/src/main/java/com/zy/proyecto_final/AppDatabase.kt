@@ -27,7 +27,7 @@ import com.zy.proyecto_final.pojo.User
     Car::class,
     Order::class,
     Favorite::class
-    ], version = 15, exportSchema = true
+    ], version = 12, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase()  {

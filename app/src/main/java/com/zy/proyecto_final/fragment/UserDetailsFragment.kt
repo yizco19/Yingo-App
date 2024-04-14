@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.activity.LoginActivity
@@ -34,6 +35,10 @@ class UserDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_details, container, false)
+        view?.findViewById<Toolbar>(R.id.toolbar)!!.setNavigationOnClickListener {
+            //replace fragment
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, MineFragment())?.commit()
+        }
             if(viewModel.userlogged.id != null){
                 username = view?.findViewById<EditText>(R.id.username)
                 email = view?.findViewById<EditText>(R.id.email)
@@ -51,6 +56,7 @@ class UserDetailsFragment : Fragment() {
              var user = viewModel.userlogged
              if(user.id != null){
                  var user = viewModel.userlogged
+                 var usernametemp=user.username
                  user.username = username?.text.toString()
                  user.email = email?.text.toString()
                  user.mobile = mobile?.text.toString()
@@ -58,12 +64,13 @@ class UserDetailsFragment : Fragment() {
                  user.payment = payment?.text.toString()
                  Toast.makeText(context, "Actualizado", Toast.LENGTH_SHORT).show()
                  // if ha cambiado de username va volver a login
-                 if(user.username != viewModel.userlogged.username){
+                 if(user.username != usernametemp){
                      viewModel.update(user)
                      activity?.finish()
                      var intent = Intent(context, LoginActivity::class.java)
                      startActivity(intent)
                  }
+
                  viewModel.update(user)
                  //cambia fragment a mine
                  activity?.supportFragmentManager?.beginTransaction()

@@ -1,4 +1,4 @@
-# Aplicación de Tienda en Línea de Informáticos con Chatbot Integrado
+# Aplicación de Tienda en Línea de Informáticos
 
 
 ## Descripción de la Aplicación
@@ -46,6 +46,7 @@ El proyecto estará organizado de la siguiente manera:
     - **fragments**
     - **pojo**
     - **repositories**
+    - **retrofit**
     - **util**
 - **res**
   - **layout**
@@ -83,6 +84,3 @@ Ordenado por su prioridad de desarrollo:
 7. **Comparación de Productos de la Misma Categoría:**
    - Comparar diferentes productos dentro de la misma categoría.
 
-8. **Chatbot de Asistencia:**
-   - Proporciona respuestas rápidas y ayuda personalizada a las consultas de los usuarios.
-   - Los usuarios pueden utilizar el chatbot de asistencia para personalizar al armar su propio PC.
