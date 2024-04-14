@@ -14,7 +14,7 @@ interface CarDao {
         @Query("SELECT * FROM car")
         fun getAll(): List<Car>
         @Query("SELECT * FROM car WHERE user_id = :user_id")
-        fun getAll(user_id:Long?): List<Car>
+        fun getAll(user_id:Int?): List<Car>
         @Delete
         fun delete(item:  Car)
 

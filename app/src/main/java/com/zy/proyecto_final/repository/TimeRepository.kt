@@ -4,6 +4,8 @@ import com.zy.proyecto_final.pojo.Time
 import com.zy.proyecto_final.retrofit.Respuesta
 import com.zy.proyecto_final.retrofit.TimeAPI
 import com.zy.proyecto_final.retrofit.TimeService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class TimeRepository {
     private var _service: TimeAPI
@@ -30,4 +32,6 @@ class TimeRepository {
         time.dstActive = item?.dstActive ?: false
         return time
     }
+
+
 }

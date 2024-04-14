@@ -57,7 +57,7 @@ class FavoritesFragment : Fragment() {
         // Verifica si items es nulo antes de asignar el adaptador
         // Asigna el adaptador
         this.viewmodel.items.value?.let {
-            recyclerView?.adapter = FavoriteRecyclerViewAdapter(it.toMutableList(), productviewmodel)
+            recyclerView?.adapter = FavoriteRecyclerViewAdapter(it.toMutableList(), productviewmodel, requireContext())
         }
 
         (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as FavoriteRecyclerViewAdapter).add_click = { position:Int, item: Favorite ->

@@ -13,28 +13,32 @@ class ProductRepository(context: Context) {
         _productDao = database.productDao()
     }
 
-    fun delete(item: Product) {
+    /*fun delete(item: Product) {
         _productDao.delete(item)
     }
 
-    fun add(item: Product): Long {
+    fun add(item: Product): Int {
         return _productDao.add(item)
     }
+    fun update(item: Product) {
+        _productDao.update(item)
+    }*/
 
     fun getAll(): MutableList<Product> {
         return _productDao.getAll().toMutableList()
     }
 
-    fun update(item: Product) {
-        _productDao.update(item)
-    }
 
-    fun getProductbyId(id: Long): Product? {
+
+    fun getProductbyId(id: Int): Product? {
         return _productDao.getProductById(id)
 
     }
 
     fun insertAll(productList: List<Product>) {
         _productDao.insertAll(productList)
+    }
+    fun setAll(productList: List<Product>) {
+        _productDao.setAll(productList)
     }
 }

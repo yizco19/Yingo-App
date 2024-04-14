@@ -8,6 +8,7 @@ import com.zy.proyecto_final.pojo.User
 class UserRepository (var context: Context){
     private  var _userDAO: UserDao
 
+
     init{
         val database= AppDatabase.getInstance(context)
         _userDAO=database.userDao()
@@ -17,7 +18,7 @@ class UserRepository (var context: Context){
         return _userDAO.getAll().toMutableList()
     }
 
-    fun add(user: User) :Long? {
+    fun add(user: User) :Int? {
         if(user.username?.let { _userDAO.getUser(it) } ==null){
             _userDAO.add(user)
             return user.id
@@ -35,11 +36,11 @@ class UserRepository (var context: Context){
         return _userDAO.getUser(usernameoremail, password)
 
     }
-    fun getUserById(id:Long):User?{
+    fun getUserById(id:Int):User?{
         return _userDAO.getUserById(id)
     }
 
-    fun updateUser(mD5: String, userId: Long) {
+    fun updateUser(mD5: String, userId: Int) {
         _userDAO.updateUser(mD5, userId)
     }
 

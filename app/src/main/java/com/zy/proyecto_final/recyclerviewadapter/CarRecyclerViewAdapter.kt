@@ -1,17 +1,21 @@
 package com.zy.proyecto_final.recyclerviewadapter
 
+import android.content.Context
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.zy.proyecto_final.databinding.FragmentItemcarBinding
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class CarRecyclerViewAdapter(private var carList: List<Car>,
-                             private val productViewModel: ProductViewModel) :
+                             private val productViewModel: ProductViewModel,
+                             private val context: Context
+) :
     RecyclerView.Adapter<CarRecyclerViewAdapter.ViewHolder>() {
     var plus_click: ((Int, Car) -> Unit)? = null
     var minus_click: ((Int, Car) -> Unit)? = null
@@ -31,7 +35,11 @@ class CarRecyclerViewAdapter(private var carList: List<Car>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val car = carList[position]
         val product = productViewModel.getProductbyId(car.product_id!!)
-        product?.imageUrl?.let { holder.productImage.setImageResource(it) }
+        product?.productPic?.let { urlOrFilePath ->
+            Glide.with(context)
+                .load(urlOrFilePath)
+                .into(holder.productImage)
+        }
         holder.productName.text = product?.name
         holder.productPrice.text = product?.price.toString()
         holder.productCount.text = car.product_count.toString()

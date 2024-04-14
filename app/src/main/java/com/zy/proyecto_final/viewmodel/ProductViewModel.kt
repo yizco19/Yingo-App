@@ -33,10 +33,10 @@ class ProductViewModel : ViewModel() {
         this._items.value = this.itemsrepository.getAll()
 
     }
-    fun getProductbyId(id:Long):Product?{
+    fun getProductbyId(id:Int):Product?{
         return this.itemsrepository.getProductbyId(id)
     }
-    fun add( item:Product) {
+    /*fun add( item:Product) {
         itemsrepository.add(item)
     }
     fun delete(item: Product) {
@@ -48,6 +48,10 @@ class ProductViewModel : ViewModel() {
 
     fun insertAll(productList: List<Product>) {
         this.itemsrepository.insertAll(productList)
+        this._items.value = this.itemsrepository.getAll()
+    }*/
+    fun setAll(productList: List<Product>) {
+        this.itemsrepository.setAll(productList)
         this._items.value = this.itemsrepository.getAll()
     }
 

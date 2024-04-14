@@ -3,10 +3,12 @@ package com.zy.proyecto_final.activity
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.zy.proyecto_final.R
@@ -14,7 +16,9 @@ import com.zy.proyecto_final.fragment.FavoritesFragment
 import com.zy.proyecto_final.fragment.HomeFragment
 import com.zy.proyecto_final.fragment.MineFragment
 import com.zy.proyecto_final.fragment.CarFragment
+import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
+import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel
@@ -33,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private val favoriteviewmodel: FavoriteViewModel by viewModels()
     private lateinit var settings: SharedPreferences
     private var issettings: Boolean = false
+    private val yingomodel: YingoViewModel by viewModels()
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +48,34 @@ class MainActivity : AppCompatActivity() {
         this.orderviewmodel.init(this)
         this.userviewmodel.init(this)
         this.favoriteviewmodel.init(this)
+        this.yingomodel.init(this)
+        var categoriesLiveData: LiveData<List<Category>> = yingomodel.getCategories()
+
+        categoriesLiveData.observe(this) { categories ->
+            // Actualiza la interfaz de usuario con las categorías recibidas
+            Log.i("categoriesrecibedo", categories.toString())
+            categoryviewmodel.setAll(categoriesLiveData.value ?: emptyList())
+            // Obtiene la lista de productos desde el ViewModel
+            var productsLiveData: LiveData<List<Product>> = yingomodel.getProducts()
+
+            // Observa los cambios en la lista de productos y actualiza el ViewModel de productos
+            productsLiveData.observe(this) { products ->
+                Log.i("productsreceived", products.toString())
+                productviewmodel.setAll(productsLiveData.value ?: emptyList())
+            }
+        }
+
+
+
+
         //asigna userlogged
         settings = getSharedPreferences("user", MODE_PRIVATE)
-        val user_id=intent.getLongExtra("userid",0)
+        val user_id=intent.getIntExtra("userid",0)
         this.userviewmodel.userlogged= this.userviewmodel.getUserById(user_id)!!
         // Inicializa la barra de navegación
         mBottomNav = findViewById(R.id.bottom_navigation)
         issettings= settings.getBoolean("issettings", false)
-        loadData(issettings)
+        //loadData(issettings)
         mBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.category -> {
@@ -79,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadData(issettings: Boolean) {
+    /*private fun loadData(issettings: Boolean) {
         if (!issettings) {
             // Crea una lista de categorías
             val additionalCategories = List(20) { index ->
@@ -155,7 +180,7 @@ class MainActivity : AppCompatActivity() {
             putBoolean("issettings", true)
             apply()
             }
-        }
+        }*/
 
 
 

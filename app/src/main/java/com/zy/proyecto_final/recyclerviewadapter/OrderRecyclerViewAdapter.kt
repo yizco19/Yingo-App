@@ -1,16 +1,19 @@
 package com.zy.proyecto_final.recyclerviewadapter
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.zy.proyecto_final.databinding.FragmentItemorderBinding
 import com.zy.proyecto_final.pojo.Order
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class OrderRecyclerViewAdapter (private var orderList:List<Order>,
-                                private val productviewmodel: ProductViewModel
+                                private val productviewmodel: ProductViewModel,
+                                private val context: Context
 ) : RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderRecyclerViewAdapter.ViewHolder {
         return ViewHolder(
@@ -26,7 +29,7 @@ class OrderRecyclerViewAdapter (private var orderList:List<Order>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orderList[position]
         val product = productviewmodel.getProductbyId(order.product_id!!)
-        product?.imageUrl?.let { holder.productImage.setImageResource(it) }
+        Glide.with(this.context).load(product?.productPic).into(holder.productImage)
         holder.productName.text = product?.name
         holder.productPrice.text = product?.price.toString()
         holder.productCount.text = order.product_count.toString()

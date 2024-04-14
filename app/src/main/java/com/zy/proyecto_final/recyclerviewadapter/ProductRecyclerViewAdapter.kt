@@ -1,17 +1,21 @@
 package com.zy.proyecto_final.recyclerviewadapter
 
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.zy.proyecto_final.databinding.FragmentItemproductBinding
+import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
 
 
 class ProductRecyclerViewAdapter(
-    private val values: MutableList<Product>
+    private var values: MutableList<Product>,
+    private val context: Context
 ) : RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder>() {
     var add_click: ((Int, Product) -> Unit)? = null
     var fav_click: ((Int, Product) -> Unit)? = null
@@ -33,7 +37,7 @@ class ProductRecyclerViewAdapter(
         val item = values[position]
         holder.contentView.text = item.name
         holder.priceView.text = item.price.toString()
-        holder.detailView.setImageResource(item.imageUrl!!)
+        Glide.with(this.context).load(item.productPic).into(holder.detailView)
         holder.addView.setOnClickListener {
             this.add_click?.let { it -> it(position, item) }
         }
@@ -62,6 +66,10 @@ class ProductRecyclerViewAdapter(
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
         }
+    }
+    public fun setValues(v:MutableList<Product>){
+        this.values=v;
+        this.notifyDataSetChanged()
     }
 
 }

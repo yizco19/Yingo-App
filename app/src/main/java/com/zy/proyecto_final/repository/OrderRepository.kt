@@ -13,7 +13,7 @@ class OrderRepository (contexto: Context) {
     }
     fun add(item: Order) {
         if(item.id == null){
-            item.id = _orderdao.insert(item)
+            item.id = _orderdao.insert(item).toInt()
         }
     }
     fun update(Order: Order) {
@@ -25,7 +25,7 @@ class OrderRepository (contexto: Context) {
     fun getAll(): MutableList<Order> {
         return _orderdao.getAll().toMutableList()
     }
-    fun getAll(user_id:Long?): MutableList<Order> {
+    fun getAll(user_id:Int?): MutableList<Order> {
         return _orderdao.getAll(user_id).toMutableList()
     }
     fun setAll(listOrder: MutableList<Order>) {

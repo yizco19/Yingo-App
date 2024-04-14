@@ -1,4 +1,4 @@
-package com.zy.proyecto_final.fragments
+package com.zy.proyecto_final.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.zy.proyecto_final.R
-import com.zy.proyecto_final.fragment.ProductDetailsFragment
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.pojo.Product
@@ -30,6 +29,7 @@ class ProductsFragment : Fragment() {
     private val carviewmodel: CarViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val favoritviewmodel: FavoriteViewModel by activityViewModels()
+    private var productAdapter: ProductRecyclerViewAdapter? = null
     private var view: View? = null
     var fav_click: ((Int, Product) -> Unit)? = null
     var add_click: ((Int, Product) -> Unit)? = null
@@ -39,57 +39,59 @@ class ProductsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        view = inflater.inflate(R.layout.fragment_products, container, false)
+        val binding = inflater.inflate(R.layout.fragment_products, container, false)
+
         // Obtén el RecyclerView
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.listado)
+        val recyclerView = binding.findViewById<RecyclerView>(R.id.listado)
         // Configura el LayoutManager
-        recyclerView?.layoutManager = GridLayoutManager(context, 2)
-        // Verifica si items es nulo antes de asignar el adaptador
-        // Asigna el adaptador
-        this.viewmodel.items.value?.let {
-            recyclerView?.adapter = ProductRecyclerViewAdapter(it.toMutableList())
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
+
+        // Observa el LiveData de productos y actualiza el adaptador cuando cambie
+        viewmodel.items.observe(viewLifecycleOwner) { products ->
+            products?.let {
+                productAdapter?.setValues(it.toMutableList())
+            }
         }
-        (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).add_click = { position:Int, item: Product ->
-            run {
-                var car :Car = Car(null,userViewModel.userlogged.id, item.id, 1)
-                carviewmodel.selectedcar=car
+
+        // Configura el adaptador del RecyclerView
+        productAdapter = ProductRecyclerViewAdapter(mutableListOf(), requireContext())
+        recyclerView.adapter = productAdapter
+
+        // Manejar clics en elementos del RecyclerView
+        productAdapter?.apply {
+            add_click = { position, item ->
+                val car = Car(null, userViewModel.userlogged.id, item.id, 1)
+                carviewmodel.selectedcar = car
                 carviewmodel.add()
                 Toast.makeText(context,"Agregado al carrito [${item.name}]", Toast.LENGTH_SHORT).show()
-
             }
-        }
-        (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).fav_click = { position:Int, item: Product ->
-            run {
-                var favorite :Favorite = Favorite(item.id,userViewModel.userlogged.id,"defecto")
-                favoritviewmodel.selectedfavorite=favorite
+
+            fav_click = { position, item ->
+                val favorite = Favorite(item.id, userViewModel.userlogged.id, "defecto")
+                favoritviewmodel.selectedfavorite = favorite
                 favoritviewmodel.add()
-                Toast.makeText(context, "Añadido al favorito [${item.name}]", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Añadido al favorito [${item.name}]", Toast.LENGTH_SHORT).show()
             }
-        }
-        (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as ProductRecyclerViewAdapter).detail_click = { position:Int, item: Product ->
-            run {
-                this.viewmodel.selectedproduct=item
-                //se avisa al principal
-                this.detail_click?.let { it -> it(position, item) }
-                var  fm: FragmentManager = parentFragmentManager
-                var f=fm.fragments
-                fm.commit {
-                    replace(R.id.fragmentContainerView, ProductDetailsFragment.newInstance())
 
+            detail_click = { position, item ->
+                viewmodel.selectedproduct = item
+                parentFragmentManager.commit {
+                    replace(R.id.fragmentContainerView, ProductDetailsFragment.newInstance())
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
                 }
             }
         }
 
-        return view
+        return binding
     }
-
 
     companion object {
         private const val CATEGORY_ID_ARG = "CATEGORY_ID_ARG"
 
-        fun newInstance(categoryId: Long?) = ProductsFragment().apply {
+        fun newInstance(categoryId: Int?) = ProductsFragment().apply {
             arguments = Bundle().apply {
-                putLong(CATEGORY_ID_ARG, categoryId ?: -1)
+                putInt(CATEGORY_ID_ARG, categoryId ?: -1)
             }
         }
     }

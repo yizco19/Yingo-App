@@ -13,7 +13,7 @@ class CarRepository (contexto: Context) {
     }
     fun add(car: Car) {
         if(car.id == null){
-            car.id = _cardao.insert(car)
+            car.id = this._cardao.insert(car).toInt()
         }
     }
     fun update(car: Car) {
@@ -25,7 +25,7 @@ class CarRepository (contexto: Context) {
     fun getAll(): MutableList<Car> {
         return _cardao.getAll().toMutableList()
     }
-    fun getAll(user_id:Long?): MutableList<Car> {
+    fun getAll(user_id:Int?): MutableList<Car> {
         return _cardao.getAll(user_id).toMutableList()
     }
 

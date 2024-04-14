@@ -10,13 +10,13 @@ import com.zy.proyecto_final.pojo.Order
 @Dao
 interface OrderDao {
     @Insert
-    fun insert(item: Order): Long
+    fun insert(item: Order):Long
 
     @Query("SELECT * FROM `order`")
     fun getAll(): List<Order>
 
     @Query("SELECT * FROM `order` WHERE user_id = :user_id")
-    fun getAll(user_id: Long?): List<Order>
+    fun getAll(user_id: Int?): List<Order>
 
     @Delete
     fun delete(item: Order)

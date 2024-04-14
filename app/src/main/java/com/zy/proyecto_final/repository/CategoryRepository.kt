@@ -19,7 +19,7 @@ class CategoryRepository(context: Context) {
         return _categoryDao.getAll().toMutableList()
     }
 
-    fun add(category: Category) {
+    /*fun add(category: Category) {
         // Puedes ejecutar esta operación en un hilo de fondo si es necesario
         _categoryDao.insert(category)
     }
@@ -32,13 +32,16 @@ class CategoryRepository(context: Context) {
     fun delete(category: Category) {
         // Puedes ejecutar esta operación en un hilo de fondo si es necesario
         _categoryDao.delete(category)
-    }
-    fun getCategoryWithProducts(id: Long): CategoryWithProducts {
+    }*/
+    fun getCategoryWithProducts(id: Int): CategoryWithProducts {
         return _categoryDao.getCategoryWithProducts(id)
     }
 
     fun insertAll(additionalCategories: List<Category>) {
         _categoryDao.insertAll(additionalCategories)
 
+    }
+    fun setAll(additionalCategories: List<Category>) {
+        _categoryDao.setAll(additionalCategories)
     }
 }

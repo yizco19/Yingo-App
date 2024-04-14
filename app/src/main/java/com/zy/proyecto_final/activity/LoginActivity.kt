@@ -4,14 +4,18 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.ActivityLoginBinding
+import com.zy.proyecto_final.retrofit.LoginData
+import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.util.MD5util
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
@@ -20,12 +24,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var isLogin: Boolean = false
     private lateinit var sharedPreferences: SharedPreferences
+    private val yingomodel: YingoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.init(this)
+        yingomodel.init(this)
 
         // Inicializa los componentes de la vista
         val registerButton = findViewById<TextView>(R.id.registernow)
@@ -57,13 +63,19 @@ class LoginActivity : AppCompatActivity() {
 
         // Botón para iniciar sesión
         loginButton.setOnClickListener {
+            //login data
+
+
             val emailorusername = binding.emailorusername.text.toString()
             val password = binding.password.text.toString()
-
+            var loginData = LoginData(emailorusername, password)
+            val login = yingomodel.login(loginData)
             // Diferente de null
-            if (emailorusername.isNotEmpty() && password.isNotEmpty()) {
-                val passwordMD5 = MD5util().getMD5(password)
-                if (viewModel.login(emailorusername, passwordMD5)) {
+            //if (emailorusername.isNotEmpty() && password.isNotEmpty()) {
+              //  val passwordMD5 = MD5util().getMD5(password)
+                //if (viewModel.login(emailorusername, passwordMD5)) {
+            if(login){
+                Log.i("login status", login.toString())
                     with(sharedPreferences.edit()) {
                         putBoolean("is_login", true)
                         putString("emailorusername", emailorusername)
@@ -87,13 +99,15 @@ class LoginActivity : AppCompatActivity() {
                         .show()
                 }
             }
-        }
-
         // Check remember me
         checkRememberMe.setOnCheckedChangeListener { _, isChecked ->
             isLogin = isChecked
         }
-    }
+        }
+
+        // Check remember me
+
+
 
     private fun clearSharedPreferences() {
         with(sharedPreferences.edit()) {

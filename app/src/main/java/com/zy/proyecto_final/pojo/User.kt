@@ -17,5 +17,5 @@ data class User(
     var mobile: String? = "",
     var payment: String? = "",
     @PrimaryKey(autoGenerate = true)
-    var id:Long?=null
+    var id:Int?=null
 )

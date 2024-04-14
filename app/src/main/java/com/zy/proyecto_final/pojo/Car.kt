@@ -26,8 +26,8 @@ import androidx.room.PrimaryKey
 )
 data class Car(
     @PrimaryKey(autoGenerate = true)
-    var id: Long? = null,
-    var user_id: Long? = null,
-    var product_id: Long? = null,
+    var id: Int? = null,
+    var user_id: Int? = null,
+    var product_id: Int? = null,
     var product_count: Int = 0,
 )

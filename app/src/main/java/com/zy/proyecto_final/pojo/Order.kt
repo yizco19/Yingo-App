@@ -24,9 +24,9 @@ import java.util.Date
 )
 data class Order(
     @PrimaryKey(autoGenerate = true)
-    var id: Long? = null,
-    var user_id: Long? = 0,
-    var product_id: Long? = 0,
+    var id: Int? = null,
+    var user_id: Int? = 0,
+    var product_id: Int? = 0,
     var product_count: Int? = 0,
     var address: String? = "",
     var mobile: String? = "",

@@ -45,7 +45,7 @@ class OrderFragment : Fragment() {
         recyclerView.adapter =
             this.viewmodel.items.value?.let {
                 OrderRecyclerViewAdapter(
-                    it.toMutableList(), productviewmodel
+                    it.toMutableList(), productviewmodel, requireContext()
                 )
             }
 

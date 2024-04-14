@@ -38,4 +38,8 @@ class CategoryViewModel : ViewModel() {
         this._items.value = this.itemsrepository.getAll()
 
     }
+    fun setAll(additionalCategories: List<Category>) {
+        this.itemsrepository.setAll(additionalCategories)
+        this._items.value = this.itemsrepository.getAll()
+    }
 }

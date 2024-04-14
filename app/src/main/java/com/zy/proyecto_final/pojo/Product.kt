@@ -4,21 +4,23 @@ import android.media.Image
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(foreignKeys = [
     ForeignKey(
         entity = Category::class,
-        childColumns = ["categoryid"],
+        childColumns = ["categoryId"],
         parentColumns = ["id"],
         onDelete = ForeignKey.CASCADE
     )
-])
+],tableName = "product")
 data class Product(
-    var name: String="",
-    var description: String="",
-    var price: Double = 0.0,
-    var imageUrl: Int? = null,
-    var categoryid: Long?=null,
-    @PrimaryKey(autoGenerate = true)
-    var id: Long ?=null
+    @PrimaryKey
+    var id: Int?      = null,
+    var categoryId: Int?      = null,
+    var name: String? = null,
+    var description: String? = null,
+    var productPic: String? = null,
+    var price: Double? = null,
+    var visible: Boolean? = null
 )

@@ -1,11 +1,13 @@
 package com.zy.proyecto_final.recyclerviewadapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.zy.proyecto_final.databinding.FragmentItemfavoriteBinding
 import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.pojo.Product
@@ -13,7 +15,8 @@ import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class FavoriteRecyclerViewAdapter(
     private val values: MutableList<Favorite>,
-    private val productViewModel: ProductViewModel
+    private val productViewModel: ProductViewModel,
+    private val context: Context
 ): RecyclerView.Adapter<FavoriteRecyclerViewAdapter.ViewHolder>() {
     var add_click: ((Int, Favorite) -> Unit)? = null
     var delete_click: ((Int, Favorite) -> Unit)? = null
@@ -37,7 +40,9 @@ class FavoriteRecyclerViewAdapter(
         // Assuming detailView is an ImageView and you want to load an image from a URL
         // You need to use a proper image loading library like Picasso or Glide for production
         // This is just a placeholder assuming item.imageUrl is a drawable resource
-        holder.detailView.setImageResource(product?.imageUrl ?: 0)
+        Glide.with(this.context)
+            .load(product?.productPic)
+            .into(holder.detailView)
 
         holder.addView.setOnClickListener {
             add_click?.invoke(position, item!!)

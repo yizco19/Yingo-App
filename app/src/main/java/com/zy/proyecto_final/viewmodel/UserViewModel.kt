@@ -35,7 +35,7 @@ class UserViewModel : ViewModel() {
 
 
     }
-    fun getUserById(id:Long):User?{
+    fun getUserById(id:Int):User?{
         return this.itemsrepository.getUserById(id)
     }
 
@@ -60,7 +60,7 @@ class UserViewModel : ViewModel() {
         this.userlogged = User()
     }
 
-    fun updateUser(mD5: String, userId: Long) {
+    fun updateUser(mD5: String, userId: Int) {
         this.itemsrepository.updateUser(mD5, userId)
     }
 

@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentCategoryBinding
-import com.zy.proyecto_final.fragments.ProductsFragment
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.recyclerviewadapter.CategoryRecyclerViewAdapter
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
@@ -27,6 +26,8 @@ class CategoryFragment : Fragment() {
     private val viewmodel : CategoryViewModel by activityViewModels<CategoryViewModel>()
     private val productviewmodel : ProductViewModel by activityViewModels<ProductViewModel>()
     private var view: View? = null;
+    private var categoryAdapter: CategoryRecyclerViewAdapter? = null // Adaptador para el RecyclerView
+
     val content_click: ((Int, Category) -> Unit)? = null
     private var columnCount = 1
 
@@ -38,32 +39,32 @@ class CategoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        view = inflater.inflate(R.layout.fragment_category, container, false)
-        view?.findViewById<RecyclerView>(R.id.listado)!!?.layoutManager =
-            GridLayoutManager(context, 1)
-        view?.findViewById<RecyclerView>(R.id.listado)!!.adapter =
-            this.viewmodel.items.value?.let {
-                CategoryRecyclerViewAdapter(
-                    it.toMutableList()
-                )
-            }
-        loadData()
-        (view?.findViewById<RecyclerView>(R.id.listado)!!.adapter as CategoryRecyclerViewAdapter).content_click = { position:Int, item: Category ->
-            run {
-                this.viewmodel.selectedcategory=item
-                this.productviewmodel.category_selected= this.viewmodel.getCategoryWithProducts()!!
-                //se avisa al principal
-                this.content_click?.let { it -> it(position, item) }
-                var  fm: FragmentManager = parentFragmentManager
-                var f=fm.fragments
-                fm.commit {
-                    replace(R.id.fragmentContainerView, ProductsFragment.newInstance(item.id))
-                    Toast.makeText(context, "Cargando productos de [${item.name}]", Toast.LENGTH_SHORT).show()
-                }
+        binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        view = binding.root
 
+        // Configuración del RecyclerView
+        categoryAdapter = CategoryRecyclerViewAdapter(mutableListOf())
+        binding.listado.layoutManager = GridLayoutManager(context, 1)
+        binding.listado.adapter = categoryAdapter
+
+        // Observa el LiveData de categorías y actualiza el adaptador cuando cambie
+        viewmodel.items.observe(viewLifecycleOwner) { categories ->
+            categories?.let {
+                categoryAdapter?.setValues(it.toMutableList())
             }
         }
 
+        // Manejar el clic en los elementos del RecyclerView
+        categoryAdapter?.content_click = { position, item ->
+            viewmodel.selectedcategory = item
+            productviewmodel.category_selected = viewmodel.getCategoryWithProducts()!!
+            parentFragmentManager.commit {
+                replace(R.id.fragmentContainerView, ProductsFragment.newInstance(item.id))
+                setReorderingAllowed(true)
+                addToBackStack(null)
+            }
+            Toast.makeText(context, "Cargando productos de [${item.name}]", Toast.LENGTH_SHORT).show()
+        }
 
         return view
     }

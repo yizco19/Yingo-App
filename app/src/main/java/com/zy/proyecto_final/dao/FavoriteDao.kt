@@ -15,7 +15,7 @@ interface FavoriteDao {
     fun getAll(): List<Favorite>
 
     @Query("SELECT * FROM favorite WHERE user_id = :user_id")
-    fun getAll(user_id:Long?): List<Favorite>
+    fun getAll(user_id:Int?): List<Favorite>
 
     @Delete
     fun delete(item:  Favorite)

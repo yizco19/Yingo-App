@@ -47,10 +47,12 @@ class CarFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         view?.findViewById<RecyclerView>(R.id.recyclerView)!!?.layoutManager =
             GridLayoutManager(context, 1)
-        view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter =
-            this.viewmodel.items.value?.let {
+        view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter =
+            this.viewmodel.items.value?.let { itemList ->
                 CarRecyclerViewAdapter(
-                    it.toMutableList(),productviewmodel
+                    itemList.toMutableList(),
+                    productviewmodel,
+                    requireContext()
                 )
             }
         (view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter as CarRecyclerViewAdapter).plus_click =
@@ -103,7 +105,7 @@ class CarFragment : Fragment() {
         var total = 0.0
         for (i in List) {
             var product_price = productviewmodel.getProductbyId(i.product_id!!)!!.price
-            total +=i.product_count * product_price
+            total +=i.product_count * product_price!!
         }
         txt_total.text = total.toString()
     }

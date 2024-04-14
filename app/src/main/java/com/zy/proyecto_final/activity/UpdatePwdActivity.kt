@@ -39,7 +39,7 @@ class UpdatePwdActivity : AppCompatActivity() {
             }
             val oldPassword = et_oldPassword.text.toString()
             val oldPasswordMD5 = MD5util().getMD5(oldPassword)
-            var user_id = intent.getLongExtra("user_id",0)
+            var user_id = intent.getIntExtra("user_id",0)
             val user = viewModel.getUserById(user_id)
 
             if(oldPasswordMD5 != user?.password){

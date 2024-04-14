@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentProductDetailsBinding
-import com.zy.proyecto_final.fragments.ProductsFragment
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.pojo.Product
@@ -18,6 +17,7 @@ import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
+import com.bumptech.glide.Glide
 
 class ProductDetailsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
@@ -58,7 +58,11 @@ class ProductDetailsFragment : Fragment() {
             favoritviewmodel.add()
             Toast.makeText(context, "Añadido al favorito", Toast.LENGTH_SHORT).show()
         }
-        viewmodel.selectedproduct.imageUrl?.let { binding.productImg.setImageResource(it) }
+// Asumiendo que productPic es una URL o una ruta de archivo
+        Glide.with(this)
+            .load(viewmodel.selectedproduct.productPic)
+            .into(binding.productPic)
+
         // Inflate the layout for this fragment
         return binding.root
 
