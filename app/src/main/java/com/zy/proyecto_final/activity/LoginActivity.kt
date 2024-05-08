@@ -11,12 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.ActivityLoginBinding
 import com.zy.proyecto_final.retrofit.LoginData
 import com.zy.proyecto_final.retrofit.YingoViewModel
-import com.zy.proyecto_final.util.MD5util
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -25,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private var isLogin: Boolean = false
     private lateinit var sharedPreferences: SharedPreferences
     private val yingomodel: YingoViewModel by viewModels()
+    private val userViewModel :UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,42 +62,43 @@ class LoginActivity : AppCompatActivity() {
 
         // Botón para iniciar sesión
         loginButton.setOnClickListener {
-            //login data
-
-
             val emailorusername = binding.emailorusername.text.toString()
             val password = binding.password.text.toString()
-            var loginData = LoginData(emailorusername, password)
+            val loginData = LoginData(emailorusername, password)
             val login = yingomodel.login(loginData)
-            // Diferente de null
-            //if (emailorusername.isNotEmpty() && password.isNotEmpty()) {
-              //  val passwordMD5 = MD5util().getMD5(password)
-                //if (viewModel.login(emailorusername, passwordMD5)) {
-            if(login){
-                Log.i("login status", login.toString())
-                    with(sharedPreferences.edit()) {
-                        putBoolean("is_login", true)
-                        putString("emailorusername", emailorusername)
-                        putString("password", password)
-                        putLong("lastLoginTime", System.currentTimeMillis())
-                        apply()
-                    }
 
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("userid", viewModel.userlogged.id)
-                    startActivity(intent)
-                    Toast.makeText(this, "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Mostrar alerta de usuario o contraseña incorrectos
-                    AlertDialog.Builder(this)
-                        .setTitle("Error de inicio de sesión")
-                        .setMessage("El nombre de usuario o la contraseña son incorrectos. Por favor, inténtalo de nuevo.")
-                        .setPositiveButton("OK") { dialog, _ ->
-                            dialog.dismiss()
-                        }
-                        .show()
+            if (login) {
+                // Inicio de sesión exitoso
+                Log.i("login status", login.toString())
+                // Guardar datos de inicio de sesión en SharedPreferences
+                with(sharedPreferences.edit()) {
+                    putBoolean("is_login", true)
+                    putString("emailorusername", emailorusername)
+                    putString("password", password)
+                    putLong("lastLoginTime", System.currentTimeMillis())
+                    apply()
                 }
+
+
+
+
+
+                // Abrir la actividad principal
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(this, "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show()
+            } else {
+                // Inicio de sesión fallido
+                // Mostrar alerta de usuario o contraseña incorrectos
+                AlertDialog.Builder(this)
+                    .setTitle("Error de inicio de sesión")
+                    .setMessage("El nombre de usuario o la contraseña son incorrectos. Por favor, inténtalo de nuevo.")
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
             }
+        }
         // Check remember me
         checkRememberMe.setOnCheckedChangeListener { _, isChecked ->
             isLogin = isChecked

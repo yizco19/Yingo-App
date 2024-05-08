@@ -12,7 +12,7 @@ data class User(
     var username: String? = "",
     @ColumnInfo(name = "password")
     var password: String? = "",
-    var imagen: Int? = null,
+    var userPic: String? = null,
     var address: String? = "",
     var mobile: String? = "",
     var payment: String? = "",

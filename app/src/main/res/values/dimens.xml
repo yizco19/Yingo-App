@@ -25,7 +25,8 @@
     <dimen name="item_height_medium">65dp</dimen>
     <dimen name="item_height_large">100dp</dimen>
     <dimen name="item_height_most">120dp</dimen>
-
+    <!-- icon size -->
+    <dimen name="icon_size">30dp</dimen>
     <!--image altura y anchura-->
     <dimen name="image_height_small">15dp</dimen>
     <dimen name="image_height_litter">20dp</dimen>

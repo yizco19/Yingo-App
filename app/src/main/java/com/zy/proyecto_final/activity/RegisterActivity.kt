@@ -12,7 +12,6 @@ import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.ActivityRegisterBinding
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.RegistrationData
-import com.zy.proyecto_final.retrofit.RetrofitClient
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.util.MD5util
 import com.zy.proyecto_final.viewmodel.UserViewModel

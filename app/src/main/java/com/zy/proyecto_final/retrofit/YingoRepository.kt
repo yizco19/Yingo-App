@@ -2,11 +2,17 @@ package com.zy.proyecto_final.retrofit
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
+import com.zy.proyecto_final.pojo.User
+import com.zy.proyecto_final.retrofit.entities.CartItemData
 import com.zy.proyecto_final.retrofit.entities.CategoryData
+import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
+import com.zy.proyecto_final.retrofit.entities.UserData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -63,6 +69,12 @@ class YingoRepository(c: Context) {
 
         }
     }
+
+    suspend fun processPayment(paymentData: PaymentData): Response<Result<Objects>> {
+        return withContext(Dispatchers.IO) {
+            _service.processPayment(paymentData)
+        }
+    }
     private fun adapterCategory(data: CategoryData): Category{
         var category = Category()
         category.name = data.name
@@ -81,6 +93,48 @@ class YingoRepository(c: Context) {
         return product
 
 
+    }
+
+    suspend fun getUser(): User? {
+        return withContext(Dispatchers.IO) {
+            var user = User()
+            val response = _service.getUser()
+            if (response.isSuccessful) {
+                response.body()?.data?.let {
+                    user = adapterUser(it)
+                }
+            }
+            return@withContext user
+    }
+    }
+    private  fun adapterUser(data: UserData): User{
+        var user = User()
+        user.username = data.username
+        user.email = data.email
+        user.id = data.id
+        user.address = data.address
+        user.mobile = data.phone
+        user.userPic = data.userPic
+
+
+
+        return user
+    }
+
+
+    suspend fun setCar(carLiveData: MutableList<Car>):  Response<Result<Objects>>  {
+        var carItems = adapterCar(carLiveData.toMutableList())
+        return withContext(Dispatchers.IO){
+            _service.setCar(carItems)
+
+        }
+        }
+    private fun adapterCar( data: MutableList<Car>):  MutableList<CartItemData>{
+        var carItems = mutableListOf<CartItemData>()
+        data.forEach {
+            carItems.add(CartItemData(it.user_id!!,it.product_id!!,it.product_count!!))
+        }
+        return carItems
     }
 
 

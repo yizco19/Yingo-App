@@ -64,14 +64,22 @@ class MainActivity : AppCompatActivity() {
                 productviewmodel.setAll(productsLiveData.value ?: emptyList())
             }
         }
+        yingomodel.getUserData().observe(
+            this
+        ) { user ->
+            if (user != null) {
+                userviewmodel.addUser(user)
+
+            }
+        };
 
 
 
 
         //asigna userlogged
         settings = getSharedPreferences("user", MODE_PRIVATE)
-        val user_id=intent.getIntExtra("userid",0)
-        this.userviewmodel.userlogged= this.userviewmodel.getUserById(user_id)!!
+        //val user_id=intent.getIntExtra("userid",0)
+        //this.userviewmodel.userlogged= this.userviewmodel.getUserById(user_id)!!
         // Inicializa la barra de navegación
         mBottomNav = findViewById(R.id.bottom_navigation)
         issettings= settings.getBoolean("issettings", false)

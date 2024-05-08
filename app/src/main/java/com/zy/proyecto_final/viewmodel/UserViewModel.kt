@@ -31,8 +31,15 @@ class UserViewModel : ViewModel() {
             return true
         }
         this.itemsrepository.add(this.userlogged)
+        this.userlogged=user
         return false
 
+
+    }
+
+    fun addUser(user: User) {
+        this.userlogged=user
+        this.itemsrepository.add(this.userlogged)
 
     }
     fun getUserById(id:Int):User?{

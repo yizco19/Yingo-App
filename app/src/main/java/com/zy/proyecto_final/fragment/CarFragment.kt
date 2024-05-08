@@ -20,6 +20,7 @@ import com.zy.proyecto_final.pojo.Order
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.recyclerviewadapter.CategoryRecyclerViewAdapter
+import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
@@ -32,6 +33,7 @@ class CarFragment : Fragment() {
     private val userviewmodel: UserViewModel by activityViewModels<UserViewModel>()
     private val productviewmodel: ProductViewModel by activityViewModels<ProductViewModel>()
     private val orderviewmodel: OrderViewModel by activityViewModels<OrderViewModel>()
+    private val yingoviewmodel : YingoViewModel by activityViewModels<YingoViewModel>()
     var plus_click: ((Int, Car) -> Unit)? = null
     var minus_click: ((Int, Car) -> Unit)? = null
     private lateinit var txt_total :TextView
@@ -81,6 +83,9 @@ class CarFragment : Fragment() {
         var btn_total=view.findViewById<TextView>(R.id.btn_total)
         setTotal(viewmodel.items.value!!)
         btn_total.setOnClickListener {
+            //Pasa el carrito a YingoShop Services
+            //Se avisa al principal
+            yingoviewmodel.setCar(viewmodel.items.value!!)
             lifecycleScope.launch {
                 if (viewmodel.items.value!!.isNotEmpty() && userviewmodel.userlogged != null) {
                     orderviewmodel.setAll(userviewmodel.userlogged!!, viewmodel.items.value!!)

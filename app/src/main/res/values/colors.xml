@@ -60,7 +60,7 @@
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
-
+    <color name="icon_name">#95968d</color>
     <!--****************  bottonnavigation   ********************-->
 
     <color name="teal">#00796B</color>
@@ -70,8 +70,8 @@
     <color name="red">#FF0000</color>
     <color name="grey">#607D8B</color>
     <color name="orange">#F57C00</color>
-
-
+    <color name="lavender">#8692f7</color>
+    <color name="setting">#8d8f83</color>
     <!--searchView-->
     <color name="search_layover_bg">#50000000</color>
     <color name="theme_primary">#2196F3</color>

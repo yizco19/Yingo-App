@@ -6,8 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
+import com.zy.proyecto_final.pojo.User
+import com.zy.proyecto_final.retrofit.entities.OrderData
+import com.zy.proyecto_final.retrofit.entities.PaymentData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -23,12 +27,15 @@ class YingoViewModel : ViewModel() {
     private val resultLiveData = MutableLiveData<Int>()
     private lateinit var _categories : MutableList<Category>
     private lateinit var _products : MutableList<Product>
+    private lateinit var _orders : List<MutableList<OrderData>>
+
 
     fun init(c: Context) {
         this._context = c
         repository = YingoRepository(_context)
         _categories =  mutableListOf()
         _products =  mutableListOf()
+        _orders = mutableListOf()
 
     }
 
@@ -55,8 +62,9 @@ class YingoViewModel : ViewModel() {
             storeTokenInJsonFile(token)
         }
 
-        return code ==0
+        return code == 0 // Devuelve true si el código es 0 (inicio de sesión exitoso)
     }
+
 
 
     fun getCategories(): LiveData<List<Category>> {
@@ -91,6 +99,47 @@ class YingoViewModel : ViewModel() {
             Log.d("YingoViewModel", "Token stored in JSON file successfully.")
         } catch (e: IOException) {
             Log.e("YingoViewModel", "Error storing token in JSON file: ${e.message}")
+        }
+    }
+
+    fun getUserData(): MutableLiveData<User?> {
+        val userLiveData = MutableLiveData<User?>()
+        runBlocking {
+            val user = repository.getUser()
+            userLiveData.postValue(user)
+
+        }
+        return userLiveData
+
+    }
+
+    fun setCar(value: MutableList<Car>) : Int {
+        val carLiveData = MutableLiveData(value)
+        var code = 1 // Valor predeterminado si ocurre un error
+        runBlocking {
+            val result = repository.setCar(carLiveData.value!!)
+            val resultData = result.body()
+            code = resultData?.code ?: 1
+        }
+        return code
+
+    }
+    fun processPayment(paymentData: PaymentData): Int {
+        var code = 1 // Valor predeterminado si ocurre un error
+        runBlocking {
+            val result = repository.processPayment(paymentData)
+            val resultData = result.body()
+            code = resultData?.code ?: 1
+        }
+        return code
+
+
+
+    }
+
+    fun getOrders() {
+        viewModelScope.launch {
+            //_orders = repository.getOrders().toMutableList()
         }
     }
 }

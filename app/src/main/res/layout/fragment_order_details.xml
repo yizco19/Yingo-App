@@ -22,9 +22,9 @@
         android:background="@color/my_app_color"
         app:navigationIcon="@drawable/reply"
         app:titleTextColor="@color/white"
-        app:title="Confirmación de pedido" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        app:title="Order" />
+        <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -43,7 +43,6 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/info_address"
                     android:layout_width="wrap_content"
                     android:paddingLeft="10dp"
                     android:layout_height="wrap_content"
@@ -86,7 +85,11 @@
 
                 </LinearLayout>
 
-
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/edit" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,7 +107,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
@@ -127,23 +130,23 @@
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/visa" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="5dp"
-                            style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu">
-                            <AutoCompleteTextView
-                                android:id="@+id/payment"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Seleccione un método de pago"
-                                android:inputType="none"/>
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:id="@+id/payment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@{userViewModel.userlogged.payment}" />
                     </LinearLayout>
 
                 </LinearLayout>
 
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/edit" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -196,16 +199,6 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/euro" />
-    <Button
-        android:id="@+id/buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Pagar"
-        android:backgroundTint="@color/my_app_color"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
