@@ -5,7 +5,6 @@ import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.CartItemData
 import com.zy.proyecto_final.retrofit.entities.CategoryData
-import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
@@ -17,27 +16,17 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.Objects
 
-interface YingoAPI {
+interface YingoUserAPI {
+    @POST("register")
+    suspend fun register(@Body registerData: RegistrationData?): Response<Result<Objects>>
 
-    @GET("category")
-    suspend fun getCategories(): Response<Result<List<CategoryData>>>
-
-    @GET("product/list")
-    suspend fun getProducts(): Response<Result<List<ProductData>>>
-
-
-    @GET("cart/items")
-    suspend fun getCart(): Response<Result<List<ProductData>>>
-
-    @POST("cart/addItems")
-    suspend fun setCar(@Body carData: List<CartItemData>) : Response<Result<Objects>>
-
-    @POST("payment")
-    suspend fun processPayment(@Body paymentData: PaymentData): Response<Result<Objects>>
-
-    @GET("order/list")
-    suspend fun getOrders(): Response<Result<List<OrderData>>>
-
+    @POST("login")
+    suspend fun login(
+        @Query("usernameOrEmail") usernameOrEmail: String,
+        @Query("password") password: String
+    ): Response<Result<String>>
+    @GET("user/userInfo")
+    suspend fun getUser(): Response<Result<UserData>>
 
 
 }

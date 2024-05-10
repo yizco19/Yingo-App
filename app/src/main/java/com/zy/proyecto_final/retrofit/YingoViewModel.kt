@@ -27,15 +27,17 @@ class YingoViewModel : ViewModel() {
     private val resultLiveData = MutableLiveData<Int>()
     private lateinit var _categories : MutableList<Category>
     private lateinit var _products : MutableList<Product>
-    private lateinit var _orders : List<MutableList<OrderData>>
+    private lateinit var _orders : MutableLiveData<MutableList<OrderData>>
 
+    public val orders: LiveData<MutableList<OrderData>>
+        get() = _orders
 
     fun init(c: Context) {
         this._context = c
         repository = YingoRepository(_context)
         _categories =  mutableListOf()
         _products =  mutableListOf()
-        _orders = mutableListOf()
+        _orders = MutableLiveData<MutableList<OrderData>>()
 
     }
 
@@ -89,6 +91,11 @@ class YingoViewModel : ViewModel() {
         }
         return productsLiveData
     }
+    fun getOrders() {
+        viewModelScope.launch {
+            _orders.value = repository.getOrders().toMutableList()
+        }
+    }
 
     private fun storeTokenInJsonFile(token: String) {
         val tokenFile = File(_context.filesDir, "token.json")
@@ -137,9 +144,4 @@ class YingoViewModel : ViewModel() {
 
     }
 
-    fun getOrders() {
-        viewModelScope.launch {
-            //_orders = repository.getOrders().toMutableList()
-        }
-    }
 }

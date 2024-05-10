@@ -108,9 +108,15 @@ class OrderFragment : Fragment() {
             return true
         }
         var amount: Double = view?.findViewById<TextView>(R.id.total)?.text.toString().toDouble()
+        var phone = view?.findViewById<TextView>(R.id.mobile)?.text.toString()
+        var name = view?.findViewById<TextView>(R.id.name)?.text.toString()
+        var address = view?.findViewById<TextView>(R.id.address)?.text.toString()
         var paymentData = PaymentData(
             paymentMethod,
-            amount
+            amount,
+            phone,
+            name,
+            address
         )
         var code = yingoviewmodel.processPayment(paymentData)
         if (code == 0) {
