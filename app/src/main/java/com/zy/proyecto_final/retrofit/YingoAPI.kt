@@ -36,8 +36,9 @@ interface YingoAPI {
     suspend fun processPayment(@Body paymentData: PaymentData): Response<Result<Objects>>
 
     @GET("order/list")
-    suspend fun getOrders(): Response<Result<List<OrderData>>>
-
+    suspend fun getOrders(@Query("status") status: Int): Response<Result<List<OrderData>>>
+    @GET("order/detail")
+    suspend fun getOrderDetail(@Query("orderId") orderId: Int): Response<Result<OrderData>>
 
 
 }

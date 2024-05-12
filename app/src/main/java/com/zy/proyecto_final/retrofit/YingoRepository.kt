@@ -13,6 +13,7 @@ import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
+import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
 import com.zy.proyecto_final.retrofit.entities.UserData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -23,24 +24,11 @@ class YingoRepository(c: Context) {
 
     private lateinit var _context: Context
     private var _service: YingoAPI
-    private var _serviceUser: YingoUserAPI
 
     init {
         _context = c
         _service = YingoService.getApiService(_context)
-        _serviceUser = YingoUserService.getApiService(_context)
 
-    }
-    suspend fun register(registerData: RegistrationData): Response<Result<Objects>> {
-        return withContext(Dispatchers.IO){
-            _serviceUser.register(registerData)
-        }
-
-    }
-    suspend fun login(loginData: LoginData?): Response<Result<String>> {
-        return withContext(Dispatchers.IO) {
-            _serviceUser.login(loginData?.usernameOrEmail ?: "", loginData?.password ?: "")
-        }
     }
     suspend fun getCategories(): List<Category> {
 
@@ -72,10 +60,10 @@ class YingoRepository(c: Context) {
 
         }
     }
-    suspend fun getOrders (): List<OrderData>{
+    suspend fun getOrders (status : Int): List<OrderData>{
         return withContext(Dispatchers.IO) {
             var orders = mutableListOf<OrderData>()
-            val response = _service.getOrders()
+            val response = _service.getOrders(status)
             if (response.isSuccessful) {
                 response.body()?.data?.forEach {
                     orders.add(it)
@@ -110,17 +98,20 @@ class YingoRepository(c: Context) {
 
     }
 
-    suspend fun getUser(): User? {
-        return withContext(Dispatchers.IO) {
-            var user = User()
-            val response = _serviceUser.getUser()
+
+    suspend fun getOrderDetail(orderId: Int): OrderData {
+        return withContext(Dispatchers.IO)
+        {
+            var order = OrderData()
+            val response = _service.getOrderDetail(orderId)
             if (response.isSuccessful) {
                 response.body()?.data?.let {
-                    user = adapterUser(it)
+                    order = it
                 }
             }
-            return@withContext user
-    }
+            return@withContext order
+                }
+
     }
     private  fun adapterUser(data: UserData): User{
         var user = User()
@@ -151,6 +142,8 @@ class YingoRepository(c: Context) {
         }
         return carItems
     }
+
+
 
 
 

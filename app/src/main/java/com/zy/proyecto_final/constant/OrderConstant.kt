@@ -1,13 +1,16 @@
 package com.zy.proyecto_final.constant
 
+import com.zy.proyecto_final.R
+
 
 class OrderConstant {
     companion object {
         val statusMap = mutableMapOf<String, Int>().apply {
-            put("En espera", 1)
-            put("En progreso", 2)
-            put("Completado", 3)
-            put("Cancelado", 4)
+            put("",0)
+            put("ALL", 0)
+            put("PENDING", 1)
+            put("SHIPPING", 2)
+            put("DELIVERED", 3)
         }
 
         const val DEFAULT_STATUS = "En espera"

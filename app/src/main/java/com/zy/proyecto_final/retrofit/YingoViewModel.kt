@@ -12,22 +12,24 @@ import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.retrofit.entities.PaymentData
-import kotlinx.coroutines.delay
+import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import kotlinx.coroutines.runBlocking
-import kotlin.collections.emptyList as emptyList1
 
 class YingoViewModel : ViewModel() {
 
+    private lateinit var _selectedOrder: OrderData
     private lateinit var _context: Context
     private lateinit var repository: YingoRepository
+    private lateinit var repositoryUser: YingoUserRepository
     private val resultLiveData = MutableLiveData<Int>()
     private lateinit var _categories : MutableList<Category>
     private lateinit var _products : MutableList<Product>
     private lateinit var _orders : MutableLiveData<MutableList<OrderData>>
+    
 
     public val orders: LiveData<MutableList<OrderData>>
         get() = _orders
@@ -38,6 +40,7 @@ class YingoViewModel : ViewModel() {
         _categories =  mutableListOf()
         _products =  mutableListOf()
         _orders = MutableLiveData<MutableList<OrderData>>()
+        _selectedOrder = OrderData()
 
     }
 
@@ -45,7 +48,7 @@ class YingoViewModel : ViewModel() {
      fun register(registerData: RegistrationData): Boolean{
          var code = 1 // Valor predeterminado si ocurre un error
          runBlocking {
-            val result = repository.register(registerData)
+            val result = repositoryUser.register(registerData)
             val resultData = result.body()
              code = resultData?.code ?: 1
         }
@@ -57,7 +60,7 @@ class YingoViewModel : ViewModel() {
         var code = 1 // Valor predeterminado si ocurre un error
 
         runBlocking {
-            val result = repository.login(loginData)
+            val result = repositoryUser.login(loginData)
             val resultData = result.body()
             code = resultData?.code ?: 1
             val token = resultData?.data ?: ""
@@ -91,9 +94,9 @@ class YingoViewModel : ViewModel() {
         }
         return productsLiveData
     }
-    fun getOrders() {
+    fun getOrders(status:Int) {
         viewModelScope.launch {
-            _orders.value = repository.getOrders().toMutableList()
+            _orders.value = repository.getOrders(status).toMutableList()
         }
     }
 
@@ -112,7 +115,7 @@ class YingoViewModel : ViewModel() {
     fun getUserData(): MutableLiveData<User?> {
         val userLiveData = MutableLiveData<User?>()
         runBlocking {
-            val user = repository.getUser()
+            val user = repositoryUser.getUser()
             userLiveData.postValue(user)
 
         }
@@ -143,5 +146,32 @@ class YingoViewModel : ViewModel() {
 
 
     }
+
+    fun getOrderDetail(position: Int) {
+        viewModelScope.launch {
+            val order = repository.getOrderDetail(position)
+            selectedOrder = order
+
+        }
+    }
+    fun updatePwd(data: UpdatePwdData): Int {
+        var code = 1 // Valor predeterminado si ocurre un error
+        runBlocking {
+            val result = repositoryUser.updatePwd(data)
+            val resultData = result.body()
+            code = resultData?.code ?: 1
+        }
+        return code
+    }
+    fun updateUser(data: User): Int {
+        var code = 1 // Valor predeterminado si ocurre un error
+        runBlocking {
+            val result = repositoryUser.updateUser(data)
+            val resultData = result.body()
+            code = resultData?.code ?: 1
+        }
+        return code
+    }
+
 
 }

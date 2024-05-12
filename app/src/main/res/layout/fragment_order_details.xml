@@ -5,8 +5,8 @@
     tools:context=".fragment.OrderFragment">
     <data>
         <variable
-            name="userViewModel"
-            type="com.zy.proyecto_final.viewmodel.UserViewModel" />
+            name="orderViewModel"
+            type="com.zy.proyecto_final.retrofit.YingoViewModel" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

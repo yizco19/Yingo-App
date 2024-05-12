@@ -80,10 +80,10 @@ class MineFragment : Fragment() {
             alertDialog.show()
         }
         val orderStatusMap = mapOf(
-            R.id.orderAll to "all",
-            R.id.history to "history",
-            R.id.pending to "pending",
-            R.id.shipping to "shipping"
+            R.id.orderAll to "ALL",
+            R.id.history to "HISTORY",
+            R.id.pending to "PENDING",
+            R.id.shipping to "DELIVERED"
         )
 
         for ((viewId, orderStatus) in orderStatusMap) {

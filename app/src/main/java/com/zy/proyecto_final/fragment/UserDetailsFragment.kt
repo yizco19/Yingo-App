@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.activity.LoginActivity
+import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +24,7 @@ private const val ARG_PARAM2 = "param2"
 
 class UserDetailsFragment : Fragment() {
     private val viewModel: UserViewModel by activityViewModels()
+    private val yingovieModel: YingoViewModel by activityViewModels()
     private var username: EditText? = null
     private var email: EditText? = null
     private var mobile: EditText? = null
@@ -40,16 +42,16 @@ class UserDetailsFragment : Fragment() {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, MineFragment())?.commit()
         }
             if(viewModel.userlogged.id != null){
-                username = view?.findViewById<EditText>(R.id.username)
+                username = view?.findViewById<EditText>(R.id.nickname)
                 email = view?.findViewById<EditText>(R.id.email)
                 mobile = view?.findViewById<EditText>(R.id.mobile)
                 address = view?.findViewById<EditText>(R.id.address)
-                payment = view?.findViewById<EditText>(R.id.paymentMethod)
-                username?.setText(viewModel.userlogged.username)
+                //payment = view?.findViewById<EditText>(R.id.paymentMethod)
+                //username?.setText(viewModel.userlogged.username)
                 email?.setText(viewModel.userlogged.email)
                 mobile?.setText(viewModel.userlogged.mobile)
                 address?.setText(viewModel.userlogged.address)
-                payment?.setText(viewModel.userlogged.payment)
+                //payment?.setText(viewModel.userlogged.payment)
 
             }
          view?.findViewById<Button>(R.id.saveChanges)?.setOnClickListener {
@@ -65,6 +67,8 @@ class UserDetailsFragment : Fragment() {
                  Toast.makeText(context, "Actualizado", Toast.LENGTH_SHORT).show()
                  // if ha cambiado de username va volver a login
                  if(user.username != usernametemp){
+
+                     yingovieModel.update(user)
                      viewModel.update(user)
                      activity?.finish()
                      var intent = Intent(context, LoginActivity::class.java)

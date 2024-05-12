@@ -175,14 +175,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+
             android:orientation="horizontal"
             android:paddingTop="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10"
             >
             <LinearLayout
                 android:id="@+id/history"
-                android:layout_marginStart="@dimen/dp_40"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical">
@@ -193,6 +196,7 @@
                     android:background="@color/white"
                     android:src="@drawable/order_history" />
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/icon_name"
@@ -201,10 +205,10 @@
 
             <LinearLayout
                 android:id="@+id/pending"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/dp_40"
                 android:orientation="vertical">
 
                 <ImageView
@@ -215,6 +219,7 @@
                     android:src="@drawable/pendiente" />
 
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="pendiente"
@@ -223,8 +228,8 @@
 
             <LinearLayout
                 android:id="@+id/shipping"
-                android:layout_marginStart="@dimen/dp_40"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical">
@@ -235,6 +240,7 @@
                     android:background="@color/white"
                     android:src="@drawable/shipping" />
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/icon_name"
@@ -242,8 +248,8 @@
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/review"
-                android:layout_marginStart="@dimen/dp_40"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical">
@@ -254,6 +260,7 @@
                     android:background="@color/white"
                     android:src="@drawable/review" />
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/icon_name"
@@ -261,6 +268,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
@@ -282,6 +290,7 @@
                 android:textSize="20sp"
                 android:background="#f9f5f5"
                 android:gravity="center"/>
+
         </LinearLayout>
     </LinearLayout>
 

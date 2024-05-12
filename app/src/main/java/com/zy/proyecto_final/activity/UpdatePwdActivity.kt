@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import com.zy.proyecto_final.R
+import com.zy.proyecto_final.retrofit.YingoViewModel
+import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
 import com.zy.proyecto_final.util.MD5util
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
@@ -17,6 +20,7 @@ class UpdatePwdActivity : AppCompatActivity() {
     private lateinit var btn_update: Button
     private lateinit var toolbar: Toolbar
     private val viewModel: UserViewModel by viewModels()
+    private val yingoviewModel: YingoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +34,7 @@ class UpdatePwdActivity : AppCompatActivity() {
             //regresa a la pantalla anterior
             onBackPressed()
         }
+        yingoviewModel.init(this)
         viewModel.init(this)
         btn_update.setOnClickListener {
             val newPassword = et_newPassword.text.toString()
@@ -47,9 +52,22 @@ class UpdatePwdActivity : AppCompatActivity() {
                 et_oldPassword.error = "La contraseña antigente no coincide"
             }
             else{
+                var updatePwdData = UpdatePwdData(
+                    oldPassword,
+                    newPassword,
+                    newPasswordConf
+                )
+                var code = yingoviewModel.updatePwd(updatePwdData)
+                if( code==0){
+                    Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
+                    //regresa a la pantalla anterior y muestra un mensaje
+                }else{
+                    Toast.makeText(this, "Error al actualizar la contraseña", Toast.LENGTH_SHORT).show()
+                }
+                /*
                 val passwordMD5 = MD5util().getMD5(newPassword)
                 user?.password = passwordMD5
-                viewModel.updateUser(MD5util().getMD5(newPassword), user_id)
+                viewModel.updateUser(MD5util().getMD5(newPassword), user_id)*/
                 setResult(1000)
                 finish()
             }

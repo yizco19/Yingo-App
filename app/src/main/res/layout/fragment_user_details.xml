@@ -35,11 +35,11 @@
                 android:layout_height="40dp"
                 android:src="@drawable/account" />
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/nickname"
                 android:paddingLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Introduce tu usuario"
+                android:hint="Introduce tu nickname"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:textSize="14sp" />

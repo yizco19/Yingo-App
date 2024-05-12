@@ -14,6 +14,7 @@ import com.zy.proyecto_final.pojo.Order
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.viewmodel.ProductViewModel
+import java.text.SimpleDateFormat
 
 class OrdersRecyclerViewAdapter (private var orderList:List<OrderData>,
                                  private var context: Context,
@@ -35,7 +36,11 @@ class OrdersRecyclerViewAdapter (private var orderList:List<OrderData>,
         val order = orderList[position]
         holder.totalView.text = order.total.toString()
         holder.statusView.text = OrderConstant.getStatusString(order.status!!)
-        holder.dateView.text = order.createdAt.toString()
+        // solo me muestra la fecha
+        // Crear un objeto SimpleDateFormat para formatear la fecha
+        val formatoFecha = SimpleDateFormat("yyyy-MM-dd")
+        var fecha = formatoFecha.format(order.createdAt)
+        holder.dateView.text = fecha
         holder.numberView.text = order.id.toString()
         holder.itemView.setOnClickListener {
             this.detail_click?.let { it -> it(position, order) }

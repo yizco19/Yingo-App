@@ -8,9 +8,12 @@ import androidx.appcompat.widget.Toolbar
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zy.proyecto_final.R
+import com.zy.proyecto_final.constant.OrderConstant
+import com.zy.proyecto_final.constant.getStatusValue
 import com.zy.proyecto_final.recyclerviewadapter.OrdersRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
 
@@ -28,13 +31,23 @@ class OrdersFragment : Fragment() {
         v.findViewById<Toolbar>(R.id.toolbar)?.title = orderStatus
         v.findViewById<RecyclerView>(R.id.listado).layoutManager = GridLayoutManager(context, 1)
 
+        val ordersRecyclerViewAdapter = context?.let { OrdersRecyclerViewAdapter(mutableListOf(), it, orderStatus ?: "") }
         v.findViewById<RecyclerView>(R.id.listado).adapter =
-            context?.let { OrdersRecyclerViewAdapter(mutableListOf(), it, orderStatus ?: "") }
-        yingomodel.getOrders()
+            ordersRecyclerViewAdapter
+        yingomodel.getOrders(OrderConstant.getStatusValue(orderStatus ?: "")!!)
+        ordersRecyclerViewAdapter?.detail_click = { position, item ->
+            val orderId = item.id
+            parentFragmentManager.commit {
+                replace(R.id.fragmentContainerView, OrderDetailsFragment.newInstance(orderId))
+                setReorderingAllowed(true)
+                addToBackStack(null)
+            }
+        }
 
         yingomodel.orders.observe(viewLifecycleOwner) {
             (v.findViewById<RecyclerView>(R.id.listado).adapter as OrdersRecyclerViewAdapter).setOrdersValues(it)
         }
+
         return v
     }
 
