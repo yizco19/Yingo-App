@@ -65,6 +65,7 @@ class UserViewModel : ViewModel() {
 
     fun logout() {
         this.userlogged = User()
+        this.itemsrepository.clear()
     }
 
     fun updateUser(mD5: String, userId: Int) {

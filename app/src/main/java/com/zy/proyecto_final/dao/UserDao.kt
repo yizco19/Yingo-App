@@ -30,5 +30,7 @@ interface UserDao {
     fun getUserById(id:Int):User
     @Query("UPDATE user SET password = :mD5 WHERE id = :userId")
     fun updateUser(mD5: String, userId: Int)
+    @Query("DELETE FROM user")
+    fun clear()
 
 }

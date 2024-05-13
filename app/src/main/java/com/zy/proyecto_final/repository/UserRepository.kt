@@ -49,4 +49,8 @@ class UserRepository (var context: Context){
 
     }
 
+    fun clear() {
+        _userDAO.clear()
+    }
+
 }

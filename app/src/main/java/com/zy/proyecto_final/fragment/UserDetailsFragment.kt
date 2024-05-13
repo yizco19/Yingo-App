@@ -17,10 +17,7 @@ import com.zy.proyecto_final.activity.LoginActivity
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 class UserDetailsFragment : Fragment() {
     private val viewModel: UserViewModel by activityViewModels()
@@ -69,7 +66,7 @@ class UserDetailsFragment : Fragment() {
                  if(user.username != usernametemp){
 
                      yingovieModel.updateUser(user)
-                     viewModel.update(user)
+                     viewModel.logout()
                      activity?.finish()
                      var intent = Intent(context, LoginActivity::class.java)
                      startActivity(intent)
