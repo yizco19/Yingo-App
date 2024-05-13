@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
         this.userviewmodel.init(this)
         this.favoriteviewmodel.init(this)
         this.yingomodel.init(this)
+        //clear producto y category
+        //productviewmodel.deleteAll()
+        //categoryviewmodel.deleteAll()
+
         var categoriesLiveData: LiveData<List<Category>> = yingomodel.getCategories()
 
         categoriesLiveData.observe(this) { categories ->

@@ -18,6 +18,9 @@ data class ProductData(
     @SerializedName("productPic")
     val productPic: String = "",
 
+    @SerializedName("stock")
+    val stock: Int = 0,
+
     @SerializedName("price")
     val price: Double = 0.0,
 

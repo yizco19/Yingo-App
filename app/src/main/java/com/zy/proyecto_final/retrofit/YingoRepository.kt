@@ -93,6 +93,7 @@ class YingoRepository(c: Context) {
         product.categoryId = data.categoryId
         product.price = data.price
         product.productPic = data.productPic
+        product.stock =data.stock
         return product
 
 

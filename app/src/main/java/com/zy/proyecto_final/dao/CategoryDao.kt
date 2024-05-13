@@ -15,9 +15,9 @@ interface CategoryDao {
     /*@Insert()
     fun insert(item: Category):Int
     @Delete
-    fun delete(item:  Category)
+    fun delete(item:  Category)*/
     @Update
-    fun update(item:  Category)*/
+    fun update(item:  Category)
     @Query("SELECT * FROM category")
     fun getAll(): List<Category>
 
@@ -32,7 +32,29 @@ interface CategoryDao {
 
     @Transaction
     fun setAll(categories: List<Category>) {
-        deleteAll() // Elimina todas las categorías existentes
-        insertAll(categories) // Inserta las nuevas categorías
+        val existingCategories = getAll() // Obtener todas las categorías existentes
+        val categoriesToAdd = mutableListOf<Category>()
+
+        for (category in categories) {
+            val existingCategory = existingCategories.find { it.id == category.id }
+            if (existingCategory == null) {
+                // La categoría no existe, agregarla a la lista de categorías a insertar
+                categoriesToAdd.add(category)
+            } else {
+                // La categoría ya existe, verificar si hay cambios en nombre o alias
+                if (existingCategory.name != category.name || existingCategory.alias != category.alias) {
+                    // Actualizar los valores de nombre y alias
+                    existingCategory.name = category.name
+                    existingCategory.alias = category.alias
+                    update(existingCategory)
+                }
+            }
+        }
+
+        // Insertar las nuevas categorías
+        if (categoriesToAdd.isNotEmpty()) {
+            insertAll(categoriesToAdd)
+        }
     }
+
 }

@@ -18,6 +18,7 @@ data class Product(
     @PrimaryKey
     var id: Int?      = null,
     var categoryId: Int?      = null,
+    var stock: Int?      = null,
     var name: String? = null,
     var description: String? = null,
     var productPic: String? = null,

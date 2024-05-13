@@ -38,6 +38,7 @@ class YingoViewModel : ViewModel() {
     fun init(c: Context) {
         this._context = c
         repository = YingoRepository(_context)
+        repositoryUser = YingoUserRepository(_context)
         _categories =  mutableListOf()
         _products =  mutableListOf()
         _orders = MutableLiveData<MutableList<OrderData>>()
@@ -176,7 +177,7 @@ class YingoViewModel : ViewModel() {
         return code
     }
 
-    fun uploadAvatar(uri: Uri) {
+    fun uploadAvatar(uri: Uri) : Int {
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
             val result = repositoryUser.uploadAvatar(uri)

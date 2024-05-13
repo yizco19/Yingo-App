@@ -1,5 +1,6 @@
 package com.zy.proyecto_final.retrofit
 
+import android.net.Uri
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
@@ -40,9 +41,8 @@ interface YingoUserAPI {
     @PUT("update")
     suspend fun update(@Body userData: UserData): Response<Result<Objects>>
 
-    @Multipart
     @PATCH("updateAvatar")
-    suspend fun uploadAvatar(@Part file: MultipartBody.Part): Response<Result<Objects>>
+    suspend fun uploadAvatar(@Query("avatarUrl") uri : Uri): Response<Result<Objects>>
 
 
 

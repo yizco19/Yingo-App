@@ -55,4 +55,8 @@ class ProductViewModel : ViewModel() {
         this._items.value = this.itemsrepository.getAll()
     }
 
+    fun deleteAll() {
+        this.itemsrepository.deleteAll()
+    }
+
 }

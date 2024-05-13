@@ -8,8 +8,6 @@ import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.CartItemData
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.asRequestBody
 
 import com.zy.proyecto_final.retrofit.entities.Result
 import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
@@ -117,10 +115,10 @@ class YingoUserRepository(c: Context) {
     suspend fun uploadAvatar(uri: Uri): Response<Result<Objects>> {
         var code = 1
         val file = File(uri.path!!)
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        //val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        //val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
         return withContext(Dispatchers.IO) {
-            val response = _serviceUser.uploadAvatar(body)
+            val response = _serviceUser.uploadAvatar(uri)
             if (response.isSuccessful) {
                 code = response.code()
             }

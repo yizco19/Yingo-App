@@ -42,4 +42,8 @@ class CategoryViewModel : ViewModel() {
         this.itemsrepository.setAll(additionalCategories)
         this._items.value = this.itemsrepository.getAll()
     }
+
+    fun deleteAll() {
+        this.itemsrepository.deleteAll()
+    }
 }

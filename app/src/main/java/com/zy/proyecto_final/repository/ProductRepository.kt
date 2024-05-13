@@ -41,4 +41,8 @@ class ProductRepository(context: Context) {
     fun setAll(productList: List<Product>) {
         _productDao.setAll(productList)
     }
+
+    fun deleteAll() {
+        _productDao.deleteAll()
+    }
 }

@@ -21,20 +21,41 @@ interface ProductDao {
     fun add(product: Product):Int
 
     @Delete
-    fun delete(product: Product)
+    fun delete(product: Product)*/
 
     @Update
-    fun update(product: Product)*/
+    fun update(product: Product)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(productList: List<Product>)
 
     @Transaction
     fun setAll(productList: List<Product>) {
-        deleteAll() // Elimina todos los datos existentes en la tabla
-        insertAll(productList) // Inserta los nuevos datos
-    }
+        val existingProducts = getAll() // Obtener todos los productos existentes
+        val productsToAdd = mutableListOf<Product>()
 
+        for (product in productList) {
+            val existingProduct = existingProducts.find { it.id == product.id }
+            if (existingProduct == null) {
+                // El producto no existe, agregarlo a la lista de productos a insertar
+                productsToAdd.add(product)
+            } else {
+                // El producto ya existe, verificar si hay cambios en algún atributo
+                if (existingProduct.name != product.name || existingProduct.price != product.price || existingProduct.stock != product.stock) {
+                    // Actualizar los valores del producto
+                    existingProduct.name = product.name
+                    existingProduct.price = product.price
+                    existingProduct.stock = product.stock
+                    update(existingProduct)
+                }
+            }
+        }
+
+        // Insertar los nuevos productos
+        if (productsToAdd.isNotEmpty()) {
+            insertAll(productsToAdd)
+        }
+    }
     @Query("DELETE FROM product")
     fun deleteAll()
 }

@@ -38,7 +38,7 @@ class OrdersFragment : Fragment() {
         ordersRecyclerViewAdapter?.detail_click = { position, item ->
             val orderId = item.id
             parentFragmentManager.commit {
-                replace(R.id.fragmentContainerView, OrderDetailsFragment.newInstance(orderId))
+                replace(R.id.fragmentContainerView, OrderDetailsFragment.newInstance(orderId!!))
                 setReorderingAllowed(true)
                 addToBackStack(null)
             }

@@ -44,4 +44,8 @@ class CategoryRepository(context: Context) {
     fun setAll(additionalCategories: List<Category>) {
         _categoryDao.setAll(additionalCategories)
     }
+
+    fun deleteAll() {
+        _categoryDao.deleteAll()
+    }
 }
