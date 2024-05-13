@@ -1,6 +1,7 @@
 package com.zy.proyecto_final.retrofit
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,7 +30,7 @@ class YingoViewModel : ViewModel() {
     private lateinit var _categories : MutableList<Category>
     private lateinit var _products : MutableList<Product>
     private lateinit var _orders : MutableLiveData<MutableList<OrderData>>
-    
+
 
     public val orders: LiveData<MutableList<OrderData>>
         get() = _orders
@@ -45,14 +46,14 @@ class YingoViewModel : ViewModel() {
     }
 
 
-     fun register(registerData: RegistrationData): Boolean{
-         var code = 1 // Valor predeterminado si ocurre un error
-         runBlocking {
+    fun register(registerData: RegistrationData): Boolean{
+        var code = 1 // Valor predeterminado si ocurre un error
+        runBlocking {
             val result = repositoryUser.register(registerData)
             val resultData = result.body()
-             code = resultData?.code ?: 1
+            code = resultData?.code ?: 1
         }
-         return code ==0
+        return code ==0
 
     }
 
@@ -87,9 +88,9 @@ class YingoViewModel : ViewModel() {
     fun getProducts(): LiveData<List<Product>> {
         val productsLiveData = MutableLiveData<List<Product>>()
         viewModelScope.launch {
-                val products = repository.getProducts()
-                _products.addAll(products)
-                productsLiveData.postValue(_products)
+            val products = repository.getProducts()
+            _products.addAll(products)
+            productsLiveData.postValue(_products)
 
         }
         return productsLiveData
@@ -147,13 +148,15 @@ class YingoViewModel : ViewModel() {
 
     }
 
-    fun getOrderDetail(position: Int) {
+    fun getOrderDetail(position: Int): LiveData<OrderData> {
+        val orderLiveData = MutableLiveData<OrderData>()
         viewModelScope.launch {
             val order = repository.getOrderDetail(position)
-            selectedOrder = order
-
+            orderLiveData.postValue(order)
         }
+        return orderLiveData
     }
+
     fun updatePwd(data: UpdatePwdData): Int {
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
@@ -171,6 +174,18 @@ class YingoViewModel : ViewModel() {
             code = resultData?.code ?: 1
         }
         return code
+    }
+
+    fun uploadAvatar(uri: Uri) {
+        var code = 1 // Valor predeterminado si ocurre un error
+        runBlocking {
+            val result = repositoryUser.uploadAvatar(uri)
+            val resultData = result.body()
+            code = resultData?.code ?: 1
+        }
+        return code
+
+
     }
 
 

@@ -9,9 +9,11 @@ import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.CartItemData
 import com.zy.proyecto_final.retrofit.entities.CategoryData
+import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
+import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
 import com.zy.proyecto_final.retrofit.entities.UserData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -27,17 +29,6 @@ class YingoRepository(c: Context) {
         _context = c
         _service = YingoService.getApiService(_context)
 
-    }
-    suspend fun register(registerData: RegistrationData): Response<Result<Objects>> {
-        return withContext(Dispatchers.IO){
-            _service.register(registerData)
-        }
-
-    }
-    suspend fun login(loginData: LoginData?): Response<Result<String>> {
-        return withContext(Dispatchers.IO) {
-            _service.login(loginData?.usernameOrEmail ?: "", loginData?.password ?: "")
-        }
     }
     suspend fun getCategories(): List<Category> {
 
@@ -69,6 +60,18 @@ class YingoRepository(c: Context) {
 
         }
     }
+    suspend fun getOrders (status : Int): List<OrderData>{
+        return withContext(Dispatchers.IO) {
+            var orders = mutableListOf<OrderData>()
+            val response = _service.getOrders(status)
+            if (response.isSuccessful) {
+                response.body()?.data?.forEach {
+                    orders.add(it)
+                }
+            }
+            return@withContext orders
+        }
+    }
 
     suspend fun processPayment(paymentData: PaymentData): Response<Result<Objects>> {
         return withContext(Dispatchers.IO) {
@@ -95,17 +98,20 @@ class YingoRepository(c: Context) {
 
     }
 
-    suspend fun getUser(): User? {
-        return withContext(Dispatchers.IO) {
-            var user = User()
-            val response = _service.getUser()
+
+    suspend fun getOrderDetail(orderId: Int): OrderData {
+        return withContext(Dispatchers.IO)
+        {
+            var order = OrderData()
+            val response = _service.getOrderDetail(orderId)
             if (response.isSuccessful) {
                 response.body()?.data?.let {
-                    user = adapterUser(it)
+                    order = it
                 }
             }
-            return@withContext user
-    }
+            return@withContext order
+        }
+
     }
     private  fun adapterUser(data: UserData): User{
         var user = User()
@@ -128,7 +134,7 @@ class YingoRepository(c: Context) {
             _service.setCar(carItems)
 
         }
-        }
+    }
     private fun adapterCar( data: MutableList<Car>):  MutableList<CartItemData>{
         var carItems = mutableListOf<CartItemData>()
         data.forEach {
@@ -136,6 +142,9 @@ class YingoRepository(c: Context) {
         }
         return carItems
     }
+
+
+
 
 
 }
