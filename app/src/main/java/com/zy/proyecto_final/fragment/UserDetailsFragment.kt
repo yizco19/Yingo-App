@@ -68,7 +68,7 @@ class UserDetailsFragment : Fragment() {
                  // if ha cambiado de username va volver a login
                  if(user.username != usernametemp){
 
-                     yingovieModel.update(user)
+                     yingovieModel.updateUser(user)
                      viewModel.update(user)
                      activity?.finish()
                      var intent = Intent(context, LoginActivity::class.java)
