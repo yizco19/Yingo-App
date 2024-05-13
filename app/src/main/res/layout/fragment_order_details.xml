@@ -3,11 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragment.OrderFragment">
-    <data>
-        <variable
-            name="orderViewModel"
-            type="com.zy.proyecto_final.retrofit.YingoViewModel" />
-    </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,6 +12,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/my_app_color"
@@ -38,12 +34,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:paddingLeft="10dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -64,14 +60,14 @@
                             android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="@{userViewModel.userlogged.username}" />
+                            android:text="name" />
 
                         <TextView
                             android:id="@+id/mobile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
-                            android:text="@{userViewModel.userlogged.mobile}" />
+                            android:text="mobile" />
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -80,16 +76,11 @@
                         android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{userViewModel.userlogged.address}"
+                        android:text="address"
                         android:textSize="16sp" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/edit" />
             </LinearLayout>
 
             <LinearLayout
@@ -102,12 +93,12 @@
                 android:paddingLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
@@ -137,16 +128,11 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
                             android:gravity="center_vertical"
-                            android:text="@{userViewModel.userlogged.payment}" />
+                            android:text="method_pay" />
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/edit" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -163,10 +149,33 @@
             android:layout_height="65dp"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout">
+            <LinearLayout
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/date"/>
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/orderDate"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="order date"/>
+
+            </LinearLayout>
 <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
+    android:layout_toEndOf="@+id/date"
+
     android:orientation="vertical">
     <TextView
         android:layout_marginLeft="10dp"
@@ -182,26 +191,30 @@
         android:text="IVA incluido"
         android:textSize="14sp"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_alignParentRight="true"
-    android:layout_gravity="right">
-    <TextView
-        android:id="@+id/total"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10000,0"
-        android:textSize="18sp" />
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/euro" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearLayoutCompat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="10000,0"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/euro" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
