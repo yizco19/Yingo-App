@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.coroutineScope
@@ -17,13 +16,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.pojo.Car
-import com.zy.proyecto_final.pojo.Order
-import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
-import com.zy.proyecto_final.recyclerviewadapter.CategoryRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.viewmodel.CarViewModel
-import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel

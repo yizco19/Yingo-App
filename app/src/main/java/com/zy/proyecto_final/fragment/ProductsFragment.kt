@@ -1,16 +1,17 @@
 package com.zy.proyecto_final.fragment
 
+import android.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
@@ -20,6 +21,7 @@ import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
+
 
 /**
  * A fragment representing a list of Items.
@@ -40,6 +42,15 @@ class ProductsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = inflater.inflate(R.layout.fragment_products, container, false)
+        val refreshLayout = findViewById<RefreshLayout>(R.id.refreshLayout)
+        refreshLayout.setRefreshHeader(ClassicsHeader(this))
+        refreshLayout.setRefreshFooter(ClassicsFooter(this))
+        refreshLayout.setOnRefreshListener {
+            refreshLayout.finishRefresh(2000 /*,false*/) // Pasa false si la actualización falla
+        }
+        refreshLayout.setOnLoadMoreListener {
+            refreshLayout.finishLoadMore(2000 /*,false*/) // Pasa false si la carga falla
+        }
 
         // Obtén el RecyclerView
         val recyclerView = binding.findViewById<RecyclerView>(R.id.listado)
