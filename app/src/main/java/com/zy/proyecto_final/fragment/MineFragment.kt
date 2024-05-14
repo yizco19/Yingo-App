@@ -33,6 +33,7 @@ class MineFragment : Fragment() {
     private val viewModel: UserViewModel by activityViewModels()
     private val timeViewModel: TimeViewModel by activityViewModels()
     private val yingoViewModel: YingoViewModel by activityViewModels<YingoViewModel>()
+    private  val userViewModel :UserViewModel by activityViewModels<UserViewModel>()
     private var profile_avatar: ImageView? = null
     val handler = Handler()
     var date : TextView? = null
@@ -158,7 +159,14 @@ class MineFragment : Fragment() {
             profile_avatar!!.setImageURI(uri)
             //upload image a servidor
             val file = File(uri.path)
+
             yingoViewModel.uploadAvatar(uri)
+            yingoViewModel.getUserData().observe(this) {
+                if (it != null) {
+                    userViewModel.update(it)
+                }
+            }
+
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
