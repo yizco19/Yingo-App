@@ -142,6 +142,8 @@ class YingoViewModel : ViewModel() {
             val result = repository.processPayment(paymentData)
             val resultData = result.body()
             code = resultData?.code ?: 1
+            Log.d("YingoViewModel", "Respuesta del servidor: ${resultData!!.message}")
+
         }
         return code
 

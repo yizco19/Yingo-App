@@ -68,7 +68,12 @@ class CarFragment : Fragment() {
             { position: Int, item: Car ->
                 run {
                     item.product_count = item.product_count - 1
-                    this.viewmodel.update(item)
+                    if (item.product_count == 0) {
+                        viewmodel.deleteByProductId(item.id!!)
+                    }else{
+                        this.viewmodel.update(item)
+                    }
+
                     //se avisa al principal
                     loadData()
                     this.minus_click?.let { it -> it(position, item) }
@@ -91,19 +96,18 @@ class CarFragment : Fragment() {
                     orderviewmodel.setAll(userviewmodel.userlogged!!, viewmodel.items.value!!)
                     parentFragmentManager.commit {
                         setReorderingAllowed(true)
-                        setReorderingAllowed(true)
                         replace(
                             R.id.fragmentContainerView,
                             OrderFragment::class.java,
                             null,
                             "OrderFragment"
                         )
+                        addToBackStack(null) // Si necesitas mantener la transacción en la pila de retroceso
                     }
-                    loadData()
-                    parentFragmentManager.popBackStack()
                 }
             }
         }
+
         return view
     }
     private fun setTotal(List: List<Car>) {

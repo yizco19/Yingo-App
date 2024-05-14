@@ -33,21 +33,21 @@ class CarViewModel: ViewModel() {
     }
 
     fun add() {
-        if(this.selectedcar.id == null){
-            val existingCar = _items.value?.find { it.product_id == selectedcar.product_id }
+        if (this.selectedcar.id == null) {
+            val existingCar = this._items.value?.find { car: Car ->  car.product_id == this.selectedcar.product_id }
             if (existingCar != null) {
                 existingCar.product_count += 1
-            }else{
+                itemsrepository.update(existingCar) // Actualiza la cantidad del elemento existente
+            } else {
+                // Si no existe, agrega un nuevo elemento al carrito
                 this._items.value?.add(this.selectedcar)
                 itemsrepository.add(this.selectedcar)
-                var t= this.selectedcar
             }
 
             this.updateAll()
-
         }
-        itemsrepository.add(this.selectedcar)
     }
+
     fun getAll():MutableList<Car>{
         return this.itemsrepository.getAll(selectedcar.user_id)
     }
@@ -55,6 +55,9 @@ class CarViewModel: ViewModel() {
 
     fun delete(item: Car) {
 this.itemsrepository.delete(item)
+    }
+    fun deleteByProductId(productId:  Int) {
+        this.itemsrepository.deleteByProductId(productId)
     }
     fun deleteAll() {
         this.itemsrepository.deleteAll()

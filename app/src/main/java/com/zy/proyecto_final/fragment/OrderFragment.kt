@@ -95,10 +95,15 @@ class OrderFragment : Fragment() {
         )
         autoComplete.setAdapter(adapter)
         autoComplete.setOnItemClickListener { parent, _, position, _ ->
-            val selectedItem = parent.getItemAtPosition(position)
-            Log.d("Selected Payment Method", selectedItem.toString())
+            val selectedItem = parent.getItemAtPosition(position).toString()
+            autoComplete.setText(selectedItem, false) // Establecer el texto seleccionado en el AutoCompleteTextView
+            Log.d("Selected Payment Method", selectedItem)
         }
+
     }
+
+
+
 
     private fun processPayment(): Boolean {
         var paymentName = view?.findViewById<TextView>(R.id.payment)
@@ -121,6 +126,7 @@ class OrderFragment : Fragment() {
         var code = yingoviewmodel.processPayment(paymentData)
         if (code == 0) {
             Toast.makeText(context, "Error al procesar el pago", Toast.LENGTH_SHORT).show()
+
         } else if (code == 1) {
             Toast.makeText(context, "Pago realizado", Toast.LENGTH_SHORT).show()
         }
@@ -143,11 +149,11 @@ class OrderFragment : Fragment() {
         val nameTextView = dialogView.findViewById<TextView>(R.id.dialog_name)
         val mobileTextView = dialogView.findViewById<TextView>(R.id.dialog_mobile)
 
-        addressTextView.text = binding.address.toString()
-        nameTextView.text = binding.name.toString()
-        mobileTextView.text = binding.mobile.toString()
-        dialogBuilder.setPositiveButton("Guardar"){
-                dialog, _ ->
+        addressTextView.text = binding.address.text.toString()
+        nameTextView.text = binding.name.text.toString()
+        mobileTextView.text = binding.mobile.text.toString()
+
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Guardar") { dialog, _ ->
             // Aquí puedes agregar la lógica para guardar la información del usuario
             // Por ejemplo, puedes obtener los nuevos valores de los TextViews y actualizar el ViewModel
             val newAddress = addressTextView.text.toString()
@@ -158,12 +164,14 @@ class OrderFragment : Fragment() {
             binding.name.text = newName
             binding.mobile.text = newMobile
         }
-        dialogBuilder.setNegativeButton("Cancelar"){
-                dialog, _ ->
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar") { dialog, _ ->
             dialog.dismiss()
         }
+
         return alertDialog
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

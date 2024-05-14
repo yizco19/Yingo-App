@@ -1,6 +1,3 @@
-package com.zy.proyecto_final.fragment
-
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +8,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.zy.proyecto_final.R
+import com.zy.proyecto_final.databinding.FragmentProductsBinding
+import com.zy.proyecto_final.fragment.ProductDetailsFragment
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.pojo.Product
@@ -22,38 +21,22 @@ import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
-
-/**
- * A fragment representing a list of Items.
- */
 class ProductsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
     private val carviewmodel: CarViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val favoritviewmodel: FavoriteViewModel by activityViewModels()
     private var productAdapter: ProductRecyclerViewAdapter? = null
-    private var view: View? = null
-    var fav_click: ((Int, Product) -> Unit)? = null
-    var add_click: ((Int, Product) -> Unit)? = null
-    var detail_click: ((Int, Product) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = inflater.inflate(R.layout.fragment_products, container, false)
-        val refreshLayout = findViewById<RefreshLayout>(R.id.refreshLayout)
-        refreshLayout.setRefreshHeader(ClassicsHeader(this))
-        refreshLayout.setRefreshFooter(ClassicsFooter(this))
-        refreshLayout.setOnRefreshListener {
-            refreshLayout.finishRefresh(2000 /*,false*/) // Pasa false si la actualización falla
-        }
-        refreshLayout.setOnLoadMoreListener {
-            refreshLayout.finishLoadMore(2000 /*,false*/) // Pasa false si la carga falla
-        }
+        val binding = FragmentProductsBinding.inflate(inflater, container, false)
+        val refreshLayout = binding.refreshLayout
 
         // Obtén el RecyclerView
-        val recyclerView = binding.findViewById<RecyclerView>(R.id.listado)
+        val recyclerView = binding.listado
         // Configura el LayoutManager
         recyclerView.layoutManager = GridLayoutManager(context, 2)
 
@@ -94,7 +77,7 @@ class ProductsFragment : Fragment() {
             }
         }
 
-        return binding
+        return binding.root
     }
 
     companion object {

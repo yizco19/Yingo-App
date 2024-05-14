@@ -22,6 +22,9 @@ class CarRepository (contexto: Context) {
     fun delete(car: Car) {
         _cardao.delete(car)
     }
+    fun deleteByProductId(productId: Int) {
+        _cardao.deleteByProductId(productId)
+    }
     fun getAll(): MutableList<Car> {
         return _cardao.getAll().toMutableList()
     }
