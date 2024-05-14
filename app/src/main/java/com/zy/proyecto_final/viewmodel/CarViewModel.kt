@@ -68,4 +68,8 @@ this.itemsrepository.delete(item)
         val values =this._items.value
         this._items.value = this.itemsrepository.getAll()
     }
+
+    fun clearCart() {
+        TODO("Not yet implemented")
+    }
 }

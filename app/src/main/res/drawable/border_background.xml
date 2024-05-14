@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent" /> <!-- Define un color de fondo transparente -->
+    <stroke
+        android:width="2dp"
+        android:color="#CCCCCC" /> <!-- Define el ancho y el color del borde -->
+    <corners android:radius="8dp" /> <!-- Define el radio de las esquinas -->
+    <padding
+        android:top="2dp"
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp" /> <!-- Define el espacio alrededor del contenido -->
+</shape>

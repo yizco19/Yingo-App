@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -79,6 +80,10 @@ class CarFragment : Fragment() {
                 }
 
             }
+        view.findViewById<LinearLayout>(R.id.clear_cart).setOnClickListener {
+            viewmodel.deleteAll()
+            loadData()
+        }
         txt_total=view.findViewById<TextView>(R.id.total)
         var btn_total=view.findViewById<TextView>(R.id.btn_total)
         setTotal(viewmodel.items.value!!)
