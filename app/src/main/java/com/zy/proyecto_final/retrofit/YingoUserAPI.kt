@@ -44,6 +44,7 @@ interface YingoUserAPI {
     @PATCH("updateAvatar")
     suspend fun uploadAvatar(@Query("avatarUrl") uri : Uri): Response<Result<Objects>>
 
-
+    @PUT("user/activateCode")
+    suspend fun redeemCode(@Query("activateCode") redeemCode: String) : Response<Result<Objects>>
 
 }

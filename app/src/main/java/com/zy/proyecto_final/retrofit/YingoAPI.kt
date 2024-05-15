@@ -52,8 +52,7 @@ interface YingoAPI {
     @GET( "order/detail")
     suspend fun getOrderDetail(@Query("id") id: Int): Response<Result<OrderData>>
 
-    @PUT("user/activateCode")
-    suspend fun redeemCode(@Query("activateCode") redeemCode: String) : Response<Result<Objects>>
+
 
 
 }

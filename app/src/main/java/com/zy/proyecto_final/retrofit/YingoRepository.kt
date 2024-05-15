@@ -24,10 +24,12 @@ class YingoRepository(c: Context) {
 
     private lateinit var _context: Context
     private var _service: YingoAPI
+    private var _serviceUser: YingoUserAPI
 
     init {
         _context = c
         _service = YingoService.getApiService(_context)
+        _serviceUser = YingoUserService.getApiService(_context)
 
     }
     suspend fun getCategories(): List<Category> {
@@ -144,12 +146,7 @@ class YingoRepository(c: Context) {
         return carItems
     }
 
-    suspend fun redeemCode(redeemCode: String): Response<Result<Objects>> {
-        return withContext(Dispatchers.IO) {
-            _service.redeemCode(redeemCode)
-        }
 
-    }
 
 
 }

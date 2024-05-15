@@ -33,6 +33,15 @@ class SettingFragment  : Fragment(){
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragmentContainerView, UserDetailsFragment())?.commit()
         }
+
+        view?.findViewById<RelativeLayout>(R.id.policy)!!.setOnClickListener{
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainerView, PolicyFragment())?.commit()
+        }
+        view?.findViewById<RelativeLayout>(R.id.about)!!.setOnClickListener{
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainerView, AboutFragment())?.commit()
+        }
         return view
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

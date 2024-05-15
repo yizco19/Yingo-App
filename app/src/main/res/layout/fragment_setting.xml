@@ -110,37 +110,6 @@
             android:background="#f5f5f5"/>
     </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#f5f5f5"/>
-            <TextView
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_centerVertical="true"
-                android:text="Historial de pedidos"/>
-            <ImageView
-                android:id="@+id/history"
-                android:layout_marginRight="10dp"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/edit"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignParentBottom="true"
-                android:background="#f5f5f5"/>
-        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"
@@ -184,6 +153,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/policy"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="5dp"
@@ -201,7 +171,6 @@
                 android:layout_centerVertical="true"
                 android:text="Política de privacidad"/>
             <ImageView
-                android:id="@+id/policy"
                 android:layout_marginRight="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -216,6 +185,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/about"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="5dp"
@@ -233,7 +203,7 @@
                 android:layout_centerVertical="true"
                 android:text="Acerca de"/>
             <ImageView
-                android:id="@+id/about"
+
                 android:layout_marginRight="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"

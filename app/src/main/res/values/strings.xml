@@ -22,4 +22,32 @@
     <string name="status">Status:</string>
 
     <string name="item_label">Items</string>
+    <string name="policy_content">
+        <![CDATA[
+        <html>
+        <body style="font-family: Arial, sans-serif; color: #333333;">
+            <h2 style="color: #007bff;">Política de Privacidad</h2>
+            <p>En nuestra aplicación, valoramos y respetamos tu privacidad. A continuación, te proporcionamos información sobre cómo recopilamos, utilizamos y protegemos tus datos personales.</p>
+
+            <h3>Recopilación de información</h3>
+            <p>Recopilamos información personal como nombre, dirección de correo electrónico y número de teléfono cuando te registras en nuestra aplicación o realizas una compra.</p>
+
+            <h3>Uso de la información</h3>
+            <p>Utilizamos la información recopilada para procesar tus pedidos, brindarte soporte al cliente y personalizar tu experiencia en la aplicación.</p>
+
+            <h3>Compartir información</h3>
+            <p>No compartimos tu información personal con terceros sin tu consentimiento, excepto cuando sea necesario para procesar tus pedidos o cumplir con la ley.</p>
+
+            <h3>Seguridad de la información</h3>
+            <p>Implementamos medidas de seguridad para proteger tu información personal contra el acceso no autorizado o la divulgación.</p>
+
+            <h3>Cambios en la política de privacidad</h3>
+            <p>Nos reservamos el derecho de realizar cambios en nuestra política de privacidad en cualquier momento. Te notificaremos sobre cualquier cambio importante mediante un aviso en nuestra aplicación.</p>
+
+            <p>Si tienes alguna pregunta sobre nuestra política de privacidad, no dudes en ponerte en contacto con nosotros.</p>
+        </body>
+        </html>
+        ]]>
+    </string>
+    <string name="yingoshop">YingoShop</string>
 </resources>
