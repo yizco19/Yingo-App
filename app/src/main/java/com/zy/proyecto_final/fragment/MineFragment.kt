@@ -88,9 +88,9 @@ class MineFragment : Fragment() {
                 setView(dialogView)
                 setPositiveButton("Aceptar") { dialog, _ ->
                     val redeemCode = editTextRedeemCode.text.toString()
-                    // Aquí puedes hacer lo que quieras con el código de redención ingresado
-                    // Por ejemplo, enviarlo a un servidor para su validación o procesamiento
-                    // Si deseas mostrar un mensaje de confirmación, puedes hacerlo aquí
+                    val result = yingoViewModel.redeemCode(redeemCode)
+                        Toast.makeText(context, result!!.message, Toast.LENGTH_SHORT).show()
+
                 }
                 setNegativeButton("Cancelar") { dialog, _ ->
                     dialog.dismiss()

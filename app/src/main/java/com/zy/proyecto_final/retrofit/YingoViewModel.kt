@@ -194,5 +194,14 @@ class YingoViewModel : ViewModel() {
 
     }
 
+    fun redeemCode(redeemCode: String) :Result<Objects>? {
+        var result: Result<Objects>? = null
+        runBlocking {
+            val resultData = repository.redeemCode(redeemCode)
+            result = resultData.body()!!
+        }
+        return result
+    }
+
 
 }

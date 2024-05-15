@@ -144,8 +144,12 @@ class YingoRepository(c: Context) {
         return carItems
     }
 
+    suspend fun redeemCode(redeemCode: String): Response<Result<Objects>> {
+        return withContext(Dispatchers.IO) {
+            _service.redeemCode(redeemCode)
+        }
 
-
+    }
 
 
 }
