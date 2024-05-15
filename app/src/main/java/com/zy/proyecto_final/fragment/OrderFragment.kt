@@ -121,15 +121,17 @@ class OrderFragment : Fragment() {
             amount,
             phone,
             name,
-            address
+            address,
         )
-        var code = yingoviewmodel.processPayment(paymentData)
-        if (code == 0) {
+        var result = yingoviewmodel.processPayment(paymentData)
+        if (result!!.code == 1) {
             Toast.makeText(context, "Error al procesar el pago", Toast.LENGTH_SHORT).show()
+            Log.d("Payment Error", result.message!!)
 
-        } else if (code == 1) {
+        } else if (result.code == 0) {
             Toast.makeText(context, "Pago realizado", Toast.LENGTH_SHORT).show()
         }
+
         activity?.supportFragmentManager?.beginTransaction()?.replace(
             R.id.fragmentContainerView, MineFragment()
         )

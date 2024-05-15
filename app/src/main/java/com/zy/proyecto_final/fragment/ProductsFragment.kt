@@ -3,29 +3,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.header.BezierRadarHeader
+import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentProductsBinding
 import com.zy.proyecto_final.fragment.ProductDetailsFragment
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
-import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.ProductRecyclerViewAdapter
+import com.zy.proyecto_final.retrofit.YingoViewModel
+import com.zy.proyecto_final.util.DataObserver
 import com.zy.proyecto_final.viewmodel.CarViewModel
+import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
+
+
 
 class ProductsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
     private val carviewmodel: CarViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val favoritviewmodel: FavoriteViewModel by activityViewModels()
+    private val categoryviewmodel: CategoryViewModel by activityViewModels()
+    private val productviewmodel: ProductViewModel by activityViewModels()
+    private val userviewmodel: UserViewModel by activityViewModels()
+    private val yingomodel: YingoViewModel by activityViewModels()
+
     private var productAdapter: ProductRecyclerViewAdapter? = null
 
     override fun onCreateView(
@@ -33,9 +43,27 @@ class ProductsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentProductsBinding.inflate(inflater, container, false)
-        val refreshLayout = binding.refreshLayout
+        val refreshLayout: RefreshLayout =binding.refreshLayout
+        refreshLayout.setRefreshHeader(BezierRadarHeader(requireContext()).setEnableHorizontalDrag(true));
 
-        // Obtén el RecyclerView
+        val dataObserver = DataObserver(
+            this,
+            yingomodel,
+            categoryviewmodel,
+            productviewmodel,
+            userviewmodel
+        )
+
+        refreshLayout.setOnRefreshListener { refreshlayout ->
+            refreshlayout.finishRefresh(2000/*,false*/) // pasa false para indicar que la actualización ha fallado
+            dataObserver.observeData()
+        }
+
+        refreshLayout.setOnLoadMoreListener { refreshlayout ->
+            refreshlayout.finishLoadMore(2000/*,false*/) // pasa false para indicar que la carga ha fallado
+        }
+
+
         val recyclerView = binding.listado
         // Configura el LayoutManager
         recyclerView.layoutManager = GridLayoutManager(context, 2)

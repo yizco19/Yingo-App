@@ -13,12 +13,14 @@ import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.retrofit.entities.PaymentData
+import com.zy.proyecto_final.retrofit.entities.Result
 import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import kotlinx.coroutines.runBlocking
+import java.util.Objects
 
 class YingoViewModel : ViewModel() {
 
@@ -136,16 +138,17 @@ class YingoViewModel : ViewModel() {
         return code
 
     }
-    fun processPayment(paymentData: PaymentData): Int {
+    fun processPayment(paymentData: PaymentData): Result<Objects>? {
         var code = 1 // Valor predeterminado si ocurre un error
+        var resultData: Result<Objects>? = null
         runBlocking {
             val result = repository.processPayment(paymentData)
-            val resultData = result.body()
+            resultData = result.body()
             code = resultData?.code ?: 1
             Log.d("YingoViewModel", "Respuesta del servidor: ${resultData!!.message}")
 
         }
-        return code
+        return resultData
 
 
 

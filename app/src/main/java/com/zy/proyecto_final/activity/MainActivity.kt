@@ -3,12 +3,10 @@ package com.zy.proyecto_final.activity
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.LiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.zy.proyecto_final.R
@@ -16,9 +14,8 @@ import com.zy.proyecto_final.fragment.FavoritesFragment
 import com.zy.proyecto_final.fragment.HomeFragment
 import com.zy.proyecto_final.fragment.MineFragment
 import com.zy.proyecto_final.fragment.CarFragment
-import com.zy.proyecto_final.pojo.Category
-import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.retrofit.YingoViewModel
+import com.zy.proyecto_final.util.DataObserver
 import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel
@@ -29,14 +26,14 @@ import com.zy.proyecto_final.viewmodel.UserViewModel
 class MainActivity : AppCompatActivity() {
     lateinit var mBottomNav: BottomNavigationView
     lateinit var mNavView: NavigationView
-    private val categoryviewmodel: CategoryViewModel by viewModels()
-    private val productviewmodel: ProductViewModel by viewModels()
     private val carviewmodel: CarViewModel by viewModels()
     private val orderviewmodel: OrderViewModel by viewModels()
-    private val userviewmodel: UserViewModel by viewModels()
     private val favoriteviewmodel: FavoriteViewModel by viewModels()
     private lateinit var settings: SharedPreferences
     private var issettings: Boolean = false
+    private val categoryviewmodel: CategoryViewModel by viewModels()
+    private val productviewmodel: ProductViewModel by viewModels()
+    private val userviewmodel: UserViewModel by viewModels()
     private val yingomodel: YingoViewModel by viewModels()
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,32 +49,14 @@ class MainActivity : AppCompatActivity() {
         //clear producto y category
         //productviewmodel.deleteAll()
         //categoryviewmodel.deleteAll()
-
-        var categoriesLiveData: LiveData<List<Category>> = yingomodel.getCategories()
-
-        categoriesLiveData.observe(this) { categories ->
-            // Actualiza la interfaz de usuario con las categorías recibidas
-            Log.i("categoriesrecibedo", categories.toString())
-            categoryviewmodel.setAll(categoriesLiveData.value ?: emptyList())
-            // Obtiene la lista de productos desde el ViewModel
-            var productsLiveData: LiveData<List<Product>> = yingomodel.getProducts()
-
-            // Observa los cambios en la lista de productos y actualiza el ViewModel de productos
-            productsLiveData.observe(this) { products ->
-                Log.i("productsreceived", products.toString())
-                productviewmodel.setAll(productsLiveData.value ?: emptyList())
-            }
-        }
-        yingomodel.getUserData().observe(
-            this
-        ) { user ->
-            if (user != null) {
-                userviewmodel.addUser(user)
-
-            }
-        };
-
-
+        val dataObserver = DataObserver(
+            this,
+            yingomodel,
+            categoryviewmodel,
+            productviewmodel,
+            userviewmodel
+        )
+        dataObserver.observeData()
 
 
         //asigna userlogged

@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ProductsFragment">
 
+    <com.scwang.smart.refresh.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <!-- Aquí agregamos SmartRefreshLayout -->
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -17,7 +20,9 @@
             android:id="@+id/listado"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </FrameLayout>
