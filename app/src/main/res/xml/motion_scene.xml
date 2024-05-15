@@ -8,14 +8,6 @@
         motion:duration="1000">
 
         <!-- Aquí definirías los elementos que quieres animar -->
-        <OnSwipe
-            motion:touchAnchorId="@id/buttonAddToCart"
-            motion:touchAnchorSide="left"
-            motion:dragDirection="dragUp"
-            motion:moveWhenScrollAtTop="true"
-            motion:touchRegionId="@id/buttonAddToCart"
-            motion:maxVelocity="5"
-            motion:touchAnchorPos="0.1" />
 
     </Transition>
 

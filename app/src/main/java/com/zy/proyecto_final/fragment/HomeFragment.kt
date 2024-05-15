@@ -31,9 +31,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val imageList = ArrayList<SlideModel>() // Create image list
 
-        imageList.add(SlideModel("https://bit.ly/2YoJ77H", "The animal population decreased by 58 percent in 42 years.",ScaleTypes.CENTER_INSIDE))
-        imageList.add(SlideModel("https://bit.ly/2BteuF2", "Elephants and tigers may become extinct.",ScaleTypes.CENTER_INSIDE))
-        imageList.add(SlideModel("https://bit.ly/3fLJf72", "And people do that.",ScaleTypes.CENTER_INSIDE))
+        imageList.add(SlideModel(R.drawable.gaming, "Popular 1",ScaleTypes.CENTER_INSIDE))
+        imageList.add(SlideModel(R.drawable.almacenamiento, "Popular 2",ScaleTypes.CENTER_INSIDE))
+        imageList.add(SlideModel(R.drawable.monitor, "Popular 3",ScaleTypes.CENTER_INSIDE))
 
         val imageSlider = view.findViewById<ImageSlider>(R.id.image_slider)
         imageSlider.setImageList(imageList)
