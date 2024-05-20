@@ -5,7 +5,9 @@ import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.CartItemData
 import com.zy.proyecto_final.retrofit.entities.CategoryData
+import com.zy.proyecto_final.retrofit.entities.OfferData
 import com.zy.proyecto_final.retrofit.entities.OrderData
+import com.zy.proyecto_final.retrofit.entities.OrderItem
 import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
@@ -35,6 +37,8 @@ interface YingoAPI {
     @GET("product/list")
     suspend fun getProducts(): Response<Result<List<ProductData>>>
 
+    @GET("offer/list")
+    suspend fun getOffers(): Response<Result<List<OfferData>>>
     @GET("user/userInfo")
     suspend fun getUser(): Response<Result<UserData>>
 
@@ -55,6 +59,8 @@ interface YingoAPI {
     @PUT("upload")
     suspend fun uploadImage(@Body file: MultipartBody.Part): Response<Result<String>>
 
+    @GET("order/items")
+    abstract fun getOrderItems(id: Int): Response<Result<List<OrderItem>>>
 
 
 }

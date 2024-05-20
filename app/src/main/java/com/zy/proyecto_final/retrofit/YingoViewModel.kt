@@ -9,9 +9,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Category
+import com.zy.proyecto_final.pojo.Offer
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.OrderData
+import com.zy.proyecto_final.retrofit.entities.OrderItem
 import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.Result
 import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
@@ -34,6 +36,8 @@ class YingoViewModel : ViewModel() {
     private val resultLiveData = MutableLiveData<Int>()
     private lateinit var _categories: MutableList<Category>
     private lateinit var _products: MutableList<Product>
+    private lateinit var _offers: MutableList<Offer>
+    private lateinit var _orderItems: MutableList<OrderItem>
     private lateinit var _orders: MutableLiveData<MutableList<OrderData>>
 
 
@@ -46,7 +50,9 @@ class YingoViewModel : ViewModel() {
         repositoryUser = YingoUserRepository(_context)
         _categories = mutableListOf()
         _products = mutableListOf()
+        _offers = mutableListOf()
         _orders = MutableLiveData<MutableList<OrderData>>()
+        _orderItems = mutableListOf()
         _selectedOrder = OrderData()
 
     }
@@ -98,6 +104,25 @@ class YingoViewModel : ViewModel() {
 
         }
         return productsLiveData
+    }
+    fun getOffers(): LiveData<List<Offer>> {
+        val offersLiveData = MutableLiveData<List<Offer>>()
+        viewModelScope.launch {
+            val offers = repository.getOffers()
+            _offers.addAll(offers)
+            offersLiveData.postValue(_offers)
+        }
+        return offersLiveData
+    }
+    fun getOrderItems(id: Int): LiveData<List<OrderItem>> {
+        val orderItemsLiveData = MutableLiveData<List<OrderItem>>()
+        viewModelScope.launch {
+            val orderItems = repository.getOrderItems(id)
+            _orderItems.addAll(orderItems)
+            orderItemsLiveData.postValue(_orderItems)
+        }
+        return orderItemsLiveData
+
     }
 
     fun getOrders(status: Int) {
@@ -165,6 +190,7 @@ class YingoViewModel : ViewModel() {
         return orderLiveData
     }
 
+
     fun updatePwd(data: UpdatePwdData): Int {
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
@@ -210,8 +236,9 @@ class YingoViewModel : ViewModel() {
 
         return code
     }
-    fun redeemCode (redeemCode: String): Result<Objects> {
+    fun redeemCode (redeemCode: String): Result<Double> {
         var code = 1 // Valor predeterminado si ocurre un error
+        var result = Result<Double>( code = code , message = "Error", data = 0.0)
         runBlocking {
             val result = repositoryUser.redeemCode(redeemCode)
             val resultData = result.body()
@@ -219,4 +246,6 @@ class YingoViewModel : ViewModel() {
         }
         return result
     }
+
+
 }

@@ -4,10 +4,13 @@ import android.content.Context
 import android.util.Log
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Category
+import com.zy.proyecto_final.pojo.Offer
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.retrofit.entities.CartItemData
 import com.zy.proyecto_final.retrofit.entities.CategoryData
+import com.zy.proyecto_final.retrofit.entities.OfferData
 import com.zy.proyecto_final.retrofit.entities.OrderData
+import com.zy.proyecto_final.retrofit.entities.OrderItem
 import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
@@ -70,6 +73,40 @@ class YingoRepository(c: Context) {
             }
             return@withContext orders
         }
+    }
+    suspend fun getOrderItems(id: Int): List<OrderItem> {
+        return withContext(Dispatchers.IO) {
+            var orderItems = mutableListOf<OrderItem>()
+            val response = _service.getOrderItems(id)
+            if (response.isSuccessful) {
+                response.body()?.data?.forEach {
+                    orderItems.add(it)
+                }
+            }
+            return@withContext orderItems
+        }
+
+    }
+
+    suspend fun getOffers(): List<Offer> {
+        return withContext(Dispatchers.IO) {
+            var offers = mutableListOf<Offer>()
+            val response = _service.getOffers()
+            if (response.isSuccessful) {
+                response.body()?.data?.forEach {
+                    offers.add(adapterOffer(it))
+                }
+            }
+            return@withContext offers
+        }
+    }
+    private fun adapterOffer(data: OfferData): Offer{
+        var offer = Offer()
+        offer.id = data.id
+        offer.title = data.title
+        offer.description = data.description
+        offer.discount = data.discount
+        return offer
     }
 
     suspend fun processPayment(paymentData: PaymentData): Response<Result<Objects>> {

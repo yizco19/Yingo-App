@@ -19,6 +19,7 @@ import com.zy.proyecto_final.util.DataObserver
 import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel
+import com.zy.proyecto_final.viewmodel.OfferViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private val productviewmodel: ProductViewModel by viewModels()
     private val userviewmodel: UserViewModel by viewModels()
     private val yingomodel: YingoViewModel by viewModels()
+    private val offermodel: OfferViewModel by viewModels()
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,17 +48,18 @@ class MainActivity : AppCompatActivity() {
         this.userviewmodel.init(this)
         this.favoriteviewmodel.init(this)
         this.yingomodel.init(this)
+        this.offermodel.init(this)
         //clear producto y category
         //productviewmodel.deleteAll()
         //categoryviewmodel.deleteAll()
         val dataObserver = DataObserver(
             this,
-            yingomodel,
-            categoryviewmodel,
-            productviewmodel,
-            userviewmodel
+            yingomodel
         )
-        dataObserver.observeData()
+        dataObserver.observeOffers(offermodel)
+        dataObserver.observeCategories(categoryviewmodel)
+        dataObserver.observeProducts(productviewmodel)
+        dataObserver.observeUserData(userviewmodel)
 
 
         //asigna userlogged

@@ -44,6 +44,9 @@ dependencies {
     //SWIPE REFRESH
     implementation  ("io.github.scwang90:refresh-layout-kernel:2.1.0")
         implementation  ("io.github.scwang90:refresh-header-radar:2.1.0")
+    // Classic header y footer
+    implementation ("io.github.scwang90:refresh-header-classics:2.1.0")
+    implementation ("io.github.scwang90:refresh-footer-classics:2.1.0")
     //imagenes
     implementation ("com.github.dhaval2404:imagepicker:2.1")
     implementation ("com.github.bumptech.glide:glide:4.14.2")

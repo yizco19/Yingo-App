@@ -121,25 +121,40 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
+
+
+
+                            <TextView
+                                android:layout_marginLeft="@dimen/dp_15"
+                                android:id="@+id/wallet_amount"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@{userViewModel.userlogged.wallet.toString()}"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/visa" />
+                            android:src="@drawable/euro_wallet" />
 
-                        <com.google.android.material.textfield.TextInputLayout
+                            <!--
+                            <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
-                            style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu">
-                            <AutoCompleteTextView
+                            style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"><AutoCompleteTextView
                                 android:id="@+id/payment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Seleccione un método de pago"
                                 android:inputType="none"/>
+                                                        </com.google.android.material.textfield.TextInputLayout>
+                                                        -->
 
-                        </com.google.android.material.textfield.TextInputLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -156,59 +171,71 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="65dp"
+            android:layout_height="90dp"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout">
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:orientation="vertical">
-    <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-    <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="IVA incluido"
-        android:textSize="14sp"/>
-</androidx.appcompat.widget.LinearLayoutCompat>
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_alignParentRight="true"
-    android:layout_gravity="right">
-    <TextView
-        android:id="@+id/total"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10000,0"
-        android:textSize="18sp" />
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/euro" />
-    <Button
-        android:id="@+id/buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Pagar"
-        android:backgroundTint="@color/my_app_color"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IVA incluido"
+                        android:textSize="14sp"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right">
+                    <TextView
+                        android:id="@+id/total"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/red"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10000,0"
+                        android:textSize="18sp" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/euro" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </LinearLayout>
+                <Button
+                    android:id="@+id/buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Pagar"
+                    android:backgroundTint="@color/my_app_color"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.zy.proyecto_final.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -41,6 +42,7 @@ class MineFragment : Fragment() {
     val delay: Long = 1000 // 1000 milisegundos = 1 segundo
 
     private val PICK_IMAGE_REQUEST = 1
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -108,9 +110,10 @@ class MineFragment : Fragment() {
         }
         val orderStatusMap = mapOf(
             R.id.orderAll to "ALL",
-            R.id.history to "HISTORY",
             R.id.pending to "PENDING",
-            R.id.shipping to "DELIVERED"
+            R.id.processing to "PROCESSING",
+            R.id.shipping to "SHIPPING",
+            R.id.delivered to "DELIVERED"
         )
 
         for ((viewId, orderStatus) in orderStatusMap) {

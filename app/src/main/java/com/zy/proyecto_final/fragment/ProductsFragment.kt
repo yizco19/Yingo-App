@@ -48,15 +48,12 @@ class ProductsFragment : Fragment() {
 
         val dataObserver = DataObserver(
             this,
-            yingomodel,
-            categoryviewmodel,
-            productviewmodel,
-            userviewmodel
+            yingomodel
         )
 
         refreshLayout.setOnRefreshListener { refreshlayout ->
             refreshlayout.finishRefresh(2000/*,false*/) // pasa false para indicar que la actualización ha fallado
-            dataObserver.observeData()
+            dataObserver.observeProducts(viewmodel)
         }
 
         refreshLayout.setOnLoadMoreListener { refreshlayout ->
