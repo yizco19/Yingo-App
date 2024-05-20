@@ -2,21 +2,18 @@ package com.zy.proyecto_final.retrofit
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
-import com.zy.proyecto_final.pojo.User
 import com.zy.proyecto_final.retrofit.entities.CartItemData
 import com.zy.proyecto_final.retrofit.entities.CategoryData
 import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
-import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
-import com.zy.proyecto_final.retrofit.entities.UserData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import retrofit2.Response
 import java.util.Objects
 
@@ -116,19 +113,6 @@ class YingoRepository(c: Context) {
         }
 
     }
-    private  fun adapterUser(data: UserData): User{
-        var user = User()
-        user.username = data.username
-        user.email = data.email
-        user.id = data.id
-        user.address = data.address
-        user.mobile = data.phone
-        user.userPic = data.userPic
-
-
-
-        return user
-    }
 
 
     suspend fun setCar(carLiveData: MutableList<Car>):  Response<Result<Objects>>  {
@@ -144,6 +128,12 @@ class YingoRepository(c: Context) {
             carItems.add(CartItemData(it.user_id!!,it.product_id!!,it.product_count!!))
         }
         return carItems
+    }
+
+    suspend fun uploadImage(file: MultipartBody.Part): Response<Result<String>> {
+        return withContext(Dispatchers.IO) {
+            _service.uploadImage(file)
+        }
     }
 
 

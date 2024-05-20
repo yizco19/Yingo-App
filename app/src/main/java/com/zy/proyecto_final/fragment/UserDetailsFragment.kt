@@ -60,7 +60,6 @@ class UserDetailsFragment : Fragment() {
                  user.email = email?.text.toString()
                  user.mobile = mobile?.text.toString()
                  user.address = address?.text.toString()
-                 user.payment = payment?.text.toString()
                  Toast.makeText(context, "Actualizado", Toast.LENGTH_SHORT).show()
                  // if ha cambiado de username va volver a login
                  if(user.username != usernametemp){

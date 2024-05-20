@@ -54,6 +54,10 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    //okhttp
+        implementation ("com.squareup.okhttp3:okhttp:4.9.2")
+        implementation ("com.squareup.okio:okio:2.10.0")
+
 
     implementation("androidx.room:room-runtime:2.5.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")

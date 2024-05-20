@@ -20,6 +20,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.util.Objects
 
 class YingoViewModel : ViewModel() {
@@ -29,9 +32,9 @@ class YingoViewModel : ViewModel() {
     private lateinit var repository: YingoRepository
     private lateinit var repositoryUser: YingoUserRepository
     private val resultLiveData = MutableLiveData<Int>()
-    private lateinit var _categories : MutableList<Category>
-    private lateinit var _products : MutableList<Product>
-    private lateinit var _orders : MutableLiveData<MutableList<OrderData>>
+    private lateinit var _categories: MutableList<Category>
+    private lateinit var _products: MutableList<Product>
+    private lateinit var _orders: MutableLiveData<MutableList<OrderData>>
 
 
     public val orders: LiveData<MutableList<OrderData>>
@@ -41,22 +44,22 @@ class YingoViewModel : ViewModel() {
         this._context = c
         repository = YingoRepository(_context)
         repositoryUser = YingoUserRepository(_context)
-        _categories =  mutableListOf()
-        _products =  mutableListOf()
+        _categories = mutableListOf()
+        _products = mutableListOf()
         _orders = MutableLiveData<MutableList<OrderData>>()
         _selectedOrder = OrderData()
 
     }
 
 
-    fun register(registerData: RegistrationData): Boolean{
+    fun register(registerData: RegistrationData): Boolean {
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
             val result = repositoryUser.register(registerData)
             val resultData = result.body()
             code = resultData?.code ?: 1
         }
-        return code ==0
+        return code == 0
 
     }
 
@@ -75,7 +78,6 @@ class YingoViewModel : ViewModel() {
     }
 
 
-
     fun getCategories(): LiveData<List<Category>> {
         val categoriesLiveData = MutableLiveData<List<Category>>()
         viewModelScope.launch {
@@ -85,7 +87,6 @@ class YingoViewModel : ViewModel() {
         }
         return categoriesLiveData
     }
-
 
 
     fun getProducts(): LiveData<List<Product>> {
@@ -98,7 +99,8 @@ class YingoViewModel : ViewModel() {
         }
         return productsLiveData
     }
-    fun getOrders(status:Int) {
+
+    fun getOrders(status: Int) {
         viewModelScope.launch {
             _orders.value = repository.getOrders(status).toMutableList()
         }
@@ -127,7 +129,7 @@ class YingoViewModel : ViewModel() {
 
     }
 
-    fun setCar(value: MutableList<Car>) : Int {
+    fun setCar(value: MutableList<Car>): Int {
         val carLiveData = MutableLiveData(value)
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
@@ -138,6 +140,7 @@ class YingoViewModel : ViewModel() {
         return code
 
     }
+
     fun processPayment(paymentData: PaymentData): Result<Objects>? {
         var code = 1 // Valor predeterminado si ocurre un error
         var resultData: Result<Objects>? = null
@@ -149,7 +152,6 @@ class YingoViewModel : ViewModel() {
 
         }
         return resultData
-
 
 
     }
@@ -172,6 +174,7 @@ class YingoViewModel : ViewModel() {
         }
         return code
     }
+
     fun updateUser(data: User): Int {
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
@@ -182,26 +185,38 @@ class YingoViewModel : ViewModel() {
         return code
     }
 
-    fun uploadAvatar(uri: Uri) : Int {
+    fun uploadAvatar(uri: Uri): Int {
+        var code = 1 // Valor predeterminado si ocurre un error
+
+        runBlocking {
+            // Primero se sube el avatar al servidor
+            val file = File(uri.path!!)
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+            // Llama al método del repositorio para subir la imagen
+            val result = repository.uploadImage(body)
+            val resultData = result.body()
+            code = resultData?.code ?: 1
+
+            // Si la carga de la imagen es exitosa, se actualiza el usuario en la base de datos
+            if (result.code() == 0) {
+                val avatarUrl = resultData?.data // Asume que `data` contiene la URL de la imagen subida
+                val updateResult = repositoryUser.uploadAvatar(avatarUrl!!)
+                val updateResultData = updateResult.body()
+                code = updateResultData?.code ?: 1
+            }
+        }
+
+        return code
+    }
+    fun redeemCode (redeemCode: String): Result<Objects> {
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
-            val result = repositoryUser.uploadAvatar(uri)
+            val result = repositoryUser.redeemCode(redeemCode)
             val resultData = result.body()
             code = resultData?.code ?: 1
         }
-        return code
-
-
-    }
-
-    fun redeemCode(redeemCode: String) :Result<Objects>? {
-        var result: Result<Objects>? = null
-        runBlocking {
-            val resultData = repositoryUser.redeemCode(redeemCode)
-            result = resultData.body()!!
-        }
         return result
     }
-
-
 }

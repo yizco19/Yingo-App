@@ -10,6 +10,7 @@ import com.zy.proyecto_final.retrofit.entities.PaymentData
 import com.zy.proyecto_final.retrofit.entities.ProductData
 import com.zy.proyecto_final.retrofit.entities.Result
 import com.zy.proyecto_final.retrofit.entities.UserData
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.Response
@@ -51,7 +52,8 @@ interface YingoAPI {
 
     @GET( "order/detail")
     suspend fun getOrderDetail(@Query("id") id: Int): Response<Result<OrderData>>
-
+    @PUT("upload")
+    suspend fun uploadImage(@Body file: MultipartBody.Part): Response<Result<String>>
 
 
 

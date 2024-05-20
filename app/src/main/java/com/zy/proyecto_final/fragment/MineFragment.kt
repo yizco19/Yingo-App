@@ -46,7 +46,8 @@ class MineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_mine, container, false)
-        view?.findViewById<TextView>(R.id.username) !!.text = viewModel.userlogged.username
+        view?.findViewById<TextView>(R.id.nickname) !!.text = viewModel.userlogged.username
+        view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
         // Iniciar la actualización periódica
         //handler.postDelayed(updateTimeRunnable, delay)
 
@@ -90,6 +91,11 @@ class MineFragment : Fragment() {
                     val redeemCode = editTextRedeemCode.text.toString()
                     val result = yingoViewModel.redeemCode(redeemCode)
                         Toast.makeText(context, result!!.message, Toast.LENGTH_SHORT).show()
+                    if(result.code == 0){
+                        //actualizar wallet
+                        viewModel.userlogged.wallet = viewModel.userlogged.wallet?.plus(result.data!!)
+                        view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
+                    }
 
                 }
                 setNegativeButton("Cancelar") { dialog, _ ->
@@ -157,13 +163,17 @@ class MineFragment : Fragment() {
 
             // Use Uri object instead of File to avoid storage permissions
             profile_avatar!!.setImageURI(uri)
+            // upload image a local
+
             //upload image a servidor
             val file = File(uri.path)
+
 
             yingoViewModel.uploadAvatar(uri)
             yingoViewModel.getUserData().observe(this) {
                 if (it != null) {
                     userViewModel.update(it)
+                    view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
                 }
             }
 

@@ -15,7 +15,7 @@ data class User(
     var userPic: String? = null,
     var address: String? = "",
     var mobile: String? = "",
-    var payment: String? = "",
+    var wallet: Double? = 0.0,
     @PrimaryKey(autoGenerate = true)
     var id:Int?=null
 )
