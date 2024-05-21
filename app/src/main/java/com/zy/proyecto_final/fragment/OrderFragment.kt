@@ -45,7 +45,7 @@ class OrderFragment : Fragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order, container, false)
-        setupPaymentMethodAutoComplete()
+        //setupPaymentMethodAutoComplete()
 
         binding.infoAddress.setOnClickListener {
             val alertDialog = alertDialog()
@@ -87,7 +87,7 @@ class OrderFragment : Fragment() {
             "PAYTM",
             "VENMO"
         )
-        val autoComplete: AutoCompleteTextView = binding.payment
+        /*val autoComplete: AutoCompleteTextView = binding.payment
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_dropdown_item_1line,
@@ -98,7 +98,7 @@ class OrderFragment : Fragment() {
             val selectedItem = parent.getItemAtPosition(position).toString()
             autoComplete.setText(selectedItem, false) // Establecer el texto seleccionado en el AutoCompleteTextView
             Log.d("Selected Payment Method", selectedItem)
-        }
+        }*/
 
     }
 
@@ -107,17 +107,17 @@ class OrderFragment : Fragment() {
 
     private fun processPayment(): Boolean {
         var paymentName = view?.findViewById<TextView>(R.id.payment)
-        var paymentMethod = PaymentConstant.paymentMethodsMap[paymentName?.text.toString()]
+        /*var paymentMethod = PaymentConstant.paymentMethodsMap[paymentName?.text.toString()]
         if (paymentMethod == null) {
             Toast.makeText(context, "Selecciona un metodo de pago", Toast.LENGTH_SHORT).show()
             return true
-        }
+        }*/
         var amount: Double = view?.findViewById<TextView>(R.id.total)?.text.toString().toDouble()
         var phone = view?.findViewById<TextView>(R.id.mobile)?.text.toString()
         var name = view?.findViewById<TextView>(R.id.name)?.text.toString()
         var address = view?.findViewById<TextView>(R.id.address)?.text.toString()
         var paymentData = PaymentData(
-            paymentMethod,
+            7,
             amount,
             phone,
             name,

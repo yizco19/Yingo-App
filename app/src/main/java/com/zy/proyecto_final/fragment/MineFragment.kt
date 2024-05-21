@@ -1,5 +1,6 @@
 package com.zy.proyecto_final.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -41,12 +42,14 @@ class MineFragment : Fragment() {
     val delay: Long = 1000 // 1000 milisegundos = 1 segundo
 
     private val PICK_IMAGE_REQUEST = 1
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_mine, container, false)
-        view?.findViewById<TextView>(R.id.username) !!.text = viewModel.userlogged.username
+        view?.findViewById<TextView>(R.id.nickname) !!.text = viewModel.userlogged.username
+        view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
         // Iniciar la actualización periódica
         //handler.postDelayed(updateTimeRunnable, delay)
 
@@ -90,6 +93,11 @@ class MineFragment : Fragment() {
                     val redeemCode = editTextRedeemCode.text.toString()
                     val result = yingoViewModel.redeemCode(redeemCode)
                         Toast.makeText(context, result!!.message, Toast.LENGTH_SHORT).show()
+                    if(result.code == 0){
+                        //actualizar wallet
+                        viewModel.userlogged.wallet = viewModel.userlogged.wallet?.plus(result.data!!)
+                        view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
+                    }
 
                 }
                 setNegativeButton("Cancelar") { dialog, _ ->
@@ -102,9 +110,10 @@ class MineFragment : Fragment() {
         }
         val orderStatusMap = mapOf(
             R.id.orderAll to "ALL",
-            R.id.history to "HISTORY",
             R.id.pending to "PENDING",
-            R.id.shipping to "DELIVERED"
+            R.id.processing to "PROCESSING",
+            R.id.shipping to "SHIPPING",
+            R.id.delivered to "DELIVERED"
         )
 
         for ((viewId, orderStatus) in orderStatusMap) {
@@ -157,13 +166,17 @@ class MineFragment : Fragment() {
 
             // Use Uri object instead of File to avoid storage permissions
             profile_avatar!!.setImageURI(uri)
+            // upload image a local
+
             //upload image a servidor
             val file = File(uri.path)
+
 
             yingoViewModel.uploadAvatar(uri)
             yingoViewModel.getUserData().observe(this) {
                 if (it != null) {
                     userViewModel.update(it)
+                    view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
                 }
             }
 

@@ -44,7 +44,7 @@
                 android:paddingTop="@dimen/dp_0.5"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
-                android:id="@+id/username"
+                android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User"
@@ -91,7 +91,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity=""
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="DuplicateIds">
 
                 <ImageView
 
@@ -104,8 +105,7 @@
 
                     android:src="@drawable/wallet" />
                 <TextView
-
-                    android:id="@+id/wallet_monet"
+                    android:id="@+id/wallet_amount"
                     android:layout_marginStart="@dimen/dp_10"
                     android:textColor="@color/my_app_color"
                     android:layout_gravity="bottom"
@@ -183,26 +183,6 @@
             android:paddingTop="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10"
             >
-            <LinearLayout
-                android:id="@+id/history"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:background="@color/white"
-                    android:src="@drawable/order_history" />
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/icon_name"
-                    android:text="historia"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/pending"
@@ -226,6 +206,26 @@
                     android:text="pendiente"
                     android:textColor="@color/icon_name" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/processing"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:background="@color/white"
+                    android:src="@drawable/processing" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/icon_name"
+                    android:text="proceso"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/shipping"
@@ -248,7 +248,7 @@
                     android:text="enviando"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/review"
+                android:id="@+id/delivered"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -259,13 +259,13 @@
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
                     android:background="@color/white"
-                    android:src="@drawable/review" />
+                    android:src="@drawable/delivered" />
                 <TextView
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/icon_name"
-                    android:text="opiniones"/>
+                    android:text="entregado"/>
             </LinearLayout>
 
         </LinearLayout>

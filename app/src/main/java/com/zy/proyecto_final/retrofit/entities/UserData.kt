@@ -19,6 +19,8 @@ data class UserData(
     val birthDate: String,
     @SerializedName("address")
     val address: String,
+    @SerializedName("wallet")
+    val wallet: Double,
     @SerializedName("phone")
     val phone: String
 )

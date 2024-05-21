@@ -12,6 +12,12 @@ import com.google.gson.annotations.SerializedName
         childColumns = ["categoryId"],
         parentColumns = ["id"],
         onDelete = ForeignKey.CASCADE
+    ),
+    ForeignKey(
+        entity = Offer::class,
+        childColumns = ["offerId"],
+        parentColumns = ["id"],
+        onDelete = ForeignKey.CASCADE
     )
 ],tableName = "product")
 data class Product(
@@ -23,5 +29,7 @@ data class Product(
     var description: String? = null,
     var productPic: String? = null,
     var price: Double? = null,
-    var visible: Boolean? = null
+    var visible: Boolean? = null,
+    var offerId : Int? = null
+
 )

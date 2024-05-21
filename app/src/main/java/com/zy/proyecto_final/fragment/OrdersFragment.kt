@@ -1,6 +1,7 @@
 package com.zy.proyecto_final.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,22 +26,26 @@ class OrdersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var v=inflater.inflate(R.layout.fragment_orders, container, false)
+        val v = inflater.inflate(R.layout.fragment_orders, container, false)
 
         val orderStatus = arguments?.getString("orderStatus")
         v.findViewById<Toolbar>(R.id.toolbar)?.title = orderStatus
         v.findViewById<RecyclerView>(R.id.listado).layoutManager = GridLayoutManager(context, 1)
 
         val ordersRecyclerViewAdapter = context?.let { OrdersRecyclerViewAdapter(mutableListOf(), it, orderStatus ?: "") }
-        v.findViewById<RecyclerView>(R.id.listado).adapter =
-            ordersRecyclerViewAdapter
+        v.findViewById<RecyclerView>(R.id.listado).adapter = ordersRecyclerViewAdapter
+
         yingomodel.getOrders(OrderConstant.getStatusValue(orderStatus ?: "")!!)
         ordersRecyclerViewAdapter?.detail_click = { position, item ->
             val orderId = item.id
-            parentFragmentManager.commit {
-                replace(R.id.fragmentContainerView, OrderDetailsFragment.newInstance(orderId!!))
-                setReorderingAllowed(true)
-                addToBackStack(null)
+            if (orderId != null) {
+                parentFragmentManager.commit {
+                    replace(R.id.fragmentContainerView, OrderDetailsFragment.newInstance(orderId))
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            } else {
+                Log.e("OrdersFragment", "Order ID is null")
             }
         }
 
@@ -49,10 +54,6 @@ class OrdersFragment : Fragment() {
         }
 
         return v
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {

@@ -63,6 +63,7 @@ class YingoUserRepository(c: Context) {
         user.address = data.address
         user.mobile = data.phone
         user.userPic = data.userPic
+        user.wallet = data.wallet
 
 
 
@@ -78,7 +79,8 @@ class YingoUserRepository(c: Context) {
             gender = null.toString(),
             birthDate = null.toString(),
             address = data.address!!,
-            phone = data.mobile!!
+            phone = data.mobile!!,
+            wallet = data.wallet!!
         )
         return user
     }
@@ -112,13 +114,10 @@ class YingoUserRepository(c: Context) {
 
     }
 
-    suspend fun uploadAvatar(uri: Uri): Response<Result<Objects>> {
+    suspend fun uploadAvatar(url: String): Response<Result<Objects>> {
         var code = 1
-        val file = File(uri.path!!)
-        //val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        //val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
         return withContext(Dispatchers.IO) {
-            val response = _serviceUser.uploadAvatar(uri)
+            val response = _serviceUser.uploadAvatar(url)
             if (response.isSuccessful) {
                 code = response.code()
             }
@@ -126,7 +125,7 @@ class YingoUserRepository(c: Context) {
         }
 
     }
-    suspend fun redeemCode(redeemCode: String): Response<Result<Objects>> {
+    suspend fun redeemCode(redeemCode: String): Response<Result<Double>> {
         return withContext(Dispatchers.IO) {
             _serviceUser.redeemCode(redeemCode)
         }
