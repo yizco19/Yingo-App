@@ -16,7 +16,8 @@
         >
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
+            android:background="@drawable/background_mine"
             android:orientation="vertical"
             android:gravity="top"
             android:layout_marginBottom="20dp">
@@ -28,7 +29,8 @@
                 android:orientation="horizontal">
              <androidx.cardview.widget.CardView
                  android:layout_width="60dp"
-                 app:cardCornerRadius="20dp"
+                 app:cardCornerRadius="30dp"
+                 android:background="@drawable/top_rounded_corners"
                  android:layout_margin="10dp"
                  android:layout_height="60dp">
                  <ImageView
@@ -49,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="User"
                 android:textStyle="bold"
-                android:textColor="@color/my_app_color"
+                android:textColor="@color/white"
                 android:layout_marginTop="10dp"
                 android:textSize="20dp"/>
 
@@ -61,7 +63,9 @@
             android:orientation="vertical"
             android:gravity="right">
             <ImageView
+                android:padding="@dimen/dp_5"
                 android:id="@+id/settings"
+                android:background="@drawable/top_rounded_corners"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/settings"
@@ -85,45 +89,68 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
-            <androidx.appcompat.widget.LinearLayoutCompat
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginHorizontal="@dimen/dp_16"
+                android:background="@drawable/gradient_background"
                 android:id="@+id/wallet"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:gravity="center|left"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
                 android:layout_gravity=""
-                android:orientation="horizontal"
+
+                android:paddingHorizontal="@dimen/dp_20"
                 tools:ignore="DuplicateIds">
 
-                <ImageView
-
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:background="@color/white"
-
-                    android:src="@drawable/wallet" />
-                <TextView
-                    android:id="@+id/wallet_amount"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:textColor="@color/my_app_color"
-                    android:layout_gravity="bottom"
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
-                    android:text="100"
-                    />
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    android:src="@drawable/euro_wallet" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dinero Total (euro)"
+                            android:textColor="#f5f5f5" />
+
+                        <TextView
+                            android:id="@+id/wallet_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:text="100"
+                            android:textColor="@color/white"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/canjear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/top_rounded_corners"
+                    android:padding="5dp"
+                    android:text="Canjear codigo"
+                    android:textColor="@color/red"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
