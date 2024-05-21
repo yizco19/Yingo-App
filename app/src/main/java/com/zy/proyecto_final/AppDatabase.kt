@@ -16,6 +16,7 @@ import com.zy.proyecto_final.dao.UserDao
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Favorite
+import com.zy.proyecto_final.pojo.Offer
 import com.zy.proyecto_final.pojo.Order
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.User
@@ -27,8 +28,9 @@ import com.zy.proyecto_final.pojo.User
     Product::class,
     Car::class,
     Order::class,
-    Favorite::class
-    ], version = 21, exportSchema = true
+    Favorite::class,
+    Offer::class
+    ], version = 4, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase()  {

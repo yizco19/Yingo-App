@@ -86,7 +86,7 @@ class YingoViewModel : ViewModel() {
 
     fun getCategories(): LiveData<List<Category>> {
         val categoriesLiveData = MutableLiveData<List<Category>>()
-        viewModelScope.launch {
+        runBlocking{
             val categories = repository.getCategories()
             _categories.addAll(categories)
             categoriesLiveData.postValue(_categories)
@@ -94,10 +94,9 @@ class YingoViewModel : ViewModel() {
         return categoriesLiveData
     }
 
-
     fun getProducts(): LiveData<List<Product>> {
         val productsLiveData = MutableLiveData<List<Product>>()
-        viewModelScope.launch {
+        runBlocking{
             val products = repository.getProducts()
             _products.addAll(products)
             productsLiveData.postValue(_products)
@@ -107,7 +106,7 @@ class YingoViewModel : ViewModel() {
     }
     fun getOffers(): LiveData<List<Offer>> {
         val offersLiveData = MutableLiveData<List<Offer>>()
-        viewModelScope.launch {
+        runBlocking{
             val offers = repository.getOffers()
             _offers.addAll(offers)
             offersLiveData.postValue(_offers)
@@ -183,7 +182,7 @@ class YingoViewModel : ViewModel() {
 
     fun getOrderDetail(position: Int): LiveData<OrderData> {
         val orderLiveData = MutableLiveData<OrderData>()
-        viewModelScope.launch {
+        runBlocking {
             val order = repository.getOrderDetail(position)
             orderLiveData.postValue(order)
         }

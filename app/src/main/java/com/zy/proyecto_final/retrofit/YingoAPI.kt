@@ -60,7 +60,7 @@ interface YingoAPI {
     suspend fun uploadImage(@Body file: MultipartBody.Part): Response<Result<String>>
 
     @GET("order/items")
-    abstract fun getOrderItems(id: Int): Response<Result<List<OrderItem>>>
+    suspend fun getOrderItems(@Query("id") id: Int): Response<Result<List<OrderItem>>>
 
 
 }

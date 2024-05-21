@@ -57,9 +57,6 @@ class HomeFragment : Fragment() {
         }
 
 
-        imageList.add(SlideModel(R.drawable.gaming, "Popular 1",ScaleTypes.CENTER_INSIDE))
-        imageList.add(SlideModel(R.drawable.almacenamiento, "Popular 2",ScaleTypes.CENTER_INSIDE))
-        imageList.add(SlideModel(R.drawable.monitor, "Popular 3",ScaleTypes.CENTER_INSIDE))
 
         val imageSlider = view.findViewById<ImageSlider>(R.id.image_slider)
         imageSlider.setImageList(imageList)

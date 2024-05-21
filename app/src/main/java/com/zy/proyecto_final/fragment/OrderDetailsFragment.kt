@@ -8,16 +8,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
-import androidx.lifecycle.Observer
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.constant.OrderConstant
 import com.zy.proyecto_final.constant.getStatusString
 import com.zy.proyecto_final.databinding.FragmentOrderDetailsBinding
 import com.zy.proyecto_final.retrofit.YingoViewModel
-import com.zy.proyecto_final.recyclerviewadapter.OrderDetailRecyclerViewAdapter
+import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 import java.text.SimpleDateFormat
+import java.util.Locale
 
 class OrderDetailsFragment : Fragment() {
 
@@ -25,6 +25,7 @@ class OrderDetailsFragment : Fragment() {
     private lateinit var binding: FragmentOrderDetailsBinding
     private val userViewModel: UserViewModel by activityViewModels()
     private val productViewModel: ProductViewModel by activityViewModels()
+    private var order: OrderData? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,33 +41,48 @@ class OrderDetailsFragment : Fragment() {
         val orderId = arguments?.getInt(ARG_ORDER_ID)
         orderId?.let { id ->
             yingoViewModel.getOrderDetail(id).observe(viewLifecycleOwner) { orderData ->
-                // Actualizar la UI con los datos de la orden
-                val user = userViewModel.getUserById(orderData.userId!!)
-                binding.name.text = user!!.username
-                binding.address.text = orderData.address
-                binding.mobile.text = orderData.phone
-                binding.title.title = "Orden #${orderData.id} - ${OrderConstant.getStatusString(orderData.status!!)}"
+                orderData?.let { data ->
+                    // Actualizar la UI con los datos de la orden
+                    data.userId?.let { userId ->
+                        userViewModel.getUserById(userId)?.let { user ->
+                            binding.name.text = user.username
+                        } ?: run {
+                            binding.name.text = "Usuario no encontrado"
+                        }
+                    } ?: run {
+                        binding.name.text = "ID de usuario no disponible"
+                    }
 
-                // Crear un objeto SimpleDateFormat para formatear la fecha
-                val formatoFecha = SimpleDateFormat("yyyy-MM-dd")
-                val fecha = formatoFecha.format(orderData.createdAt!!)
-                binding.orderDate.text = fecha
-                binding.total.text = orderData.total.toString()
+                    binding.address.text = data.address ?: "Dirección no disponible"
+                    binding.mobile.text = data.phone ?: "Teléfono no disponible"
+                    binding.title.title = "Orden #${data.id} - ${OrderConstant.getStatusString(data.status ?: 0)}"
 
-
+                    // Crear un objeto SimpleDateFormat para formatear la fecha
+                    val formatoFecha = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val fecha = data.createdAt?.let { formatoFecha.format(it) } ?: "Fecha no disponible"
+                    binding.orderDate.text = fecha
+                    binding.total.text = data.total?.toString() ?: "Total no disponible"
+                } ?: run {
+                    // Manejar el caso cuando orderData es null
+                    binding.title.title = "Orden no disponible"
+                }
             }
-            val orderItems = yingoViewModel.getOrderItems(orderId)
-
+            yingoViewModel.getOrderItems(id).observe(viewLifecycleOwner) { orderItems ->
+                // Manejar los elementos de la orden aquí
+                // Puedes actualizar un RecyclerView o cualquier otro elemento de la UI
+            }
         }
     }
 
     companion object {
         private const val ARG_ORDER_ID = "orderId"
 
-        fun newInstance(orderId: Int): OrderDetailsFragment {
+        fun newInstance(order: OrderData): OrderDetailsFragment {
             val fragment = OrderDetailsFragment()
             val args = Bundle().apply {
-                putInt(ARG_ORDER_ID, orderId)
+                putInt(ARG_ORDER_ID, order.id!!)
+                //put order object
+
             }
             fragment.arguments = args
             return fragment

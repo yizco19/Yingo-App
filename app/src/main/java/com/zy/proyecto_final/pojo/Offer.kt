@@ -6,7 +6,7 @@ import java.util.Date
 
 @Entity(tableName = "offer")
 data class Offer(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id : Int? = null,
     var title : String?= null,
     var description : String?= null,

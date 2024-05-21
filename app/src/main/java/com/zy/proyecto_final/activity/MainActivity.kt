@@ -52,13 +52,13 @@ class MainActivity : AppCompatActivity() {
         //clear producto y category
         //productviewmodel.deleteAll()
         //categoryviewmodel.deleteAll()
-        val dataObserver = DataObserver(
-            this,
-            yingomodel
-        )
+        val dataObserver = DataObserver(this, yingomodel)
+
         dataObserver.observeOffers(offermodel)
-        dataObserver.observeCategories(categoryviewmodel)
-        dataObserver.observeProducts(productviewmodel)
+        dataObserver.observeCategories(categoryviewmodel) {
+            // Solo observar productos después de que las categorías se hayan cargado
+            dataObserver.observeProducts(productviewmodel)
+        }
         dataObserver.observeUserData(userviewmodel)
 
 
