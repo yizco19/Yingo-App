@@ -1,100 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="productViewModel"
             type="com.zy.proyecto_final.viewmodel.ProductViewModel" />
     </data>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="Detalle del producto"
-            app:titleTextColor="@color/white"
-            android:background="@color/my_app_color"
-            app:navigationIcon="@drawable/back_arrow"
-            />
-        <ImageView
-            android:id="@+id/product_pic"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/product"/>
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:background="@drawable/top_rounded_corners"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="@color/my_back_product"
+                android:padding="@dimen/dp_10"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{productViewModel.selectedproduct.name}"/>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
-
-                <TextView
-                    android:textColor="@color/red"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(productViewModel.selectedproduct.price)}"
-                    android:textSize="30sp"/>
-                <ImageView
+                    app:cardCornerRadius="@dimen/dp_26"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/euro_wallet"
-                    android:layout_marginBottom="10dp"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:contentDescription="TODO"
+                        android:src="@drawable/atras" />
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{productViewModel.selectedproduct.description}"/>
+                <!-- SearchView added here -->
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/card_border"
+                    android:queryHint="Buscar productos..."
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/favorito"
+                    app:layout_constraintStart_toEndOf="@+id/cardView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/favorito"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/dp_26">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="@dimen/dp_10"
+                        android:contentDescription="TODO"
+                        android:src="@drawable/heart" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:paddingHorizontal="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:id="@+id/product_pic"
+                android:background="@color/my_back_product"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/product" />
+
+         <androidx.cardview.widget.CardView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/top_rounded_corners">
+             <androidx.appcompat.widget.LinearLayoutCompat
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical">
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@{productViewModel.selectedproduct.name}" />
+
+                 <androidx.appcompat.widget.LinearLayoutCompat
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+
+                     <TextView
+                         android:textColor="@color/red"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@{String.valueOf(productViewModel.selectedproduct.price)}"
+                         android:textSize="30sp" />
+
+                     <ImageView
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+                         android:src="@drawable/euro_wallet"
+                         android:layout_marginBottom="10dp" />
+                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@{productViewModel.selectedproduct.description}" />
+
+             </androidx.appcompat.widget.LinearLayoutCompat>
+         </androidx.cardview.widget.CardView>
+
+
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:gravity="right">
-        <ImageView
-            android:id="@+id/favorito"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/heart"
-            android:layout_gravity="center"
-            />
-
-        <Button
-            android:id="@+id/comprar"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/my_app_color"
-            android:text="Añadir al carrito" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="right">
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <TextView
+                android:id="@+id/comprar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="@dimen/dp_10"
+                android:textAlignment="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_button_background"
+                android:text="Añadir al carrito" />
 
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-</RelativeLayout>
-
+    </RelativeLayout>
 </layout>
