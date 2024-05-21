@@ -39,15 +39,23 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val imageList = ArrayList<SlideModel>() // Create image list
 
-        offerViewModel.items.value?.forEach {
-            //Comprueba si existe un producto con este offerId  si no hay no se añade
-            if (productViewModel.items.value?.find { it.offerId == it.id } != null) {
-                // agrega el imagen de producto y nombre
-                for (i in productViewModel.items.value?.filter { it.offerId == it.id }!!) {
-                    imageList.add(SlideModel(i.productPic, i.name, ScaleTypes.CENTER_INSIDE))
+        offerViewModel.items.value?.forEach { offer ->
+            // Comprueba si existe un producto con este offerId, si no hay, no se añade
+            val matchingProducts = productViewModel.items.value?.filter { it.offerId == offer.id }
+
+            if (!matchingProducts.isNullOrEmpty()) {
+                // Agrega las imágenes del producto y el nombre
+                matchingProducts.forEach { product ->
+                    if (imageList.size < 6) {
+                        imageList.add(SlideModel(product.productPic, product.name, ScaleTypes.CENTER_INSIDE))
+                    } else {
+                        // Salir del bucle si ya se han añadido 6 imágenes
+                        return@forEach
+                    }
                 }
             }
         }
+
 
         imageList.add(SlideModel(R.drawable.gaming, "Popular 1",ScaleTypes.CENTER_INSIDE))
         imageList.add(SlideModel(R.drawable.almacenamiento, "Popular 2",ScaleTypes.CENTER_INSIDE))

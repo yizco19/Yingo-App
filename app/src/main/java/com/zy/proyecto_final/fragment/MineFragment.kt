@@ -81,7 +81,7 @@ class MineFragment : Fragment() {
         }
 
 
-        view?.findViewById<LinearLayoutCompat>(R.id.wallet)!!.setOnClickListener {
+        view?.findViewById<TextView>(R.id.canjear)!!.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.dialog_redemption, null)
             val editTextRedeemCode = dialogView.findViewById<EditText>(R.id.editTextRedeemCode)
 
