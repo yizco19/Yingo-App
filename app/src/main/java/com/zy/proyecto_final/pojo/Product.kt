@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName
         entity = Offer::class,
         childColumns = ["offerId"],
         parentColumns = ["id"],
-        onDelete = ForeignKey.CASCADE
+        onDelete = ForeignKey.SET_NULL
     )
 ],tableName = "product")
 data class Product(

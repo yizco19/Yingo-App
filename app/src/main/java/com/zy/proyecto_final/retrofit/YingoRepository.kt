@@ -130,6 +130,10 @@ class YingoRepository(c: Context) {
         product.price = data.price
         product.productPic = data.productPic
         product.stock =data.stock
+        //en caso de que exista una oferta
+        if(data.offerId != 0 && data.offerId != null) {
+            product.offerId = data.offerId
+        }
         return product
 
 

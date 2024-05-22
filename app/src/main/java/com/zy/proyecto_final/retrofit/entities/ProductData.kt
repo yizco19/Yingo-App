@@ -25,5 +25,8 @@ data class ProductData(
     val price: Double = 0.0,
 
     @SerializedName("visible")
-    val visible: Boolean = false
+    val visible: Boolean = false,
+    @SerializedName("offerId")
+    val offerId: Int = 0
+
 )

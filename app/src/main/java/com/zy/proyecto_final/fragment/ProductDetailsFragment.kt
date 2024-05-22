@@ -38,7 +38,7 @@ class ProductDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.productViewModel = viewmodel
 
-        binding.toolbar.setNavigationOnClickListener {
+        binding.back.setOnClickListener {
             //replace fragment
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProductsFragment())?.commit()
         }

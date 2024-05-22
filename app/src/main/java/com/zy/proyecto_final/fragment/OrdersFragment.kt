@@ -40,7 +40,7 @@ class OrdersFragment : Fragment() {
             val orderId = item.id
             if (orderId != null) {
                 parentFragmentManager.commit {
-                    replace(R.id.fragmentContainerView, OrderDetailsFragment.newInstance(orderId))
+                    replace(R.id.fragmentContainerView, OrderDetailsFragment.newInstance(item))
                     setReorderingAllowed(true)
                     addToBackStack(null)
                 }
