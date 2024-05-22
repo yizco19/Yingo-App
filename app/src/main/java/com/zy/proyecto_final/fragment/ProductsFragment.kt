@@ -2,6 +2,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.zy.proyecto_final.databinding.FragmentProductsBinding
 import com.zy.proyecto_final.fragment.ProductDetailsFragment
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
+import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.ProductRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.util.DataObserver
@@ -35,7 +37,7 @@ class ProductsFragment : Fragment() {
     private val productviewmodel: ProductViewModel by activityViewModels()
     private val userviewmodel: UserViewModel by activityViewModels()
     private val yingomodel: YingoViewModel by activityViewModels()
-
+    private lateinit var searchView: SearchView
     private var productAdapter: ProductRecyclerViewAdapter? = null
 
     override fun onCreateView(
@@ -44,6 +46,7 @@ class ProductsFragment : Fragment() {
     ): View? {
         val binding = FragmentProductsBinding.inflate(inflater, container, false)
         val refreshLayout: RefreshLayout =binding.refreshLayout
+        searchView = binding.searchView
         refreshLayout.setRefreshHeader(BezierRadarHeader(requireContext()).setEnableHorizontalDrag(true));
 
         val dataObserver = DataObserver(
@@ -101,6 +104,19 @@ class ProductsFragment : Fragment() {
                 }
             }
         }
+// Configuración del SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    viewmodel.filter(newText)
+                }
+                return true
+            }
+        })
 
         return binding.root
     }

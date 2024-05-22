@@ -24,6 +24,7 @@ import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.recyclerviewadapter.OrderRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.retrofit.entities.PaymentData
+import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
@@ -33,6 +34,7 @@ class OrderFragment : Fragment() {
     private val viewmodel: OrderViewModel by activityViewModels<OrderViewModel>()
     private val productviewmodel: ProductViewModel by activityViewModels<ProductViewModel>()
     private val yingoviewmodel: YingoViewModel by activityViewModels<YingoViewModel>()
+    private val carviewmodel: CarViewModel by activityViewModels<CarViewModel>()
     private val userViewModel: UserViewModel by activityViewModels()
     private  lateinit var binding: FragmentOrderBinding
     private lateinit var txt_total : TextView
@@ -130,6 +132,14 @@ class OrderFragment : Fragment() {
 
         } else if (result.code == 0) {
             Toast.makeText(context, "Pago realizado", Toast.LENGTH_SHORT).show()
+            //clear the cart y order local
+            viewmodel.clearOrder()
+            carviewmodel.clearCart()
+            //volver a home
+            activity?.supportFragmentManager?.beginTransaction()?.replace(
+                R.id.fragmentContainerView, MineFragment()
+            )
+            return true
         }
 
         activity?.supportFragmentManager?.beginTransaction()?.replace(

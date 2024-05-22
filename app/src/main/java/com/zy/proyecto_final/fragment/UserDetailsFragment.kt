@@ -22,7 +22,7 @@ import com.zy.proyecto_final.viewmodel.UserViewModel
 class UserDetailsFragment : Fragment() {
     private val viewModel: UserViewModel by activityViewModels()
     private val yingovieModel: YingoViewModel by activityViewModels()
-    private var username: EditText? = null
+    private var nickname: EditText? = null
     private var email: EditText? = null
     private var mobile: EditText? = null
     private var address: EditText? = null
@@ -39,7 +39,7 @@ class UserDetailsFragment : Fragment() {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, MineFragment())?.commit()
         }
             if(viewModel.userlogged.id != null){
-                username = view?.findViewById<EditText>(R.id.nickname)
+                nickname = view?.findViewById<EditText>(R.id.nickname)
                 email = view?.findViewById<EditText>(R.id.email)
                 mobile = view?.findViewById<EditText>(R.id.mobile)
                 address = view?.findViewById<EditText>(R.id.address)
@@ -55,23 +55,24 @@ class UserDetailsFragment : Fragment() {
              var user = viewModel.userlogged
              if(user.id != null){
                  var user = viewModel.userlogged
-                 var usernametemp=user.username
-                 user.username = username?.text.toString()
+                 user.nickname = nickname?.text.toString()
                  user.email = email?.text.toString()
                  user.mobile = mobile?.text.toString()
                  user.address = address?.text.toString()
                  Toast.makeText(context, "Actualizado", Toast.LENGTH_SHORT).show()
                  // if ha cambiado de username va volver a login
-                 if(user.username != usernametemp){
+                 /*if(user.username != usernametemp){
 
                      yingovieModel.updateUser(user)
                      viewModel.logout()
                      activity?.finish()
                      var intent = Intent(context, LoginActivity::class.java)
                      startActivity(intent)
-                 }
+                 }*/
 
                  viewModel.update(user)
+                 //update service
+                 yingovieModel.updateUser(user)
                  //cambia fragment a mine
                  activity?.supportFragmentManager?.beginTransaction()
                      ?.replace(R.id.fragmentContainerView, MineFragment())?.commit()

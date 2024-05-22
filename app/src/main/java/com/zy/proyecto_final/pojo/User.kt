@@ -10,6 +10,8 @@ data class User(
     var email: String? = "",
     @ColumnInfo(name = "username")
     var username: String? = "",
+    @ColumnInfo(name = "nickname")
+    var nickname: String? = "",
     @ColumnInfo(name = "password")
     var password: String? = "",
     var userPic: String? = null,

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -26,6 +27,7 @@ class HomeFragment : Fragment() {
     private val offerViewModel: OfferViewModel by activityViewModels<OfferViewModel>()
     private val yingoViewModel: YingoViewModel by activityViewModels<YingoViewModel>()
     private val productViewModel: ProductViewModel by activityViewModels<ProductViewModel>()
+    private lateinit var searchView: SearchView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,11 +57,27 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+        view?.findViewById<SearchView>(R.id.search_view)
+
 
 
 
         val imageSlider = view.findViewById<ImageSlider>(R.id.image_slider)
         imageSlider.setImageList(imageList)
+        searchView = view.findViewById(R.id.search_view)
+        // Configuración del SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    productViewModel.filter(newText)
+                }
+                return true
+            }
+        })
         return view
     }
 

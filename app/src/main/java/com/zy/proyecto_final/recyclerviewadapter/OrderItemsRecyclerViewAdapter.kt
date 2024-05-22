@@ -12,11 +12,11 @@ import com.zy.proyecto_final.pojo.Order
 import com.zy.proyecto_final.retrofit.entities.OrderItem
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
-class OrderRecyclerViewAdapter (private var orderList:List<Order>,
-                                private val productviewmodel: ProductViewModel,
-                                private val context: Context
-) : RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderRecyclerViewAdapter.ViewHolder {
+class OrderItemsRecyclerViewAdapter (private var orderList:List<OrderItem>,
+                                     private val productviewmodel: ProductViewModel,
+                                     private val context: Context
+) : RecyclerView.Adapter<OrderItemsRecyclerViewAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderItemsRecyclerViewAdapter.ViewHolder {
         return ViewHolder(
             FragmentItemorderBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -29,12 +29,12 @@ class OrderRecyclerViewAdapter (private var orderList:List<Order>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orderList[position]
-        val product = productviewmodel.getProductbyId(order.product_id!!)
+        val product = productviewmodel.getProductbyId(order.productId!!)
         Glide.with(this.context).load(product?.productPic).into(holder.productImage)
         holder.productName.text = product?.name
         holder.productPrice.text = product?.price.toString()
-        holder.productCount.text = order.product_count.toString()
-        holder.productTotal.text= (product?.price?.times(order.product_count!!)).toString()
+        holder.productCount.text = order.quantity.toString()
+        holder.productTotal.text= (product?.price?.times(order.quantity!!)).toString()
 
     }
     override fun getItemCount(): Int = orderList.size
@@ -48,7 +48,7 @@ class OrderRecyclerViewAdapter (private var orderList:List<Order>,
 
 
     }
-    public fun setValues(v:MutableList<Order>){
+    public fun setValues(v:MutableList<OrderItem>){
         this.orderList=v;
         this.notifyDataSetChanged()
     }

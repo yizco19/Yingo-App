@@ -33,6 +33,16 @@ class ProductViewModel : ViewModel() {
         this._items.value = this.itemsrepository.getAll()
 
     }
+    fun filter(query: String) {
+        val filteredList = mutableListOf<Product>()
+        for (product in _category_selected.products) {
+            if (product.name!!.contains(query, ignoreCase = true)) {
+                filteredList.add(product)
+            }
+        }
+        _items.value = filteredList
+    }
+
     fun getProductbyId(id:Int):Product?{
         return this.itemsrepository.getProductbyId(id)
     }

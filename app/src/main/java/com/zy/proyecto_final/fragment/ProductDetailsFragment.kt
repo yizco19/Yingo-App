@@ -27,7 +27,7 @@ class ProductDetailsFragment : Fragment() {
     private val favoritviewmodel: FavoriteViewModel by activityViewModels()
 
     private  lateinit var binding: FragmentProductDetailsBinding
-    private var view:View?=null
+
 
 
     override fun onCreateView(

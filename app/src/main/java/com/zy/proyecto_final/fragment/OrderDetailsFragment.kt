@@ -12,6 +12,9 @@ import com.zy.proyecto_final.R
 import com.zy.proyecto_final.constant.OrderConstant
 import com.zy.proyecto_final.constant.getStatusString
 import com.zy.proyecto_final.databinding.FragmentOrderDetailsBinding
+import com.zy.proyecto_final.recyclerviewadapter.OrderItemsRecyclerViewAdapter
+import com.zy.proyecto_final.recyclerviewadapter.OrderRecyclerViewAdapter
+import com.zy.proyecto_final.recyclerviewadapter.OrdersRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.retrofit.entities.OrderData
 import com.zy.proyecto_final.viewmodel.ProductViewModel
@@ -60,11 +63,12 @@ class OrderDetailsFragment : Fragment() {
                     // Manejar el caso cuando orderData es null
                     binding.title.title = "Orden no disponible"
                 }
+                binding.recyclerViewOrder.adapter = OrderItemsRecyclerViewAdapter(mutableListOf(),productViewModel,requireContext())
+
+                (binding.recyclerViewOrder.adapter as OrderItemsRecyclerViewAdapter).setValues(orderData.orderItems!!.toMutableList())
             }
-            yingoViewModel.getOrderItems(id).observe(viewLifecycleOwner) { orderItems ->
-                // Manejar los elementos de la orden aquí
-                // Puedes actualizar un RecyclerView o cualquier otro elemento de la UI
-            }
+
+
         }
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
