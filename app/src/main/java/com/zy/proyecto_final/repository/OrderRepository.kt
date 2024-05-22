@@ -31,4 +31,7 @@ class OrderRepository (contexto: Context) {
     fun setAll(listOrder: MutableList<Order>) {
         _orderdao.setAll(listOrder)
     }
+    fun deleteAll(){
+        _orderdao.deleteAll()
+    }
 }

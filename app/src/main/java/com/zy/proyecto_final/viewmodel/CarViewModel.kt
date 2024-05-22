@@ -73,6 +73,8 @@ this.itemsrepository.delete(item)
     }
 
     fun clearCart() {
-        TODO("Not yet implemented")
+        deleteAll()
+        _items.value = mutableListOf()
+        _items.value = _items.value
     }
 }

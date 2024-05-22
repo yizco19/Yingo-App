@@ -25,4 +25,7 @@ interface OrderDao {
     fun update(item: Order)
     @Insert
     abstract fun setAll(listOrder: MutableList<Order>)
+
+    @Query("DELETE FROM `order`")
+    fun deleteAll()
 }

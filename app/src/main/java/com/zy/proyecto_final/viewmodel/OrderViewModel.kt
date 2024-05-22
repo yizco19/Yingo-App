@@ -51,6 +51,9 @@ class OrderViewModel : ViewModel() {
     fun delete(item: Order) {
         this.itemsrepository.delete(item)
     }
+    fun deleteAll(){
+        this.itemsrepository.deleteAll()
+    }
 
     fun update() {
         this._items.value = this.itemsrepository.getAll()
@@ -69,6 +72,12 @@ class OrderViewModel : ViewModel() {
         }
         this._items.value = listOrder
         this.itemsrepository.setAll(listOrder)
+    }
+
+    fun clearOrder() {
+        deleteAll()
+        _items.value = mutableListOf()
+        _items.value = _items.value
     }
 
 }

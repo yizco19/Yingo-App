@@ -5,7 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.ProductsFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <!-- SearchView added here -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_border"
+            android:queryHint="Buscar productos..."
+            app:layout_constraintBottom_toBottomOf="parent" />
 
+    </LinearLayout>
     <!-- Aquí agregamos SmartRefreshLayout -->
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -27,5 +43,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
+    </LinearLayout>
 </FrameLayout>
