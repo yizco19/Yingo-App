@@ -32,12 +32,6 @@ class OrderDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_details, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val orderId = arguments?.getInt(ARG_ORDER_ID)
         orderId?.let { id ->
             yingoViewModel.getOrderDetail(id).observe(viewLifecycleOwner) { orderData ->
@@ -72,6 +66,12 @@ class OrderDetailsFragment : Fragment() {
                 // Puedes actualizar un RecyclerView o cualquier otro elemento de la UI
             }
         }
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {
@@ -81,7 +81,7 @@ class OrderDetailsFragment : Fragment() {
             val fragment = OrderDetailsFragment()
             val args = Bundle().apply {
                 putInt(ARG_ORDER_ID, order.id!!)
-                //put order object
+
 
             }
             fragment.arguments = args

@@ -152,6 +152,14 @@ class YingoViewModel : ViewModel() {
         return userLiveData
 
     }
+    fun getOrderDetail(position: Int): LiveData<OrderData?> {
+        val orderLiveData = MutableLiveData<OrderData?>()
+        runBlocking {
+            val order = repository.getOrderDetail(position)
+            orderLiveData.postValue(order)
+        }
+        return orderLiveData
+    }
 
     fun setCar(value: MutableList<Car>): Int {
         val carLiveData = MutableLiveData(value)
@@ -180,14 +188,7 @@ class YingoViewModel : ViewModel() {
 
     }
 
-    fun getOrderDetail(position: Int): LiveData<OrderData> {
-        val orderLiveData = MutableLiveData<OrderData>()
-        runBlocking {
-            val order = repository.getOrderDetail(position)
-            orderLiveData.postValue(order)
-        }
-        return orderLiveData
-    }
+
 
 
     fun updatePwd(data: UpdatePwdData): Int {
