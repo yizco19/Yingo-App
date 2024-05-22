@@ -145,6 +145,7 @@ class YingoRepository(c: Context) {
         {
             var order = OrderData()
             val response = _service.getOrderDetail(orderId)
+            Log.i("responseOrder", response.toString())
             if (response.isSuccessful) {
                 response.body()?.data?.let {
                     order = it
