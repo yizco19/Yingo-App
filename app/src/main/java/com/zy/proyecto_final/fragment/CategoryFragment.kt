@@ -57,7 +57,7 @@ class CategoryFragment : Fragment() {
         // Manejar el clic en los elementos del RecyclerView
         categoryAdapter?.content_click = { position, item ->
             viewmodel.selectedcategory = item
-            productviewmodel.category_selected = viewmodel.getCategoryWithProducts()!!
+            productviewmodel.category_selected = viewmodel.getCategoryWithProducts()
             parentFragmentManager.commit {
                 replace(R.id.fragmentContainerView, ProductsFragment.newInstance(item.id))
                 setReorderingAllowed(true)

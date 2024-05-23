@@ -7,6 +7,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,6 +92,7 @@ class MineFragment : Fragment() {
                     val redeemCode = editTextRedeemCode.text.toString()
                     val result = yingoViewModel.redeemCode(redeemCode)
                         Toast.makeText(context, result!!.message, Toast.LENGTH_SHORT).show()
+                    Log.d("Redeem", result.toString())
                     if(result.code == 0){
                         //actualizar wallet
                         viewModel.userlogged.wallet = viewModel.userlogged.wallet?.plus(result.data!!)
@@ -134,8 +136,8 @@ class MineFragment : Fragment() {
         val oldValue = textView.text.toString().toFloat()
         val newValue = newText.toFloat()
 
-        val valueAnimator = ValueAnimator.ofFloat(oldValue, newValue)
-        valueAnimator.duration = 500 // Duración de la animación en milisegundos
+        val valueAnimator = ValueAnimator.ofFloat(oldValue, oldValue+newValue)
+        valueAnimator.duration = 5000 // Duración de la animación en milisegundos
         valueAnimator.interpolator = AccelerateDecelerateInterpolator()
 
         valueAnimator.addUpdateListener { animator ->

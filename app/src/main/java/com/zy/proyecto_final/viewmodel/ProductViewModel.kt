@@ -12,61 +12,66 @@ class ProductViewModel : ViewModel() {
     private lateinit var _context: Context
 
     lateinit var itemsrepository: ProductRepository
-    private lateinit var _items: MutableLiveData<MutableList<Product>>;
-    private lateinit var _category_selected: CategoryWithProducts
+    private lateinit var _items: MutableLiveData<MutableList<Product>>
+    private var _category_selected: CategoryWithProducts? = null
 
-    var selectedproduct = Product();
+    var selectedproduct = Product()
 
-    public val items: LiveData<MutableList<Product>>
+    val items: LiveData<MutableList<Product>>
         get() = _items
-    var category_selected: CategoryWithProducts
+
+    var category_selected: CategoryWithProducts?
         set(value) {
-            this._category_selected = value;
-            this._items.value = value.products.toMutableList()
+            _category_selected = value
+            _items.value = value?.products?.toMutableList() ?: mutableListOf()
         }
-        get() = this._category_selected
+        get() = _category_selected
 
     fun init(c: Context) {
-        this._context = c
+        _context = c
         _items = MutableLiveData()
-        this.itemsrepository = ProductRepository(c)
-        this._items.value = this.itemsrepository.getAll()
-
+        itemsrepository = ProductRepository(c)
+        _items.value = itemsrepository.getAll()
     }
+
     fun filter(query: String) {
         val filteredList = mutableListOf<Product>()
-        for (product in _category_selected.products) {
-            if (product.name!!.contains(query, ignoreCase = true)) {
+        _category_selected?.products?.forEach { product ->
+            if (product.name?.contains(query, ignoreCase = true) == true) {
                 filteredList.add(product)
             }
         }
         _items.value = filteredList
     }
 
-    fun getProductbyId(id:Int):Product?{
-        return this.itemsrepository.getProductbyId(id)
+    fun getProductbyId(id: Int): Product? {
+        return itemsrepository.getProductbyId(id)
     }
-    /*fun add( item:Product) {
+
+    // Descomentar si es necesario:
+    /*fun add(item: Product) {
         itemsrepository.add(item)
     }
+
     fun delete(item: Product) {
-        this.itemsrepository.delete(item)
+        itemsrepository.delete(item)
     }
+
     private fun update(item: Product) {
-        this.itemsrepository.update(item)
+        itemsrepository.update(item)
     }
 
     fun insertAll(productList: List<Product>) {
-        this.itemsrepository.insertAll(productList)
-        this._items.value = this.itemsrepository.getAll()
+        itemsrepository.insertAll(productList)
+        _items.value = itemsrepository.getAll()
     }*/
+
     fun setAll(productList: List<Product>) {
-        this.itemsrepository.setAll(productList)
-        this._items.value = this.itemsrepository.getAll()
+        itemsrepository.setAll(productList)
+        _items.value = itemsrepository.getAll()
     }
 
     fun deleteAll() {
-        this.itemsrepository.deleteAll()
+        itemsrepository.deleteAll()
     }
-
 }

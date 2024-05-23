@@ -237,15 +237,15 @@ class YingoViewModel : ViewModel() {
 
         return code
     }
-    fun redeemCode (redeemCode: String): Result<Double> {
+    fun redeemCode (redeemCode: String): Result<Double>? {
         var code = 1 // Valor predeterminado si ocurre un error
-        var result = Result<Double>( code = code , message = "Error", data = 0.0)
+        var resultData: Result<Double>? = null
         runBlocking {
             val result = repositoryUser.redeemCode(redeemCode)
-            val resultData = result.body()
+            resultData = result.body()
             code = resultData?.code ?: 1
         }
-        return result
+        return resultData
     }
 
 
