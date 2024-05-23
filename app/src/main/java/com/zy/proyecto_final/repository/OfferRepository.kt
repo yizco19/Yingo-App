@@ -16,9 +16,6 @@ class OfferRepository (context: Context) {
     fun getAll():  MutableList<Offer>  {
         return _offerDao.getAll().toMutableList()
     }
-    fun getOfferById(id: Int): Offer? {
-        return _offerDao.getOfferById(id)
-    }
 
     fun insertAll(offers: List<Offer>) {
         _offerDao.insertAll(offers)
@@ -28,6 +25,11 @@ class OfferRepository (context: Context) {
     }
     fun deleteAll() {
         _offerDao.deleteAll()
+    }
+
+    fun getOfferById(id: Int): Offer? {
+        return _offerDao.getOfferById(id)
+
     }
 
 

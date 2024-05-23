@@ -77,4 +77,7 @@
     <color name="theme_primary">#2196F3</color>
     <color name="my_app_color">#e3b900</color>
     <color name="my_back_product">#bfd7e3</color>
+    <color name="text_color">#000000</color>
+    <color name="edittext_background_color">#F2F2F2</color>
+    <color name="edittext_stroke_color">#CCCCCC</color>
 </resources>

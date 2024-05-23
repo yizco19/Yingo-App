@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -39,6 +40,7 @@ class ProductsFragment : Fragment() {
     private val yingomodel: YingoViewModel by activityViewModels()
     private lateinit var searchView: SearchView
     private var productAdapter: ProductRecyclerViewAdapter? = null
+    private var productMutableList : MutableList<Product> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,38 +48,20 @@ class ProductsFragment : Fragment() {
     ): View? {
         val binding = FragmentProductsBinding.inflate(inflater, container, false)
         val refreshLayout: RefreshLayout =binding.refreshLayout
-        searchView = binding.searchView
-        refreshLayout.setRefreshHeader(BezierRadarHeader(requireContext()).setEnableHorizontalDrag(true));
 
-        val dataObserver = DataObserver(
-            this,
-            yingomodel
-        )
-
-        refreshLayout.setOnRefreshListener { refreshlayout ->
-            refreshlayout.finishRefresh(2000/*,false*/) // pasa false para indicar que la actualización ha fallado
-            dataObserver.observeProducts(viewmodel)
-        }
-
-        refreshLayout.setOnLoadMoreListener { refreshlayout ->
-            refreshlayout.finishLoadMore(2000/*,false*/) // pasa false para indicar que la carga ha fallado
-        }
-
-
-        val recyclerView = binding.listado
-        // Configura el LayoutManager
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        refreshLayout.setRefreshHeader(BezierRadarHeader(requireContext()).setEnableHorizontalDrag(true))
 
         // Observa el LiveData de productos y actualiza el adaptador cuando cambie
         viewmodel.items.observe(viewLifecycleOwner) { products ->
             products?.let {
-                productAdapter?.setValues(it.toMutableList())
+                productMutableList = it.toMutableList()
+                productAdapter?.setValues(productMutableList)
             }
         }
 
         // Configura el adaptador del RecyclerView
         productAdapter = ProductRecyclerViewAdapter(mutableListOf(), requireContext())
-        recyclerView.adapter = productAdapter
+        binding.listado.adapter = productAdapter
 
         // Manejar clics en elementos del RecyclerView
         productAdapter?.apply {
@@ -97,36 +81,44 @@ class ProductsFragment : Fragment() {
 
             detail_click = { position, item ->
                 viewmodel.selectedproduct = item
+                val fragment = ProductDetailsFragment.newInstance()
                 parentFragmentManager.commit {
-                    replace(R.id.fragmentContainerView, ProductDetailsFragment.newInstance())
+                    replace(R.id.fragmentContainerView, fragment)
                     setReorderingAllowed(true)
                     addToBackStack(null)
                 }
             }
         }
-// Configuración del SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
-                    viewmodel.filter(newText)
-                }
-                return true
+        binding.edFilter.addTextChangedListener { userFilter ->
+            val filteredProducts = productMutableList.filter { product ->
+                product.name!!.contains(userFilter.toString(), ignoreCase = true)
             }
-        })
+            updateProducts(filteredProducts)
+        }
+        //get query
+        val query = arguments?.getString("query")
+        if(query!=null && query!=""){
+            val filteredProducts = productMutableList.filter { product ->
+                product.name!!.contains(query.toString(), ignoreCase = true)
+            }
+            updateProducts(filteredProducts)
 
+        }
         return binding.root
+    }
+
+    private fun updateProducts(products: List<Product>) {
+        productAdapter?.setValues(products.toMutableList())
     }
 
     companion object {
         private const val CATEGORY_ID_ARG = "CATEGORY_ID_ARG"
 
-        fun newInstance(categoryId: Int?) = ProductsFragment().apply {
+        fun newInstance(categoryId: Int? = null, query: String? = null) = ProductsFragment().apply {
             arguments = Bundle().apply {
                 putInt(CATEGORY_ID_ARG, categoryId ?: -1)
+                putString("query", query)
             }
         }
     }

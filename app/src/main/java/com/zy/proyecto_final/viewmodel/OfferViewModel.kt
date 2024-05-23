@@ -39,5 +39,8 @@ class OfferViewModel : ViewModel()  {
     fun deleteAll() {
         this.itemsrepository.deleteAll()
     }
+    fun getOfferById(id: Int): Offer? {
+        return this.itemsrepository.getOfferById(id)
+    }
 
 }

@@ -19,12 +19,14 @@ import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
+import com.zy.proyecto_final.viewmodel.OfferViewModel
 
 class ProductDetailsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
     private val carviewmodel: CarViewModel by activityViewModels()
     private val userviewmodel: UserViewModel by activityViewModels()
     private val favoritviewmodel: FavoriteViewModel by activityViewModels()
+    private  val offerviewmodel : OfferViewModel by activityViewModels()
 
     private  lateinit var binding: FragmentProductDetailsBinding
 
@@ -34,10 +36,34 @@ class ProductDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_details, container, false)
+        if(viewmodel.selectedproduct.offerId!=null && viewmodel.selectedproduct.offerId!!.toInt()!=0) {
+            binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_product_offer_details,
+                container,
+                false
+            )
+            val offer = offerviewmodel.getOfferById(viewmodel.selectedproduct.offerId!!.toInt())
+            val discount = offer!!.discount
+            val precioConDescuento = viewmodel.selectedproduct.price?.times((1 - (discount?.div(100)!!)))
+            binding.price.text=precioConDescuento.toString()
+        }else{
+            binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_product_details,
+                container,
+                false
+            )
+            binding.price.text=viewmodel.selectedproduct.price.toString()
+        }
         binding.lifecycleOwner = this
-        binding.productViewModel = viewmodel
+        binding.name.text=viewmodel.selectedproduct.name
 
+        binding.description.text=viewmodel.selectedproduct.description
+// Asumiendo que productPic es una URL o una ruta de archivo
+        Glide.with(this)
+            .load(viewmodel.selectedproduct.productPic)
+            .into(binding.productPic)
         binding.back.setOnClickListener {
             //replace fragment
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProductsFragment())?.commit()
@@ -59,10 +85,7 @@ class ProductDetailsFragment : Fragment() {
             favoritviewmodel.add()
             Toast.makeText(context, "Añadido al favorito", Toast.LENGTH_SHORT).show()
         }
-// Asumiendo que productPic es una URL o una ruta de archivo
-        Glide.with(this)
-            .load(viewmodel.selectedproduct.productPic)
-            .into(binding.productPic)
+
 
         // Inflate the layout for this fragment
         return binding.root

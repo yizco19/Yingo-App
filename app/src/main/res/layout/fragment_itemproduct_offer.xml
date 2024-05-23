@@ -1,3 +1,4 @@
+<!-- fragment_itemproduct_offer.xml -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -54,6 +55,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+            <TextView
+                android:id="@+id/discounted_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discounted Price"
+                android:textColor="@color/colorAccent" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <Button

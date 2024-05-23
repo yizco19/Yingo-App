@@ -5,31 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.ProductsFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <!-- SearchView added here -->
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_border"
-            android:queryHint="Buscar productos..."
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_medium">
 
+            <!-- EditText con estilo mejorado -->
+            <EditText
+                android:id="@+id/ed_filter"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:padding="@dimen/spacing_small"
+                android:textSize="@dimen/text_size_medium"
+                android:background="@drawable/edittext_background"
+                android:textColor="@color/text_color"
+                android:hint="Buscar..."
+                android:drawableEnd="@drawable/ic_search"
+                android:drawablePadding="@dimen/spacing_small"/>
+
+        </LinearLayout>
     </LinearLayout>
+
     <!-- Aquí agregamos SmartRefreshLayout -->
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Agregamos el Header y el Footer de SmartRefreshLayout -->
-        <com.scwang.smart.refresh.header.ClassicsHeader
+        <!-- Cambiamos el Header a RadarHeader -->
+        <com.scwang.smart.refresh.header.BezierRadarHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -43,5 +55,4 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-    </LinearLayout>
 </FrameLayout>

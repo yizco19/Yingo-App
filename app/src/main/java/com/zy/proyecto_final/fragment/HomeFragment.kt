@@ -68,13 +68,12 @@ class HomeFragment : Fragment() {
         // Configuración del SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                //replaca a productsfragment con el query
+                parentFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ProductsFragment.newInstance(null,query)).commit()
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
-                    productViewModel.filter(newText)
-                }
                 return true
             }
         })

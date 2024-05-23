@@ -1,21 +1,21 @@
 package com.zy.proyecto_final.fragment
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
@@ -25,23 +25,21 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.activity.LoginActivity
 import com.zy.proyecto_final.retrofit.YingoViewModel
-import com.zy.proyecto_final.viewmodel.TimeViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 import java.io.File
 
 class MineFragment : Fragment() {
     private val viewModel: UserViewModel by activityViewModels()
-    private val timeViewModel: TimeViewModel by activityViewModels()
+
     private val yingoViewModel: YingoViewModel by activityViewModels<YingoViewModel>()
     private  val userViewModel :UserViewModel by activityViewModels<UserViewModel>()
     private var profile_avatar: ImageView? = null
-    val handler = Handler()
     var date : TextView? = null
     var time : TextView? = null
-    val delay: Long = 1000 // 1000 milisegundos = 1 segundo
+    //private val timeViewModel: TimeViewModel by activityViewModels()
+    //val delay: Long = 1000 // 1000 milisegundos = 1 segundo
 
-    private val PICK_IMAGE_REQUEST = 1
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +47,14 @@ class MineFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_mine, container, false)
         view?.findViewById<TextView>(R.id.nickname) !!.text = viewModel.userlogged.username
-        view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
+        view.findViewById<TextView>(R.id.wallet_amount)!!.text = viewModel.userlogged.wallet.toString()
         // Iniciar la actualización periódica
         //handler.postDelayed(updateTimeRunnable, delay)
 
         //date = view?.findViewById<TextView>(R.id.date)!!
         //time = view?.findViewById<TextView>(R.id.time)!!
         //updateTimeRunnable.run()
-        view?.findViewById<TextView>(R.id.logout) !!.setOnClickListener {
+        view.findViewById<TextView>(R.id.logout)!!.setOnClickListener {
             viewModel.viewModelScope.launch {
                 viewModel.logout()
                 //cambia a welcome activity
@@ -81,7 +79,7 @@ class MineFragment : Fragment() {
         }
 
 
-        view?.findViewById<TextView>(R.id.canjear)!!.setOnClickListener {
+        view.findViewById<TextView>(R.id.canjear)!!.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.dialog_redemption, null)
             val editTextRedeemCode = dialogView.findViewById<EditText>(R.id.editTextRedeemCode)
 
@@ -96,7 +94,8 @@ class MineFragment : Fragment() {
                     if(result.code == 0){
                         //actualizar wallet
                         viewModel.userlogged.wallet = viewModel.userlogged.wallet?.plus(result.data!!)
-                        view?.findViewById<TextView>(R.id.wallet_amount) !!.text = viewModel.userlogged.wallet.toString()
+// Actualizar wallet con animación
+                        animateTextChange(view.findViewById(R.id.wallet_amount), result.data.toString())
                     }
 
                 }
@@ -130,6 +129,21 @@ class MineFragment : Fragment() {
             }
         }
         return view
+    }
+    private fun animateTextChange(textView: TextView, newText: String) {
+        val oldValue = textView.text.toString().toFloat()
+        val newValue = newText.toFloat()
+
+        val valueAnimator = ValueAnimator.ofFloat(oldValue, newValue)
+        valueAnimator.duration = 500 // Duración de la animación en milisegundos
+        valueAnimator.interpolator = AccelerateDecelerateInterpolator()
+
+        valueAnimator.addUpdateListener { animator ->
+            val animatedValue = animator.animatedValue as Float
+            textView.text = String.format("%.2f", animatedValue)
+        }
+
+        valueAnimator.start()
     }
 
     private fun openOrder(orderStatus: String) {
