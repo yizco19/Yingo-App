@@ -60,7 +60,7 @@ Ordenado por su prioridad de desarrollo:
 
 1. **Inicio de Sesión/Registro:**
    - Los usuarios pueden crear una cuenta nueva o iniciar sesión en una cuenta existente para acceder a todas las funcionalidades de la aplicación.
-   - Proporcionar opciones de inicio de sesión con correo electrónico, redes sociales u otros métodos de autenticación.
+   - Proporcionar opciones de inicio de sesión con correo electrónico
 
 2. **Exploración de Productos:**
    - Navegar por la amplia variedad de productos disponibles en la tienda.
@@ -69,18 +69,9 @@ Ordenado por su prioridad de desarrollo:
 3. **Selección y Compra:**
    - Los usuarios pueden seleccionar productos y agregarlos al carrito de compras.
    - Proporcionan formas de pago seguras y convenientes.
-   - Funciones de cupones de descuento o códigos promocionales.
 
 4. **Gestión de Pedidos:**
    - Visualizar el historial de pedidos.
    - Realizar un seguimiento del estado de los envíos.
 
-5. **Sistema de Valoraciones y Reseñas:**
-   - Los usuarios pueden dejar valoraciones y reseñas para los productos.
-
-6. **Lista de Top Rank:**
-   - Una lista de los productos más populares o mejor valorados.
-
-7. **Comparación de Productos de la Misma Categoría:**
-   - Comparar diferentes productos dentro de la misma categoría.
 
