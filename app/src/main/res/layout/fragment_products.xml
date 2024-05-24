@@ -32,7 +32,7 @@
                 android:drawablePadding="@dimen/spacing_small"/>
 
         </LinearLayout>
-    </LinearLayout>
+
 
     <!-- Aquí agregamos SmartRefreshLayout -->
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -52,7 +52,9 @@
         <!-- Agregamos el RecyclerView dentro de SmartRefreshLayout -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listado"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+    </LinearLayout>
 </FrameLayout>

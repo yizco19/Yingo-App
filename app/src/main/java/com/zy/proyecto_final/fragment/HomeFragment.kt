@@ -11,26 +11,17 @@ import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.zy.proyecto_final.R
-import com.zy.proyecto_final.pojo.Offer
-import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.viewmodel.OfferViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
 class HomeFragment : Fragment() {
 
-    private val offerViewModel: OfferViewModel by activityViewModels<OfferViewModel>()
-    private val yingoViewModel: YingoViewModel by activityViewModels<YingoViewModel>()
-    private val productViewModel: ProductViewModel by activityViewModels<ProductViewModel>()
+    private val offerViewModel: OfferViewModel by activityViewModels()
+    private val productViewModel: ProductViewModel by activityViewModels()
     private lateinit var searchView: SearchView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -38,38 +29,24 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        // Inflate the layout for this fragment
-        val imageList = ArrayList<SlideModel>() // Create image list
+        val imageList = ArrayList<SlideModel>()
 
-        offerViewModel.items.value?.forEach { offer ->
-            // Comprueba si existe un producto con este offerId, si no hay, no se añade
-            val matchingProducts = productViewModel.items.value?.filter { it.offerId == offer.id }
-
-            if (!matchingProducts.isNullOrEmpty()) {
-                // Agrega las imágenes del producto y el nombre
+        productViewModel.items.observe(viewLifecycleOwner) { products ->
+            offerViewModel.items.value?.forEach { offer ->
+                val matchingProducts = products.filter { it.offerId == offer.id }
                 matchingProducts.forEach { product ->
                     if (imageList.size < 6) {
                         imageList.add(SlideModel(product.productPic, product.name, ScaleTypes.CENTER_INSIDE))
-                    } else {
-                        // Salir del bucle si ya se han añadido 6 imágenes
-                        return@forEach
                     }
                 }
             }
+            view.findViewById<ImageSlider>(R.id.image_slider).setImageList(imageList)
         }
-        view?.findViewById<SearchView>(R.id.search_view)
 
-
-
-
-        val imageSlider = view.findViewById<ImageSlider>(R.id.image_slider)
-        imageSlider.setImageList(imageList)
         searchView = view.findViewById(R.id.search_view)
-        // Configuración del SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //replaca a productsfragment con el query
-                parentFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ProductsFragment.newInstance(null,query)).commit()
+                parentFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ProductsFragment.newInstance(null, query)).commit()
                 return false
             }
 
@@ -79,6 +56,4 @@ class HomeFragment : Fragment() {
         })
         return view
     }
-
-
 }

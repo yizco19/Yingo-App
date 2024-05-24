@@ -1,10 +1,12 @@
+package com.zy.proyecto_final.fragment
+
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,20 +16,11 @@ import com.scwang.smart.refresh.header.BezierRadarHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.FragmentProductsBinding
-import com.zy.proyecto_final.fragment.ProductDetailsFragment
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.recyclerviewadapter.ProductRecyclerViewAdapter
-import com.zy.proyecto_final.retrofit.YingoViewModel
-import com.zy.proyecto_final.util.DataObserver
-import com.zy.proyecto_final.viewmodel.CarViewModel
-import com.zy.proyecto_final.viewmodel.CategoryViewModel
-import com.zy.proyecto_final.viewmodel.FavoriteViewModel
-import com.zy.proyecto_final.viewmodel.ProductViewModel
-import com.zy.proyecto_final.viewmodel.UserViewModel
-
-
+import com.zy.proyecto_final.viewmodel.*
 
 class ProductsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
@@ -35,41 +28,29 @@ class ProductsFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
     private val favoritviewmodel: FavoriteViewModel by activityViewModels()
     private val categoryviewmodel: CategoryViewModel by activityViewModels()
-    private val productviewmodel: ProductViewModel by activityViewModels()
-    private val userviewmodel: UserViewModel by activityViewModels()
-    private val yingomodel: YingoViewModel by activityViewModels()
     private lateinit var searchView: SearchView
     private var productAdapter: ProductRecyclerViewAdapter? = null
-    private var productMutableList : MutableList<Product> = mutableListOf()
+    private var productMutableList: MutableList<Product> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentProductsBinding.inflate(inflater, container, false)
-        val refreshLayout: RefreshLayout =binding.refreshLayout
 
-        refreshLayout.setRefreshHeader(BezierRadarHeader(requireContext()).setEnableHorizontalDrag(true))
-
-        // Observa el LiveData de productos y actualiza el adaptador cuando cambie
-        viewmodel.items.observe(viewLifecycleOwner) { products ->
-            products?.let {
-                productMutableList = it.toMutableList()
-                productAdapter?.setValues(productMutableList)
-            }
-        }
-
-        // Configura el adaptador del RecyclerView
+        binding.listado.layoutManager = GridLayoutManager(context, 2)
         productAdapter = ProductRecyclerViewAdapter(mutableListOf(), requireContext())
         binding.listado.adapter = productAdapter
 
-        // Manejar clics en elementos del RecyclerView
+        val refreshLayout: RefreshLayout = binding.refreshLayout
+        refreshLayout.setRefreshHeader(BezierRadarHeader(requireContext()).setEnableHorizontalDrag(true))
+
         productAdapter?.apply {
             add_click = { position, item ->
                 val car = Car(null, userViewModel.userlogged.id, item.id, 1)
                 carviewmodel.selectedcar = car
                 carviewmodel.add()
-                Toast.makeText(context,"Agregado al carrito [${item.name}]", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Agregado al carrito [${item.name}]", Toast.LENGTH_SHORT).show()
             }
 
             fav_click = { position, item ->
@@ -91,25 +72,47 @@ class ProductsFragment : Fragment() {
         }
 
         binding.edFilter.addTextChangedListener { userFilter ->
+            viewmodel.items.value?.let { productMutableList = it.toMutableList() }
             val filteredProducts = productMutableList.filter { product ->
-                product.name!!.contains(userFilter.toString(), ignoreCase = true)
+                product.name?.contains(userFilter.toString(), ignoreCase = true) == true
             }
-            updateProducts(filteredProducts)
-        }
-        //get query
-        val query = arguments?.getString("query")
-        if(query!=null && query!=""){
-            val filteredProducts = productMutableList.filter { product ->
-                product.name!!.contains(query.toString(), ignoreCase = true)
-            }
-            updateProducts(filteredProducts)
 
+            updateProducts(filteredProducts)
         }
+
+        val query = arguments?.getString("query")
+        if (!query.isNullOrBlank()) {
+            Log.d("query", query)
+            viewmodel.init(requireContext())
+
+            val categoryId = arguments?.getInt(CATEGORY_ID_ARG) ?: -1
+            viewmodel.items.observe(viewLifecycleOwner) { products ->
+                productMutableList = products.toMutableList()
+                val filteredProducts = when {
+                    categoryId != -1 -> productMutableList.filter { product ->
+                        product.categoryId == categoryId
+                    }
+                    !query.isNullOrBlank() -> {
+                        productMutableList.filter { product ->
+                            product.name?.contains(query, ignoreCase = true) == true
+                        }
+                    }
+                    else -> productMutableList
+                }
+                updateProducts(filteredProducts)
+            }
+        }
+
+        viewmodel.items.observe(viewLifecycleOwner) { products ->
+            updateProducts(products)
+        }
+
         return binding.root
     }
 
     private fun updateProducts(products: List<Product>) {
         productAdapter?.setValues(products.toMutableList())
+        productAdapter?.notifyDataSetChanged()
     }
 
     companion object {
