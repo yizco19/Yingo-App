@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/src/main/java/com/zy/proyecto_final/retrofit/RetrofitYingo.kt
