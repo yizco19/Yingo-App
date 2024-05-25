@@ -39,6 +39,11 @@ class UpdatePwdActivity : AppCompatActivity() {
         btn_update.setOnClickListener {
             val newPassword = et_newPassword.text.toString()
             val newPasswordConf = et_newPasswordConf.text.toString()
+            //comprueba si la contraseña tiene longitud suficiente 5-16
+            if(newPassword.length < 5 || newPassword.length > 16){
+                et_newPassword.error = "La contraseña debe contener entre 5 y 16 caracteres"
+                return@setOnClickListener
+            }
             if(newPassword != newPasswordConf){
                 et_newPasswordConf.error = "Las contraseñas no coinciden"
                 return@setOnClickListener
