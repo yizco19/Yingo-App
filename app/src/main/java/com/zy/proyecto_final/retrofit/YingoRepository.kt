@@ -174,6 +174,7 @@ class YingoRepository(c: Context) {
 
     suspend fun uploadImage(file: MultipartBody.Part): Response<Result<String>> {
         return withContext(Dispatchers.IO) {
+
             _service.uploadImage(file)
         }
     }

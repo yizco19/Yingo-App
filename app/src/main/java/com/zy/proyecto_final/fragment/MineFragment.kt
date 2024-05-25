@@ -26,6 +26,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.activity.LoginActivity
 import com.zy.proyecto_final.retrofit.YingoViewModel
+import com.zy.proyecto_final.util.DataObserver
 import com.zy.proyecto_final.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -46,6 +47,10 @@ class MineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val dataObserver = DataObserver(this, yingoViewModel)
+
+        dataObserver.observeUserData(userViewModel)
+
         val view = inflater.inflate(R.layout.fragment_mine, container, false)
         view?.findViewById<TextView>(R.id.nickname) !!.text = viewModel.userlogged.username
         view.findViewById<TextView>(R.id.wallet_amount)!!.text = viewModel.userlogged.wallet.toString()

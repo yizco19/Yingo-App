@@ -94,19 +94,21 @@
                  android:orientation="vertical">
 
                  <TextView
+                     android:id="@+id/name"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:text="@{productViewModel.selectedproduct.name}" />
+                     android:text="name" />
 
                  <androidx.appcompat.widget.LinearLayoutCompat
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content">
 
                      <TextView
+                         android:id="@+id/price"
                          android:textColor="@color/red"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:text="@{String.valueOf(productViewModel.selectedproduct.price)}"
+                         android:text="1"
                          android:textSize="30sp" />
 
                      <ImageView
@@ -117,9 +119,10 @@
                  </androidx.appcompat.widget.LinearLayoutCompat>
 
                  <TextView
+                     android:id="@+id/description"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:text="@{productViewModel.selectedproduct.description}" />
+                     android:text="description" />
 
              </androidx.appcompat.widget.LinearLayoutCompat>
          </androidx.cardview.widget.CardView>

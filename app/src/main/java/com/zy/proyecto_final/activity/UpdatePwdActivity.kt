@@ -48,21 +48,21 @@ class UpdatePwdActivity : AppCompatActivity() {
             var user_id = intent.getIntExtra("user_id",0)
             val user = viewModel.getUserById(user_id)
 
-            if(oldPasswordMD5 != user?.password){
+            /*if(oldPasswordMD5 != user?.password){
                 et_oldPassword.error = "La contraseña antigente no coincide"
             }
-            else{
+            else{*/
                 var updatePwdData = UpdatePwdData(
                     oldPassword,
                     newPassword,
                     newPasswordConf
                 )
-                var code = yingoviewModel.updatePwd(updatePwdData)
-                if( code==0){
+                var result = yingoviewModel.updatePwd(updatePwdData)
+                if( result!!.code==0){
                     Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
                     //regresa a la pantalla anterior y muestra un mensaje
                 }else{
-                    Toast.makeText(this, "Error al actualizar la contraseña", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
                 }
                 /*
                 val passwordMD5 = MD5util().getMD5(newPassword)
@@ -70,7 +70,7 @@ class UpdatePwdActivity : AppCompatActivity() {
                 viewModel.updateUser(MD5util().getMD5(newPassword), user_id)*/
                 setResult(1000)
                 finish()
-            }
+            //}
         }
     }
 }

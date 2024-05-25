@@ -24,7 +24,9 @@ import java.io.IOException
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Response
 import java.util.Objects
 
 class YingoViewModel : ViewModel() {
@@ -192,14 +194,17 @@ class YingoViewModel : ViewModel() {
 
 
 
-    fun updatePwd(data: UpdatePwdData): Int {
+    fun updatePwd(data: UpdatePwdData): Result<Objects>? {
         var code = 1 // Valor predeterminado si ocurre un error
+        var resultData: Result<Objects>? = null
         runBlocking {
             val result = repositoryUser.updatePwd(data)
-            val resultData = result.body()
+            Log.d("YingoViewModelPwd", "Respuesta del servidor: ${result!!}")
+            resultData = result.body()
+            Log.d("YingoViewModelPwd", "Respuesta del servidor: ${resultData?.code}")
             code = resultData?.code ?: 1
         }
-        return code
+        return resultData
     }
 
     fun updateUser(data: User): Int {
@@ -216,22 +221,36 @@ class YingoViewModel : ViewModel() {
         var code = 1 // Valor predeterminado si ocurre un error
 
         runBlocking {
-            // Primero se sube el avatar al servidor
-            val file = File(uri.path!!)
-            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            try {
+                val file = File(uri.path ?: throw IllegalArgumentException("URI path is null"))
+                val requestFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+                val body: MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-            // Llama al método del repositorio para subir la imagen
-            val result = repository.uploadImage(body)
-            val resultData = result.body()
-            code = resultData?.code ?: 1
+                // Llama al método del repositorio para subir la imagen
+                val result: Response<Result<String>> = repository.uploadImage(body)
+                val resultData = result.body()
+                if (resultData != null) {
+                    Log.d("YingoViewModelUpload", "Respuesta del servidor: ${resultData}")
+                    code = resultData.code ?: 1
 
-            // Si la carga de la imagen es exitosa, se actualiza el usuario en la base de datos
-            if (result.code() == 0) {
-                val avatarUrl = resultData?.data // Asume que `data` contiene la URL de la imagen subida
-                val updateResult = repositoryUser.uploadAvatar(avatarUrl!!)
-                val updateResultData = updateResult.body()
-                code = updateResultData?.code ?: 1
+                    if (resultData.code == 0) {
+                        val avatarUrl = resultData.data ?: throw IllegalArgumentException("Avatar URL is null")
+                        val updateResult = repositoryUser.uploadAvatar(avatarUrl)
+                        val updateResultData = updateResult.body()
+                        if (updateResultData != null) {
+                            Log.d("YingoViewModelUpload", "Respuesta del servidor: ${updateResultData}")
+                            code = updateResultData.code ?: 1
+                        } else {
+                            Log.e("YingoViewModelUpload", "Update result data is null")
+                        }
+                    } else {
+                        Log.e("YingoViewModelUpload", "Result code is ${resultData.code}")
+                    }
+                } else {
+                    Log.e("YingoViewModelUpload", "Result data is null")
+                }
+            } catch (e: Exception) {
+                Log.e("YingoViewModelUpload", "Error uploading avatar", e)
             }
         }
 

@@ -17,7 +17,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Query
 import java.util.Objects
 
@@ -56,8 +58,9 @@ interface YingoAPI {
 
     @GET( "order/detail")
     suspend fun getOrderDetail(@Query("id") id: Int): Response<Result<OrderData>>
-    @PUT("upload")
-    suspend fun uploadImage(@Body file: MultipartBody.Part): Response<Result<String>>
+    @Multipart
+    @POST("upload")
+    suspend fun uploadImage(@Part file: MultipartBody.Part): Response<Result<String>>
 
     @GET("order/items")
     suspend fun getOrderItems(@Query("id") id: Int): Response<Result<List<OrderItem>>>

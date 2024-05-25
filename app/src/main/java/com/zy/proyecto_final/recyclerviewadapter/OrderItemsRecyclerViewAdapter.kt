@@ -34,9 +34,9 @@ class OrderItemsRecyclerViewAdapter(
         Log.d("orderitemasdasd", order.toString())
         val product = productviewmodel.getProductbyId(order.productId!!)
         holder.productName.text = product?.name
-        holder.productPrice.text = product?.price.toString()
+        holder.productPrice.text = order.price.toString()
         holder.productCount.text = order.quantity.toString()
-        holder.productTotal.text = (product?.price?.times(order.quantity!!)).toString()
+        holder.productTotal.text = (order?.price?.times(order.quantity!!)).toString()
         Glide.with(this.context).load(product?.productPic).into(holder.productImage)
     }
 
