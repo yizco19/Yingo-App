@@ -73,4 +73,7 @@ interface ProductDao {
     @Query("SELECT * FROM category")
     fun getAllCategories(): List<Category>
 
+    @Query("SELECT * FROM Product WHERE offerId IS NOT NULL AND offerId != 0 AND offerId != '' LIMIT :limit")
+    fun getProductOfferList(limit: Int): List<Product>
+
 }

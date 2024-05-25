@@ -15,7 +15,7 @@ import com.zy.proyecto_final.fragment.HomeFragment
 import com.zy.proyecto_final.fragment.MineFragment
 import com.zy.proyecto_final.fragment.CarFragment
 import com.zy.proyecto_final.retrofit.YingoViewModel
-import com.zy.proyecto_final.util.DataObserver
+import com.zy.proyecto_final.utils.DataObserver
 import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.CategoryViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel

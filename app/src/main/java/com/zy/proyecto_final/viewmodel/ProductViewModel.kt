@@ -74,4 +74,9 @@ class ProductViewModel : ViewModel() {
     fun deleteAll() {
         itemsrepository.deleteAll()
     }
+
+    fun getProductOfferList(i: Int): List<Product> {
+        return itemsrepository.getProductOfferList(i)
+
+    }
 }

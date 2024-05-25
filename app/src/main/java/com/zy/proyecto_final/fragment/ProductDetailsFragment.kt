@@ -1,6 +1,8 @@
 package com.zy.proyecto_final.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +15,12 @@ import com.zy.proyecto_final.databinding.FragmentProductDetailsBinding
 import com.zy.proyecto_final.databinding.FragmentProductOfferDetailsBinding
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.pojo.Favorite
-import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.viewmodel.CarViewModel
 import com.zy.proyecto_final.viewmodel.FavoriteViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
-import com.zy.proyecto_final.util.PriceUtils
+import com.zy.proyecto_final.utils.PriceUtils
 import com.zy.proyecto_final.viewmodel.OfferViewModel
 
 class ProductDetailsFragment : Fragment() {
@@ -31,7 +32,7 @@ class ProductDetailsFragment : Fragment() {
 
     private lateinit var normalBinding: FragmentProductDetailsBinding
     private lateinit var offerBinding: FragmentProductOfferDetailsBinding
-
+    @SuppressLint("StringFormatMatches")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +50,8 @@ class ProductDetailsFragment : Fragment() {
             )
             val offer = offerviewmodel.getOfferById(offerId.toInt())
             val precioConDescuento = PriceUtils.calculateDiscountedPrice(product, offer)
-            offerBinding.price.text = precioConDescuento.toString()
+
+            offerBinding.price.text = getString(R.string.discounted_price_format, precioConDescuento)
             offerBinding.lifecycleOwner = this
             offerBinding.name.text = product.name
             offerBinding.description.text = product.description
@@ -110,6 +112,7 @@ class ProductDetailsFragment : Fragment() {
 
         return view
     }
+
 
     companion object {
         fun newInstance() = ProductDetailsFragment()

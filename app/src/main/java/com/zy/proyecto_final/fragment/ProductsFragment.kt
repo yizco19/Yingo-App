@@ -28,6 +28,7 @@ class ProductsFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
     private val favoritviewmodel: FavoriteViewModel by activityViewModels()
     private val categoryviewmodel: CategoryViewModel by activityViewModels()
+    private val offerViewModel: OfferViewModel by activityViewModels()
     private lateinit var searchView: SearchView
     private var productAdapter: ProductRecyclerViewAdapter? = null
     private var productMutableList: MutableList<Product> = mutableListOf()
@@ -39,7 +40,7 @@ class ProductsFragment : Fragment() {
         val binding = FragmentProductsBinding.inflate(inflater, container, false)
 
         binding.listado.layoutManager = GridLayoutManager(context, 2)
-        productAdapter = ProductRecyclerViewAdapter(mutableListOf(), requireContext())
+        productAdapter = ProductRecyclerViewAdapter(mutableListOf(), requireContext(), offerviewmodel =offerViewModel )
         binding.listado.adapter = productAdapter
 
         val refreshLayout: RefreshLayout = binding.refreshLayout

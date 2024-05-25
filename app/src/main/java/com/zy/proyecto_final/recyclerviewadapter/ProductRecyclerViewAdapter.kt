@@ -1,6 +1,7 @@
 package com.zy.proyecto_final.recyclerviewadapter
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,14 +11,16 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.zy.proyecto_final.databinding.FragmentItemproductBinding
 import com.zy.proyecto_final.databinding.FragmentItemproductOfferBinding
-import com.zy.proyecto_final.pojo.Category
 import com.zy.proyecto_final.pojo.Product
-
+import com.zy.proyecto_final.utils.PriceUtils
+import com.zy.proyecto_final.viewmodel.OfferViewModel
 
 class ProductRecyclerViewAdapter(
     private var values: MutableList<Product>,
-    private val context: Context
+    private val context: Context,
+    private val offerviewmodel: OfferViewModel
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     var add_click: ((Int, Product) -> Unit)? = null
     var fav_click: ((Int, Product) -> Unit)? = null
     var detail_click: ((Int, Product) -> Unit)? = null
@@ -34,6 +37,7 @@ class ProductRecyclerViewAdapter(
             VIEW_TYPE_NORMAL
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_OFFER) {
             OfferViewHolder(
@@ -54,12 +58,15 @@ class ProductRecyclerViewAdapter(
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = values[position]
         if (holder is OfferViewHolder) {
             holder.contentView.text = item.name
-            holder.priceView.text = item.price.toString()
+            val offer = offerviewmodel.getOfferById(item.offerId!!)
+            val precioConDescuento = PriceUtils.calculateDiscountedPrice(item, offer)
+            Log.d("pricedesc", precioConDescuento.toString())
+            Log.d("price", item.price.toString())
+            holder.priceView.text = "$" + String.format("%.2f", precioConDescuento)
             Glide.with(this.context).load(item.productPic).into(holder.detailView)
             holder.addView.setOnClickListener {
                 this.add_click?.let { it(position, item) }
@@ -113,9 +120,9 @@ class ProductRecyclerViewAdapter(
             return super.toString() + " '" + contentView.text + "'"
         }
     }
-    public fun setValues(v:MutableList<Product>){
-        this.values=v;
+
+    fun setValues(v: MutableList<Product>) {
+        this.values = v
         this.notifyDataSetChanged()
     }
-
 }

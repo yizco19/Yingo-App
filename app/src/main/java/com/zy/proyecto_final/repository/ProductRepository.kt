@@ -45,4 +45,9 @@ class ProductRepository(context: Context) {
     fun deleteAll() {
         _productDao.deleteAll()
     }
+
+    fun getProductOfferList(i: Int): List<Product> {
+        return _productDao.getProductOfferList(i)
+
+    }
 }

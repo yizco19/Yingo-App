@@ -2,20 +2,25 @@ package com.zy.proyecto_final.activity
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.databinding.ActivityLoginBinding
 import com.zy.proyecto_final.retrofit.LoginData
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel: UserViewModel by viewModels()
@@ -23,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private var isLogin: Boolean = false
     private lateinit var sharedPreferences: SharedPreferences
     private val yingomodel: YingoViewModel by viewModels()
-    private val userViewModel :UserViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
         val registerButton = findViewById<TextView>(R.id.registernow)
         val loginButton = findViewById<Button>(R.id.login)
         val checkRememberMe = findViewById<CheckBox>(R.id.rememberme)
+        val progressBar = findViewById<View>(R.id.progressBar)
 
         // Obtiene datos de SharedPreferences
         sharedPreferences = getSharedPreferences("user", MODE_PRIVATE)
@@ -65,49 +71,56 @@ class LoginActivity : AppCompatActivity() {
             val emailorusername = binding.emailorusername.text.toString()
             val password = binding.password.text.toString()
             val loginData = LoginData(emailorusername, password)
-            val login = yingomodel.login(loginData)
+            progressBar.visibility = View.VISIBLE // Mostrar ProgressBar
 
-            if (login) {
-                // Inicio de sesión exitoso
-                Log.i("login status", login.toString())
-                // Guardar datos de inicio de sesión en SharedPreferences
-                with(sharedPreferences.edit()) {
-                    putBoolean("is_login", true)
-                    putString("emailorusername", emailorusername)
-                    putString("password", password)
-                    putLong("lastLoginTime", System.currentTimeMillis())
-                    apply()
+            // Aquí necesitas usar coroutines para manejar la operación de inicio de sesión de manera asíncrona
+            lifecycleScope.launch {
+                val login = withContext(Dispatchers.IO) {
+                    try {
+                        yingomodel.login(loginData)
+                    } catch (e: Exception) {
+                        Toast.makeText(this@LoginActivity, "El servidor no está disponible o el nombre de usuario/contraseña es incorrecto. Por favor, inténtalo de nuevo.", Toast.LENGTH_SHORT).show()
+                        false
+                    }
                 }
 
+                progressBar.visibility = View.GONE // Ocultar ProgressBar
 
-
-
-
-                // Abrir la actividad principal
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                Toast.makeText(this, "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show()
-            } else {
-                // Inicio de sesión fallido
-                // Mostrar alerta de usuario o contraseña incorrectos
-                AlertDialog.Builder(this)
-                    .setTitle("Error de inicio de sesión")
-                    .setMessage("El nombre de usuario o la contraseña son incorrectos. Por favor, inténtalo de nuevo.")
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
+                if (login) {
+                    // Inicio de sesión exitoso
+                    Log.i("login status", login.toString())
+                    // Guardar datos de inicio de sesión en SharedPreferences
+                    with(sharedPreferences.edit()) {
+                        putBoolean("is_login", true)
+                        putString("emailorusername", emailorusername)
+                        putString("password", password)
+                        putLong("lastLoginTime", System.currentTimeMillis())
+                        apply()
                     }
-                    .show()
+
+                    // Abrir la actividad principal
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    Toast.makeText(this@LoginActivity, "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Inicio de sesión fallido
+                    // Mostrar alerta de usuario o contraseña incorrectos
+                    AlertDialog.Builder(this@LoginActivity)
+                        .setTitle("Error de inicio de sesión")
+                        .setMessage("El servidor no está disponible o el nombre de usuario/contraseña es incorrecto. Por favor, inténtalo de nuevo.")
+                        .setPositiveButton("OK") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
             }
         }
+
         // Check remember me
         checkRememberMe.setOnCheckedChangeListener { _, isChecked ->
             isLogin = isChecked
         }
-        }
-
-        // Check remember me
-
-
+    }
 
     private fun clearSharedPreferences() {
         with(sharedPreferences.edit()) {

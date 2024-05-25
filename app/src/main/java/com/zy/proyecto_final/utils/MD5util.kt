@@ -1,4 +1,4 @@
-package com.zy.proyecto_final.util
+package com.zy.proyecto_final.utils
 
 import java.math.BigInteger
 import java.security.MessageDigest

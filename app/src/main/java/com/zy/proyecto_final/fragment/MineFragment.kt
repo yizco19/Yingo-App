@@ -26,7 +26,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.activity.LoginActivity
 import com.zy.proyecto_final.retrofit.YingoViewModel
-import com.zy.proyecto_final.util.DataObserver
+import com.zy.proyecto_final.utils.DataObserver
 import com.zy.proyecto_final.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 import java.io.File

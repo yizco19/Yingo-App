@@ -1,4 +1,4 @@
-package com.zy.proyecto_final.util
+package com.zy.proyecto_final.utils
 
 import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.pojo.Offer

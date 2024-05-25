@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.retrofit.entities.UpdatePwdData
-import com.zy.proyecto_final.util.MD5util
+import com.zy.proyecto_final.utils.MD5util
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class UpdatePwdActivity : AppCompatActivity() {

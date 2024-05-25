@@ -75,15 +75,20 @@ class YingoViewModel : ViewModel() {
         var code = 1 // Valor predeterminado si ocurre un error
 
         runBlocking {
-            val result = repositoryUser.login(loginData)
-            val resultData = result.body()
-            code = resultData?.code ?: 1
-            val token = resultData?.data ?: ""
-            storeTokenInJsonFile(token)
+            try {
+                val result = repositoryUser.login(loginData)
+                val resultData = result.body()
+                code = resultData?.code ?: 1
+                val token = resultData?.data ?: ""
+                storeTokenInJsonFile(token)
+            } catch (e: Exception) {
+                Log.e("YingoViewModel", "Error during login", e)
+            }
         }
 
         return code == 0 // Devuelve true si el código es 0 (inicio de sesión exitoso)
     }
+
 
 
     fun getCategories(): LiveData<List<Category>> {

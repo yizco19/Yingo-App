@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.zy.proyecto_final.R
+import com.zy.proyecto_final.pojo.Product
 import com.zy.proyecto_final.viewmodel.OfferViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
@@ -31,17 +34,37 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val imageList = ArrayList<SlideModel>()
 
-        productViewModel.items.observe(viewLifecycleOwner) { products ->
-            offerViewModel.items.value?.forEach { offer ->
-                val matchingProducts = products.filter { it.offerId == offer.id }
-                matchingProducts.forEach { product ->
-                    if (imageList.size < 6) {
-                        imageList.add(SlideModel(product.productPic, product.name, ScaleTypes.CENTER_INSIDE))
-                    }
+
+        var productOfferList :List<Product> = productViewModel.getProductOfferList(4)
+
+        for(product in productOfferList){
+            imageList.add(SlideModel(product.productPic, product.name, ScaleTypes.FIT))
+        }
+        view.findViewById<ImageSlider>(R.id.image_slider).setImageList(imageList)
+        view.findViewById<ImageSlider>(R.id.image_slider).setItemClickListener(object :
+            ItemClickListener {
+            override fun doubleClick(position: Int) {
+                val item = productOfferList[position] // Obtener el producto seleccionado
+                productViewModel.selectedproduct = item
+                val fragment = ProductDetailsFragment.newInstance()
+                parentFragmentManager.commit {
+                    replace(R.id.fragmentContainerView, fragment)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
                 }
             }
-            view.findViewById<ImageSlider>(R.id.image_slider).setImageList(imageList)
-        }
+
+            override fun onItemSelected(position: Int) {
+                // You can listen here.
+                val item = productOfferList[position] // Obtener el producto seleccionado
+                productViewModel.selectedproduct = item
+                val fragment = ProductDetailsFragment.newInstance()
+                parentFragmentManager.commit {
+                    replace(R.id.fragmentContainerView, fragment)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            } })
 
         searchView = view.findViewById(R.id.search_view)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
