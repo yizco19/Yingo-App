@@ -187,8 +187,9 @@ class YingoViewModel : ViewModel() {
         runBlocking {
             val result = repository.processPayment(paymentData)
             resultData = result.body()
+            Log.d("YingoViewModel", "Respuesta del servidor: $result")
             code = resultData?.code ?: 1
-            Log.d("YingoViewModel", "Respuesta del servidor: ${resultData!!.message}")
+            //Log.d("YingoViewModel", "Respuesta del servidor: ${resultData!!.message}")
 
         }
         return resultData

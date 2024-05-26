@@ -1,19 +1,20 @@
 package com.zy.proyecto_final.fragment
 
-import android.app.Activity
+import PolicyFragment
+import UpdatePwdFragment
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.activity.LoginActivity
-import com.zy.proyecto_final.activity.UpdatePwdActivity
 import com.zy.proyecto_final.viewmodel.UserViewModel
 
 class SettingFragment  : Fragment(){
@@ -24,10 +25,19 @@ class SettingFragment  : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
+        view?.findViewById<TextView>(R.id.logout) !!.setOnClickListener {
+            viewModel.logout()
+            //cambia a welcome activity
+            activity?.finish()
+        }
+        view?.findViewById<Toolbar>(R.id.toolbar) !!.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainerView, MineFragment())?.commit()
+
+        }
         view?.findViewById<RelativeLayout>(R.id.updatePwd) !!.setOnClickListener {
-            var intent= Intent(context, UpdatePwdActivity::class.java)
-            intent.putExtra("user_id",viewModel.userlogged.id)
-            startActivityForResult(intent,1000)
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainerView, UpdatePwdFragment())?.commit()
         }
         view?.findViewById<RelativeLayout>(R.id.user_info) !!.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
@@ -46,20 +56,18 @@ class SettingFragment  : Fragment(){
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==1000){
-            activity?.finish()
-            var intent= Intent(context, LoginActivity::class.java)
-            //pasa userlogged
-            startActivity(intent)
-        }
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            // Obtiene la Uri de la imagen seleccionada
-            val selectedImageUri: Uri? = data?.data
-
-            // Asigna la Uri al ImageView
-            view?.findViewById<ImageView>(R.id.image)?.setImageURI(selectedImageUri)
+        // Verifica si la contraseña se actualizó correctamente o no
+        if (requestCode == 1000) {
+            if (resultCode == 1000) {
+                // La contraseña se actualizó correctamente, vuelve a iniciar sesión
+                activity?.finish()
+                startActivity(Intent(context, LoginActivity::class.java))
+            } else {
+                // Si el resultado no es 1000, no hagas nada o toma alguna otra acción
+            }
         }
     }
+
 
     companion object {
         fun newInstance(): Fragment {

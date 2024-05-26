@@ -70,7 +70,7 @@ class ProductDetailsFragment : Fragment() {
                 Toast.makeText(context, "Agregado al carrito", Toast.LENGTH_SHORT).show()
             }
             offerBinding.favorito.setOnClickListener {
-                val favorite = Favorite(product.id, userviewmodel.userlogged.id, "defecto")
+                val favorite = Favorite(product.id, userviewmodel.userlogged.id)
                 favoritviewmodel.selectedfavorite = favorite
                 favoritviewmodel.add()
                 Toast.makeText(context, "Añadido al favorito", Toast.LENGTH_SHORT).show()
@@ -102,7 +102,7 @@ class ProductDetailsFragment : Fragment() {
                 Toast.makeText(context, "Agregado al carrito", Toast.LENGTH_SHORT).show()
             }
             normalBinding.favorito.setOnClickListener {
-                val favorite = Favorite(product.id, userviewmodel.userlogged.id, "defecto")
+                val favorite = Favorite(product.id, userviewmodel.userlogged.id)
                 favoritviewmodel.selectedfavorite = favorite
                 favoritviewmodel.add()
                 Toast.makeText(context, "Añadido al favorito", Toast.LENGTH_SHORT).show()

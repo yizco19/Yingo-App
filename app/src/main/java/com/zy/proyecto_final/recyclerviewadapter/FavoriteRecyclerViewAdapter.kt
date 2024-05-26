@@ -3,7 +3,6 @@ package com.zy.proyecto_final.recyclerviewadapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +12,11 @@ import com.zy.proyecto_final.pojo.Favorite
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class FavoriteRecyclerViewAdapter(
-    private val values: MutableList<Favorite>,
+    private var values: MutableList<Favorite>,
     private val productViewModel: ProductViewModel,
     private val context: Context
-): RecyclerView.Adapter<FavoriteRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<FavoriteRecyclerViewAdapter.ViewHolder>() {
+
     var add_click: ((Int, Favorite) -> Unit)? = null
     var delete_click: ((Int, Favorite) -> Unit)? = null
 
@@ -34,21 +34,25 @@ class FavoriteRecyclerViewAdapter(
         val item = values[position]
         val product = productViewModel.getProductbyId(item.product_id ?: 0)
 
-        holder.contentView.text = product?.name
-        holder.priceView.text = product?.price.toString()
-        // Assuming detailView is an ImageView and you want to load an image from a URL
-        // You need to use a proper image loading library like Picasso or Glide for production
-        // This is just a placeholder assuming item.imageUrl is a drawable resource
-        Glide.with(this.context)
-            .load(product?.productPic)
-            .into(holder.detailView)
+        if (product != null) {
+            holder.contentView.text = product.name
+            holder.priceView.text = product.price.toString()
+            Glide.with(this.context)
+                .load(product.productPic)
+                .into(holder.detailView)
 
-        holder.addView.setOnClickListener {
-            add_click?.invoke(position, item!!)
-        }
-        holder.deleteView.setOnClickListener {
-            delete_click?.invoke(position, item!!)
-            notifyDataSetChanged()
+            holder.addView.setOnClickListener {
+                add_click?.invoke(position, item)
+            }
+            holder.deleteView.setOnClickListener {
+                delete_click?.invoke(position, item)
+            }
+        } else {
+            holder.contentView.text = "Producto no encontrado"
+            holder.priceView.text = ""
+            holder.detailView.setImageResource(android.R.color.transparent)
+            holder.addView.setOnClickListener(null)
+            holder.deleteView.setOnClickListener(null)
         }
     }
 
@@ -64,6 +68,18 @@ class FavoriteRecyclerViewAdapter(
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
+        }
+    }
+
+    fun setValues(newValues: MutableList<Favorite>) {
+        values = newValues
+        notifyDataSetChanged()
+    }
+
+    fun removeItem(position: Int) {
+        if (position in values.indices) {
+            values.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
 }

@@ -30,7 +30,7 @@ import com.zy.proyecto_final.pojo.User
         Offer::class,
     Order::class,
     Favorite::class
-    ], version = 26, exportSchema = true
+    ], version = 29, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase()  {

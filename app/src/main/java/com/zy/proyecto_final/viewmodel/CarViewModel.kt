@@ -54,10 +54,13 @@ class CarViewModel: ViewModel() {
 
 
     fun delete(item: Car) {
-this.itemsrepository.delete(item)
+        this.itemsrepository.delete(item)
+        this._items.value = this.itemsrepository.getAll()
     }
-    fun deleteByProductId(productId:  Int) {
+
+    fun deleteByProductId(productId: Int) {
         this.itemsrepository.deleteByProductId(productId)
+        this._items.value = this.itemsrepository.getAll()
     }
     fun deleteAll() {
         this.itemsrepository.deleteAll()
@@ -65,7 +68,9 @@ this.itemsrepository.delete(item)
     fun update(item: Car) {
         this.selectedcar = item
         this.itemsrepository.update(selectedcar)
+        this._items.value = this.itemsrepository.getAll()
     }
+
 
     fun updateAll() {
         val values =this._items.value

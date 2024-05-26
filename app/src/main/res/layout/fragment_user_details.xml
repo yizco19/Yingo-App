@@ -82,7 +82,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/icon_login_pw" />
+                android:src="@drawable/phone" />
             <EditText
                 android:id="@+id/mobile"
                 android:paddingLeft="10dp"

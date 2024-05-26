@@ -8,6 +8,16 @@
     <!-- Título del proyecto -->
 
     <!-- Descripción del proyecto -->
+    <ImageView
+        android:id="@+id/back"
+
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -24,10 +34,9 @@
 
     <TextView
         android:id="@+id/tvDescription"
-        android:layout_width="358dp"
-        android:layout_height="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="Se desarrollará una interfaz de administración para gestionar los productos y clientes. Además, puede crear una oferta especial o limitado."
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"

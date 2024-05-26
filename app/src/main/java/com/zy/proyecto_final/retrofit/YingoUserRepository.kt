@@ -45,7 +45,9 @@ class YingoUserRepository(c: Context) {
         return withContext(Dispatchers.IO) {
             var user = User()
             val response = _serviceUser.getUser()
+
             if (response.isSuccessful) {
+
                 response.body()?.data?.let {
                     user = adapterUser(it)
                 }
@@ -58,6 +60,7 @@ class YingoUserRepository(c: Context) {
     private  fun adapterUser(data: UserData): User{
         var user = User()
         user.username = data.username
+        user.nickname = data.nickname
         user.email = data.email
         user.id = data.id
         user.address = data.address

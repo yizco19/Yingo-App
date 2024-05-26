@@ -51,4 +51,20 @@
         ]]>
     </string>
     <string name="yingoshop">YingoShop</string>
+    <string name="about">
+    <![CDATA[
+    <html>
+    <body style="font-family: Arial, sans-serif; color: #333333;">
+        <h1 style="color: #007bff;">¡Bienvenido a YingoShop!</h1>
+        <p>En nuestra aplicación, valoramos y respetamos tu privacidad. A continuación, te proporcionamos información sobre qué recopilamos, utilizamos y protegemos tus datos personales.</p>
+
+        <p>Si tienes alguna pregunta sobre nuestra aplicación, no dudes en ponerte en contacto con nosotros.</p>
+        <p>¡Gracias por preferirnos!</p>
+
+    </body>
+    </html>
+    ]]>
+</string>
+
+
 </resources>

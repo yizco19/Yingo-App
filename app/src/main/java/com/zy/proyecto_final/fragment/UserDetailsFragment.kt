@@ -36,7 +36,7 @@ class UserDetailsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_user_details, container, false)
         view?.findViewById<Toolbar>(R.id.toolbar)!!.setNavigationOnClickListener {
             //replace fragment
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, MineFragment())?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, SettingFragment())?.commit()
         }
             if(viewModel.userlogged.id != null){
                 nickname = view?.findViewById<EditText>(R.id.nickname)
@@ -45,6 +45,7 @@ class UserDetailsFragment : Fragment() {
                 address = view?.findViewById<EditText>(R.id.address)
                 //payment = view?.findViewById<EditText>(R.id.paymentMethod)
                 //username?.setText(viewModel.userlogged.username)
+                nickname?.setText(viewModel.userlogged.nickname)
                 email?.setText(viewModel.userlogged.email)
                 mobile?.setText(viewModel.userlogged.mobile)
                 address?.setText(viewModel.userlogged.address)

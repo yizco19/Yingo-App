@@ -24,7 +24,9 @@ import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.recyclerviewadapter.OrderRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.retrofit.entities.PaymentData
+import com.zy.proyecto_final.utils.PriceUtils
 import com.zy.proyecto_final.viewmodel.CarViewModel
+import com.zy.proyecto_final.viewmodel.OfferViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
@@ -35,6 +37,7 @@ class OrderFragment : Fragment() {
     private val productviewmodel: ProductViewModel by activityViewModels<ProductViewModel>()
     private val yingoviewmodel: YingoViewModel by activityViewModels<YingoViewModel>()
     private val carviewmodel: CarViewModel by activityViewModels<CarViewModel>()
+    private val offerViewModel: OfferViewModel by activityViewModels<OfferViewModel>()
     private val userViewModel: UserViewModel by activityViewModels()
     private  lateinit var binding: FragmentOrderBinding
     private lateinit var txt_total : TextView
@@ -62,7 +65,9 @@ class OrderFragment : Fragment() {
         recyclerView.adapter =
             this.viewmodel.items.value?.let {
                 OrderRecyclerViewAdapter(
-                    it.toMutableList(), productviewmodel, requireContext()
+                    it.toMutableList(), productviewmodel,
+                    offerViewModel = offerViewModel,
+                    requireContext()
                 )
             }
 
@@ -127,7 +132,7 @@ class OrderFragment : Fragment() {
         )
         var result = yingoviewmodel.processPayment(paymentData)
         if (result!!.code == 1) {
-            Toast.makeText(context, "Error al procesar el pago", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
             Log.d("Payment Error", result.message!!)
 
         } else if (result.code == 0) {
@@ -194,7 +199,9 @@ class OrderFragment : Fragment() {
             for (i in items) {
                 i.product_id?.let { productId ->
                     val product = productviewmodel.getProductbyId(productId)
-                    val productPrice = product?.price?.toBigDecimal() ?: BigDecimal.ZERO
+                    var offer = offerViewModel.getOfferById(product!!.offerId!!)
+                    var productPrice = PriceUtils.calculateDiscountedPrice(product!!,offer).toBigDecimal() ?: BigDecimal.ZERO
+                    //val productPrice = product?.price?.toBigDecimal() ?: BigDecimal.ZERO
                     precio += productPrice * (i.product_count?.toBigDecimal() ?: BigDecimal.ZERO)
                 }
             }

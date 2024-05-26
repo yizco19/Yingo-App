@@ -5,7 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
+    <ImageView
+        android:id="@+id/back"
 
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:src="@drawable/back"/>
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -27,7 +32,6 @@
             android:id="@+id/tvPolicyContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/policy_content"
             android:textSize="16sp"/>
     </ScrollView>
 

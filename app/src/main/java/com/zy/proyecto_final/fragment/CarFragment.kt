@@ -18,7 +18,9 @@ import com.zy.proyecto_final.R
 import com.zy.proyecto_final.pojo.Car
 import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
+import com.zy.proyecto_final.utils.PriceUtils
 import com.zy.proyecto_final.viewmodel.CarViewModel
+import com.zy.proyecto_final.viewmodel.OfferViewModel
 import com.zy.proyecto_final.viewmodel.OrderViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 import com.zy.proyecto_final.viewmodel.UserViewModel
@@ -28,6 +30,7 @@ class CarFragment : Fragment() {
     private val viewmodel: CarViewModel by activityViewModels<CarViewModel>()
     private val userviewmodel: UserViewModel by activityViewModels<UserViewModel>()
     private val productviewmodel: ProductViewModel by activityViewModels<ProductViewModel>()
+    private val offerViewModel: OfferViewModel by activityViewModels<OfferViewModel>()
     private val orderviewmodel: OrderViewModel by activityViewModels<OrderViewModel>()
     private val yingoviewmodel : YingoViewModel by activityViewModels<YingoViewModel>()
     var plus_click: ((Int, Car) -> Unit)? = null
@@ -43,53 +46,48 @@ class CarFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_car, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerView)
-        view?.findViewById<RecyclerView>(R.id.recyclerView)!!?.layoutManager =
-            GridLayoutManager(context, 1)
-        view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter =
-            this.viewmodel.items.value?.let { itemList ->
-                CarRecyclerViewAdapter(
-                    itemList.toMutableList(),
-                    productviewmodel,
-                    requireContext()
-                )
-            }
-        (view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter as CarRecyclerViewAdapter).plus_click =
-            { position: Int, item: Car ->
-                run {
-                    item.product_count = item.product_count + 1
-                    this.viewmodel.update(item)
-                    loadData()
-                    //se avisa al principal
-                    this.plus_click?.let { it -> it(position, item) }
+        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        recyclerView.adapter = this.viewmodel.items.value?.let { itemList ->
+            CarRecyclerViewAdapter(
+                itemList.toMutableList(),
+                productviewmodel,
+                offerViewModel,
+                requireContext()
+            )
+        }
 
+        (recyclerView.adapter as CarRecyclerViewAdapter).plus_click = { position: Int, item: Car ->
+            run {
+                item.product_count = item.product_count + 1
+                this.viewmodel.update(item)
+                loadData()
+                this.plus_click?.let { it(position, item) }
+            }
+        }
+
+        (recyclerView.adapter as CarRecyclerViewAdapter).minus_click = { position: Int, item: Car ->
+            run {
+                item.product_count = item.product_count - 1
+                if (item.product_count == 0) {
+                    viewmodel.delete(item)
+                } else {
+                    viewmodel.update(item)
                 }
+                loadData()
+                this.minus_click?.let { it(position, item) }
             }
-        (view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter as CarRecyclerViewAdapter).minus_click =
-            { position: Int, item: Car ->
-                run {
-                    item.product_count = item.product_count - 1
-                    if (item.product_count == 0) {
-                        viewmodel.deleteByProductId(item.id!!)
-                    }else{
-                        this.viewmodel.update(item)
-                    }
+        }
 
-                    //se avisa al principal
-                    loadData()
-                    this.minus_click?.let { it -> it(position, item) }
-                }
-
-            }
         view.findViewById<LinearLayout>(R.id.clear_cart).setOnClickListener {
             viewmodel.deleteAll()
             loadData()
         }
-        txt_total=view.findViewById<TextView>(R.id.total)
-        var btn_total=view.findViewById<TextView>(R.id.btn_total)
+
+        txt_total = view.findViewById<TextView>(R.id.total)
+        var btn_total = view.findViewById<TextView>(R.id.btn_total)
         setTotal(viewmodel.items.value!!)
+
         btn_total.setOnClickListener {
-            //Pasa el carrito a YingoShop Services
-            //Se avisa al principal
             yingoviewmodel.setCar(viewmodel.items.value!!)
             lifecycleScope.launch {
                 if (viewmodel.items.value!!.isNotEmpty() && userviewmodel.userlogged != null) {
@@ -102,7 +100,7 @@ class CarFragment : Fragment() {
                             null,
                             "OrderFragment"
                         )
-                        addToBackStack(null) // Si necesitas mantener la transacción en la pila de retroceso
+                        addToBackStack(null)
                     }
                 }
             }
@@ -110,11 +108,16 @@ class CarFragment : Fragment() {
 
         return view
     }
+
     private fun setTotal(List: List<Car>) {
         var total = 0.0
         for (i in List) {
-            var product_price = productviewmodel.getProductbyId(i.product_id!!)!!.price
-            total +=i.product_count * product_price!!
+            productviewmodel.getProductbyId(i.product_id!!)
+            var product = productviewmodel.getProductbyId(i.product_id!!)
+            var offer = offerViewModel.getOfferById(product!!.offerId!!)
+            var product_price = PriceUtils.calculateDiscountedPrice(product!!,offer)
+           // var product_price = productviewmodel.getProductbyId(i.product_id!!)!!.price
+            total += i.product_count * product_price!!
         }
         txt_total.text = total.toString()
     }
@@ -122,12 +125,10 @@ class CarFragment : Fragment() {
     private fun loadData() {
         lifecycle.coroutineScope.launch {
             viewmodel.items.value?.let {
-                (view?.findViewById<RecyclerView>(R.id.recyclerView)!!.adapter as CarRecyclerViewAdapter).setValues(
-                    it.toMutableList()
-                )
+                (recyclerView.adapter as CarRecyclerViewAdapter).setValues(it.toMutableList())
+                recyclerView.adapter?.notifyDataSetChanged()
             }
             setTotal(viewmodel.items.value!!)
         }
     }
-
 }

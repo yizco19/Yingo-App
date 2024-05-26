@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.zy.proyecto_final.R
 import com.zy.proyecto_final.activity.LoginActivity
@@ -54,6 +55,9 @@ class MineFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_mine, container, false)
         view?.findViewById<TextView>(R.id.nickname) !!.text = viewModel.userlogged.username
         view.findViewById<TextView>(R.id.wallet_amount)!!.text = viewModel.userlogged.wallet.toString()
+        Glide.with(this)
+            .load(viewModel.userlogged.userPic)
+            .into(view.findViewById<ImageView>(R.id.profile_avatar)!!)
         // Iniciar la actualización periódica
         //handler.postDelayed(updateTimeRunnable, delay)
 
@@ -62,7 +66,6 @@ class MineFragment : Fragment() {
         //updateTimeRunnable.run()
         view.findViewById<TextView>(R.id.logout)!!.setOnClickListener {
             viewModel.viewModelScope.launch {
-                viewModel.logout()
                 //cambia a welcome activity
                 requireActivity().finish()
 

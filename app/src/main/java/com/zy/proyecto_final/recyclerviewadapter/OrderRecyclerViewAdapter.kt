@@ -10,10 +10,13 @@ import com.bumptech.glide.Glide
 import com.zy.proyecto_final.databinding.FragmentItemorderBinding
 import com.zy.proyecto_final.pojo.Order
 import com.zy.proyecto_final.retrofit.entities.OrderItem
+import com.zy.proyecto_final.utils.PriceUtils
+import com.zy.proyecto_final.viewmodel.OfferViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class OrderRecyclerViewAdapter (private var orderList:List<Order>,
                                 private val productviewmodel: ProductViewModel,
+                                private val offerViewModel: OfferViewModel,
                                 private val context: Context
 ) : RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderRecyclerViewAdapter.ViewHolder {
@@ -32,7 +35,9 @@ class OrderRecyclerViewAdapter (private var orderList:List<Order>,
         val product = productviewmodel.getProductbyId(order.product_id!!)
         Glide.with(this.context).load(product?.productPic).into(holder.productImage)
         holder.productName.text = product?.name
-        holder.productPrice.text = product?.price.toString()
+        var offer = offerViewModel.getOfferById(product!!.offerId!!)
+        var precioConDescuento = PriceUtils.calculateDiscountedPrice(product,offer)
+        holder.productPrice.text = "$" + String.format("%.2f", precioConDescuento)
         holder.productCount.text = order.product_count.toString()
         holder.productTotal.text= (product?.price?.times(order.product_count!!)).toString()
 

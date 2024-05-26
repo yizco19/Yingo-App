@@ -55,10 +55,11 @@ class ProductsFragment : Fragment() {
             }
 
             fav_click = { position, item ->
-                val favorite = Favorite(item.id, userViewModel.userlogged.id, "defecto")
+                val favorite = Favorite(item.id, userViewModel.userlogged.id)
                 favoritviewmodel.selectedfavorite = favorite
                 favoritviewmodel.add()
-                Toast.makeText(context, "Añadido al favorito [${item.name}]", Toast.LENGTH_SHORT).show()
+                Log.d("favorito", item.toString())
+                Toast.makeText(context, "Añadido al favorito ", Toast.LENGTH_SHORT).show()
             }
 
             detail_click = { position, item ->
@@ -89,24 +90,20 @@ class ProductsFragment : Fragment() {
             val categoryId = arguments?.getInt(CATEGORY_ID_ARG) ?: -1
             viewmodel.items.observe(viewLifecycleOwner) { products ->
                 productMutableList = products.toMutableList()
-                val filteredProducts = when {
-                    categoryId != -1 -> productMutableList.filter { product ->
-                        product.categoryId == categoryId
-                    }
-                    !query.isNullOrBlank() -> {
-                        productMutableList.filter { product ->
-                            product.name?.contains(query, ignoreCase = true) == true
-                        }
-                    }
-                    else -> productMutableList
+
+                binding.edFilter.setText(query)
+                val filteredProducts = productMutableList.filter { product ->
+                    product.name?.contains(query, ignoreCase = true) == true
                 }
                 updateProducts(filteredProducts)
             }
+        }else{
+            viewmodel.items.observe(viewLifecycleOwner) { products ->
+                updateProducts(products)
+            }
         }
 
-        viewmodel.items.observe(viewLifecycleOwner) { products ->
-            updateProducts(products)
-        }
+
 
         return binding.root
     }

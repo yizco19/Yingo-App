@@ -11,72 +11,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:navigationIcon="@drawable/back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/my_app_color"
         app:titleTextColor="@color/white"
-        app:title="Cuenta" />
+        app:title="Settings"
+        android:layout_marginBottom="35dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:orientation="vertical"
-        >
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:background="@color/my_app_color"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="20dp">
-             <androidx.cardview.widget.CardView
-                 android:layout_width="80dp"
-                 app:cardCornerRadius="40dp"
-                 android:layout_marginLeft="30dp"
-                 android:layout_height="80dp">
-                 <ImageView
-                     android:id="@+id/image"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:src="@drawable/account"
-                     android:layout_alignParentRight="true"/>
-
-             </androidx.cardview.widget.CardView>
-            <TextView
-                android:layout_marginLeft="10dp"
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="User"
-                android:textSize="40dp"/>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:gravity="right">
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:text="asd"/>
-            <TextView
-                android:id="@+id/time"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textSize="18sp"
-                android:text="asd"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
+>
 
     <RelativeLayout
         android:id="@+id/updatePwd"

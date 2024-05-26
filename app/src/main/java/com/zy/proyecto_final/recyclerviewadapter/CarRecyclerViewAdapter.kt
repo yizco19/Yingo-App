@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zy.proyecto_final.databinding.FragmentItemcarBinding
 import com.zy.proyecto_final.pojo.Car
+import com.zy.proyecto_final.utils.PriceUtils
+import com.zy.proyecto_final.viewmodel.OfferViewModel
 import com.zy.proyecto_final.viewmodel.ProductViewModel
 
 class CarRecyclerViewAdapter(private var carList: List<Car>,
                              private val productViewModel: ProductViewModel,
+                             private val offerViewModel: OfferViewModel,
                              private val context: Context
 ) :
     RecyclerView.Adapter<CarRecyclerViewAdapter.ViewHolder>() {
@@ -41,7 +44,10 @@ class CarRecyclerViewAdapter(private var carList: List<Car>,
                 .into(holder.productImage)
         }
         holder.productName.text = product?.name
-        holder.productPrice.text = product?.price.toString()
+        //comprueba si el producto tiene oferta
+        var offer = offerViewModel.getOfferById(product!!.offerId!!)
+        var precioConDescuento = PriceUtils.calculateDiscountedPrice(product,offer)
+        holder.productPrice.text = "$" + String.format("%.2f", precioConDescuento)
         holder.productCount.text = car.product_count.toString()
         holder.btn_plus.setOnClickListener {
             plus_click?.let { it1 -> it1(position, car) }
@@ -66,9 +72,10 @@ class CarRecyclerViewAdapter(private var carList: List<Car>,
 
 
     }
-    public fun setValues(v:MutableList<Car>){
-        this.carList=v;
+    public fun setValues(v: MutableList<Car>) {
+        this.carList = v
         this.notifyDataSetChanged()
     }
+
 }
 
