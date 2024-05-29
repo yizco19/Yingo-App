@@ -69,52 +69,6 @@
                 app:iss_text_align="CENTER"/>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="10dp"
-                android:backgroundTint="#91ddf2">
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:layout_margin="6dp"
-                        android:textStyle="bold"
-                        android:text="Oferta especial para usted"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/blue"
-                        android:layout_alignParentRight="true"
-                        android:text="30%"/>
-
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="10dp"
-                        android:src="@drawable/product" />
-                </RelativeLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
         </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 

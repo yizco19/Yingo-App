@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         val imageList = ArrayList<SlideModel>()
 
 
-        var productOfferList :List<Product> = productViewModel.getProductOfferList(4)
+        var productOfferList :List<Product> = productViewModel.getProductOfferList(6)
 
         for(product in productOfferList){
             imageList.add(SlideModel(product.productPic, product.name, ScaleTypes.FIT))
