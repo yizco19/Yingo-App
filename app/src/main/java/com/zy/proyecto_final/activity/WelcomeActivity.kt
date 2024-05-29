@@ -29,6 +29,8 @@ class WelcomeActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 skipButton.text = "Skip"
+                startActivity(Intent(this@WelcomeActivity, LoginActivity::class.java))
+                finish()
             }
         }.start()
 
