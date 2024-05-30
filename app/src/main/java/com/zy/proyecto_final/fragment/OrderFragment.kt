@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -17,10 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zy.proyecto_final.R
-import com.zy.proyecto_final.constant.PaymentConstant
 import com.zy.proyecto_final.databinding.FragmentOrderBinding
-import com.zy.proyecto_final.databinding.FragmentProductDetailsBinding
-import com.zy.proyecto_final.recyclerviewadapter.CarRecyclerViewAdapter
 import com.zy.proyecto_final.recyclerviewadapter.OrderRecyclerViewAdapter
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.retrofit.entities.PaymentData
@@ -33,14 +28,14 @@ import com.zy.proyecto_final.viewmodel.UserViewModel
 import java.math.BigDecimal
 
 class OrderFragment : Fragment() {
-    private val viewmodel: OrderViewModel by activityViewModels<OrderViewModel>()
-    private val productviewmodel: ProductViewModel by activityViewModels<ProductViewModel>()
-    private val yingoviewmodel: YingoViewModel by activityViewModels<YingoViewModel>()
-    private val carviewmodel: CarViewModel by activityViewModels<CarViewModel>()
-    private val offerViewModel: OfferViewModel by activityViewModels<OfferViewModel>()
+    private val viewmodel: OrderViewModel by activityViewModels()
+    private val productviewmodel: ProductViewModel by activityViewModels()
+    private val yingoviewmodel: YingoViewModel by activityViewModels()
+    private val carviewmodel: CarViewModel by activityViewModels()
+    private val offerViewModel: OfferViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
-    private  lateinit var binding: FragmentOrderBinding
-    private lateinit var txt_total : TextView
+    private lateinit var binding: FragmentOrderBinding
+    private lateinit var txt_total: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnBuy: Button
 
@@ -48,108 +43,93 @@ class OrderFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order, container, false)
-        //setupPaymentMethodAutoComplete()
-
-        binding.infoAddress.setOnClickListener {
-            val alertDialog = alertDialog()
-            alertDialog.show()
-        }
 
         binding.lifecycleOwner = this
         binding.userViewModel = userViewModel
         recyclerView = binding.recyclerViewOrder
-        recyclerView.layoutManager =
-            GridLayoutManager(context, 1)
-        recyclerView.adapter =
-            this.viewmodel.items.value?.let {
-                OrderRecyclerViewAdapter(
-                    it.toMutableList(), productviewmodel,
-                    offerViewModel = offerViewModel,
-                    requireContext()
-                )
-            }
+        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        recyclerView.adapter = viewmodel.items.value?.let {
+            OrderRecyclerViewAdapter(
+                it.toMutableList(), productviewmodel,
+                offerViewModel = offerViewModel,
+                requireContext()
+            )
+        }
 
         binding.buy.setOnClickListener {
             if (processPayment()) return@setOnClickListener
         }
-        // Inflate the layout for this fragment
+
         return binding.root
     }
 
-    private fun setupPaymentMethodAutoComplete() {
-        val payment_methods = listOf(
-            "ALIPAY",
-            "WEIXIN",
-            "BANK",
-            "CASH",
-            "UNIONPAY",
-            "WALLET",
-            "CARD",
-            "PAYPAL",
-            "APPLE_PAY",
-            "ANDROID_PAY",
-            "SAMSUNG_PAY",
-            "PAYTM",
-            "VENMO"
-        )
-        /*val autoComplete: AutoCompleteTextView = binding.payment
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
-            payment_methods
-        )
-        autoComplete.setAdapter(adapter)
-        autoComplete.setOnItemClickListener { parent, _, position, _ ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
-            autoComplete.setText(selectedItem, false) // Establecer el texto seleccionado en el AutoCompleteTextView
-            Log.d("Selected Payment Method", selectedItem)
-        }*/
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadData() // Move the loadData() call to onViewCreated
+        calculateTotal()
     }
 
+    private fun calculateTotal() {
+        var precio = BigDecimal.ZERO
 
+        viewmodel.items.value?.let { items ->
+            for (i in items) {
+                i.product_id?.let { productId ->
+                    val product = productviewmodel.getProductbyId(productId)
+                    if (product != null) {
+                        val offer = product.offerId?.let { offerViewModel.getOfferById(it) }
+                        val productPrice = PriceUtils.calculateDiscountedPrice(product, offer)?.toBigDecimal() ?: BigDecimal.ZERO
+                        precio += productPrice * (i.product_count?.toBigDecimal() ?: BigDecimal.ZERO)
+                    }
+                }
+            }
+        }
+        //format price 2 decimal
+        val formattedPrice = String.format("%.2f", precio)
+        view?.findViewById<TextView>(R.id.total)?.text = formattedPrice
+    }
 
+    private fun loadData() {
+        viewmodel.items.value?.let {
+            (view?.findViewById<RecyclerView>(R.id.recyclerView_order)!!.adapter as OrderRecyclerViewAdapter).setValues(
+                it.toMutableList()
+            )
+        }
+    }
 
     private fun processPayment(): Boolean {
-        var paymentName = view?.findViewById<TextView>(R.id.payment)
-        /*var paymentMethod = PaymentConstant.paymentMethodsMap[paymentName?.text.toString()]
-        if (paymentMethod == null) {
-            Toast.makeText(context, "Selecciona un metodo de pago", Toast.LENGTH_SHORT).show()
-            return true
-        }*/
-        var amount: Double = view?.findViewById<TextView>(R.id.total)?.text.toString().toDouble()
-        var phone = view?.findViewById<TextView>(R.id.mobile)?.text.toString()
-        var name = view?.findViewById<TextView>(R.id.name)?.text.toString()
-        var address = view?.findViewById<TextView>(R.id.address)?.text.toString()
-        var paymentData = PaymentData(
+        val paymentName = view?.findViewById<TextView>(R.id.payment)?.text.toString()
+        val amount = view?.findViewById<TextView>(R.id.total)?.text.toString().toDoubleOrNull() ?: 0.0
+        val phone = view?.findViewById<TextView>(R.id.mobile)?.text.toString()
+        val name = view?.findViewById<TextView>(R.id.name)?.text.toString()
+        val address = view?.findViewById<TextView>(R.id.address)?.text.toString()
+
+        val paymentData = PaymentData(
             7,
             amount,
             phone,
             name,
-            address,
+            address
         )
-        var result = yingoviewmodel.processPayment(paymentData)
-        if (result!!.code == 1) {
+
+        val result = yingoviewmodel.processPayment(paymentData)
+        if (result?.code == 1) {
             Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
             Log.d("Payment Error", result.message!!)
-
-        } else if (result.code == 0) {
+        } else if (result?.code == 0) {
             Toast.makeText(context, "Pago realizado", Toast.LENGTH_SHORT).show()
-            //clear the cart y order local
             viewmodel.clearOrder()
             carviewmodel.clearCart()
-            //volver a home
             activity?.supportFragmentManager?.beginTransaction()?.replace(
                 R.id.fragmentContainerView, MineFragment()
-            )
+            )?.commit()
             return true
         }
 
         activity?.supportFragmentManager?.beginTransaction()?.replace(
             R.id.fragmentContainerView, MineFragment()
-        )
+        )?.commit()
         return false
     }
 
@@ -170,9 +150,7 @@ class OrderFragment : Fragment() {
         nameTextView.text = binding.name.text.toString()
         mobileTextView.text = binding.mobile.text.toString()
 
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Guardar") { dialog, _ ->
-            // Aquí puedes agregar la lógica para guardar la información del usuario
-            // Por ejemplo, puedes obtener los nuevos valores de los TextViews y actualizar el ViewModel
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Guardar") { _, _ ->
             val newAddress = addressTextView.text.toString()
             val newName = nameTextView.text.toString()
             val newMobile = mobileTextView.text.toString()
@@ -188,33 +166,4 @@ class OrderFragment : Fragment() {
 
         return alertDialog
     }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        loadData() // Move the loadData() call to onViewCreated
-        var precio = BigDecimal.ZERO
-
-        viewmodel.items.value?.let { items ->
-            for (i in items) {
-                i.product_id?.let { productId ->
-                    val product = productviewmodel.getProductbyId(productId)
-                    var offer = offerViewModel.getOfferById(product!!.offerId!!)
-                    var productPrice = PriceUtils.calculateDiscountedPrice(product!!,offer).toBigDecimal() ?: BigDecimal.ZERO
-                    //val productPrice = product?.price?.toBigDecimal() ?: BigDecimal.ZERO
-                    precio += productPrice * (i.product_count?.toBigDecimal() ?: BigDecimal.ZERO)
-                }
-            }
-        }
-        view?.findViewById<TextView>(R.id.total)?.text = precio.toString()
-    }
-    private fun loadData() {
-        viewmodel.items.value?.let {
-            (view?.findViewById<RecyclerView>(R.id.recyclerView_order)!!.adapter as OrderRecyclerViewAdapter).setValues(
-                it.toMutableList()
-            )
-        }
-    }
-
-
 }
