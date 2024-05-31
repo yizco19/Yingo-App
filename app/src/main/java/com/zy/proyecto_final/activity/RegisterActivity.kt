@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.zy.proyecto_final.retrofit.RegistrationData
 import com.zy.proyecto_final.retrofit.YingoViewModel
 import com.zy.proyecto_final.utils.MD5util
 import com.zy.proyecto_final.viewmodel.UserViewModel
+import okhttp3.internal.wait
 
 class RegisterActivity : AppCompatActivity() {
     val viewModel: UserViewModel by viewModels()
@@ -54,7 +56,15 @@ class RegisterActivity : AppCompatActivity() {
             if (viewModel.add(user)) {
                 var registrationData = RegistrationData(username,email, password,"4983a0ab83ed86e0e7213c8783940193");
 
-                yingomodel.register(registrationData)
+                val code = yingomodel.register(registrationData)
+                if(code){
+                    Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+
+                }else{
+                    Toast.makeText(this, "Error al registrar", Toast.LENGTH_SHORT).show()
+                }
+                //espera 2 segundos antes de redirigir
+                Thread.sleep(2000)
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()

@@ -31,7 +31,7 @@ class YingoUserRepository(c: Context) {
     }
     suspend fun register(registerData: RegistrationData): Response<Result<Objects>> {
         return withContext(Dispatchers.IO){
-            _serviceUser.register(registerData)
+            _serviceUser.register(registerData.username, registerData.email, registerData.password)
         }
 
     }

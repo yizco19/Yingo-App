@@ -26,7 +26,7 @@ import java.util.Objects
 
 interface YingoUserAPI {
     @POST("register")
-    suspend fun register(@Body registerData: RegistrationData?): Response<Result<Objects>>
+    suspend fun register(@Query("username") username: String, @Query("password") password: String , @Query("email") email: String): Response<Result<Objects>>
 
     @POST("login")
     suspend fun login(

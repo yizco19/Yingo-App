@@ -64,7 +64,9 @@ class YingoViewModel : ViewModel() {
         var code = 1 // Valor predeterminado si ocurre un error
         runBlocking {
             val result = repositoryUser.register(registerData)
+            Log.d("YingoViewModelasdqwe", "Respuesta del servidor: $result")
             val resultData = result.body()
+
             code = resultData?.code ?: 1
         }
         return code == 0
