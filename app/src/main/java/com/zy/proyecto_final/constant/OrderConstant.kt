@@ -10,8 +10,9 @@ class OrderConstant {
             put("ALL", 0)
             put("PENDING", 1)
             put("PROCESSING", 2)
-            put("DELIVERED", 3)
-            put("CANCELLED", 4)
+            put("SHIPPING", 3)
+            put("DELIVERED", 4)
+            put("CANCELLED", 5)
         }
 
         const val DEFAULT_STATUS = "En espera"

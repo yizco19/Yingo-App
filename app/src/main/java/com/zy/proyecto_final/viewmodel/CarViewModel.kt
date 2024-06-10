@@ -64,6 +64,8 @@ class CarViewModel: ViewModel() {
     }
     fun deleteAll() {
         this.itemsrepository.deleteAll()
+        _items.value = mutableListOf()
+        _items.value = _items.value
     }
     fun update(item: Car) {
         this.selectedcar = item

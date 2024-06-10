@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitYingo(private val context: Context) {  // Inject context
 
     companion object {
-        private const val BASE_URL = "http://192.168.100.111:8080"
+        private const val BASE_URL = "http://192.168.100.111:8080/"
     }
 
     val retrofit: Retrofit by lazy {

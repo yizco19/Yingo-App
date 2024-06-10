@@ -34,5 +34,6 @@ class CarRepository (contexto: Context) {
 
     fun deleteAll() {
         _cardao.deleteAll()
+
     }
 }

@@ -89,13 +89,6 @@ class YingoUserRepository(c: Context) {
     }
 
 
-    private fun adapterCar( data: MutableList<Car>):  MutableList<CartItemData>{
-        var carItems = mutableListOf<CartItemData>()
-        data.forEach {
-            carItems.add(CartItemData(it.user_id!!,it.product_id!!,it.product_count!!))
-        }
-        return carItems
-    }
 
     suspend fun updatePwd(data: UpdatePwdData): Response<Result<Objects>> {
         return withContext(Dispatchers.IO) {

@@ -49,8 +49,10 @@ class ProductDetailsFragment : Fragment() {
                 false
             )
             val offer = offerviewmodel.getOfferById(offerId.toInt())
-            val precioConDescuento = PriceUtils.calculateDiscountedPrice(product, offer)
 
+            var precioConDescuento = PriceUtils.calculateDiscountedPrice(product, offer)
+            // formatea el precio a dos decimales
+            precioConDescuento = String.format("%.2f", precioConDescuento).toDouble()
             offerBinding.price.text = getString(R.string.discounted_price_format, precioConDescuento)
             offerBinding.lifecycleOwner = this
             offerBinding.name.text = product.name
