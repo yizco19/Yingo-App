@@ -220,6 +220,7 @@ class YingoViewModel : ViewModel() {
         runBlocking {
             val result = repositoryUser.updateUser(data)
             val resultData = result.body()
+            Log.d("YingoViewModel", "Respuesta del servidor: ${resultData.toString()}")
             code = resultData?.code ?: 1
         }
         return code

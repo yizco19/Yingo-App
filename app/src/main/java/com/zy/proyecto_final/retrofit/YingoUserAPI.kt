@@ -38,7 +38,7 @@ interface YingoUserAPI {
     @PATCH("user/updatePwd")
     suspend fun updatePwd(@Body updatePwdData: UpdatePwdData): Response<Result<Objects>>
 
-    @PUT("update")
+    @PUT("user/update")
     suspend fun update(@Body userData: UserData): Response<Result<Objects>>
 
     @PATCH("user/updateAvatar")

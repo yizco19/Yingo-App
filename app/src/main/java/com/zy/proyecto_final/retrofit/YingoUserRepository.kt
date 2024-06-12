@@ -100,9 +100,12 @@ class YingoUserRepository(c: Context) {
         var code = 1
         return withContext(Dispatchers.IO) {
             val response = _serviceUser.update(user)
+            Log.d("updatqweqwecqwee", response.toString())
+
             if (response.isSuccessful) {
-                code = response.code()
-                Log.d("update", code.toString())
+                Log.d("updatqweqwecqwee", response.body().toString())
+                code = response.body()?.code ?: 1
+                Log.d("updatqweqwecqwee", code.toString())
 
             }
             return@withContext response
