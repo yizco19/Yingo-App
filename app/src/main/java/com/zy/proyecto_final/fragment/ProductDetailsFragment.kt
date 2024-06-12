@@ -22,6 +22,7 @@ import com.zy.proyecto_final.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
 import com.zy.proyecto_final.utils.PriceUtils
 import com.zy.proyecto_final.viewmodel.OfferViewModel
+import java.util.Locale
 
 class ProductDetailsFragment : Fragment() {
     private val viewmodel: ProductViewModel by activityViewModels()
@@ -50,16 +51,18 @@ class ProductDetailsFragment : Fragment() {
             )
             val offer = offerviewmodel.getOfferById(offerId.toInt())
 
-            var precioConDescuento = PriceUtils.calculateDiscountedPrice(product, offer)
-            // formatea el precio a dos decimales
-            precioConDescuento = String.format("%.2f", precioConDescuento).toDouble()
-            offerBinding.price.text = getString(R.string.discounted_price_format, precioConDescuento)
+            val precioConDescuento = PriceUtils.calculateDiscountedPrice(product, offer)
+// Formatea el precio a dos decimales utilizando la configuración regional adecuada
+            val precioConDescuentoFormatted = String.format(Locale.US, "%.2f", precioConDescuento).toDouble()
+
+            offerBinding.price.text = getString(R.string.discounted_price_format, precioConDescuentoFormatted)
             offerBinding.lifecycleOwner = this
             offerBinding.name.text = product.name
             offerBinding.description.text = product.description
             Glide.with(this)
                 .load(product.productPic)
                 .into(offerBinding.productPic)
+
             offerBinding.back.setOnClickListener {
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.fragmentContainerView, ProductsFragment())
